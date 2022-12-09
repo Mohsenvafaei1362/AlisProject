@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 
 final httpClient = Dio(
   BaseOptions(
-    baseUrl: "http://192.168.1.173/AlisApi/api/v1/",
-    // baseUrl: "http://185.135.229.96:805/AlisApi/api/v1/",
+    // baseUrl: "http://192.168.1.173/AlisApi/api/v1/",
+    baseUrl: "http://185.135.229.96:805/AlisApi/api/v1/",
   ),
 );
 // ..interceptors.add(
@@ -20,8 +20,8 @@ final httpClient = Dio(
 
 final httpProduct = Dio(
   BaseOptions(
-    baseUrl: "http://192.168.1.173:3000/",
-    // baseUrl: "http://185.135.229.96:806/",
+    // baseUrl: "http://192.168.1.173:3000/",
+    baseUrl: "http://185.135.229.96:806/",
   ),
 );
 
