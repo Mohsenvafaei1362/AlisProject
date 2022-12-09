@@ -100,48 +100,48 @@ class _FriendsState extends State<Friends> {
                   child: Container(
                     width: size.width,
                     // color: Colors.blue,
-                    child:  Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Icon(Icons.volunteer_activism),
-                              Image.asset(
-                                'assets/images/7978 (1).png',
-                                width: 48,
-                                height: 48,
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              const Text(
-                                'هدیه به دوستان',
-                                style: TextStyle(fontSize: 10),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Icon(Icons.how_to_reg_rounded),
-                              Image.asset(
-                                'assets/images/7978 (2).png',
-                                width: 48,
-                                height: 48,
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              const Text(
-                                'دریافت امتیاز',
-                                style: TextStyle(fontSize: 10),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // Icon(Icons.volunteer_activism),
+                            Image.asset(
+                              'assets/images/7978 (1).png',
+                              width: 48,
+                              height: 48,
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            const Text(
+                              'هدیه به دوستان',
+                              style: TextStyle(fontSize: 10),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // Icon(Icons.how_to_reg_rounded),
+                            Image.asset(
+                              'assets/images/7978 (2).png',
+                              width: 48,
+                              height: 48,
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            const Text(
+                              'دریافت امتیاز',
+                              style: TextStyle(fontSize: 10),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -150,55 +150,54 @@ class _FriendsState extends State<Friends> {
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Container(
-                    width: size.width*0.6,
+                    width: size.width * 0.6,
                     color: Colors.yellow,
                     child: Container(
-                        width: size.width / 2,
-                        height: 35,
-                        decoration: BoxDecoration(
-                          // border: Border.all(color: Colors.black),
-                          gradient: const RadialGradient(
-                            radius: 5,
-                            colors: [
-                              Color(0xffeef2f3),
-                              Color(0xff005aa7),
-                            ],
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset: const Offset(0, 3),
-                            )
+                      width: size.width / 2,
+                      height: 35,
+                      decoration: BoxDecoration(
+                        // border: Border.all(color: Colors.black),
+                        gradient: const RadialGradient(
+                          radius: 5,
+                          colors: [
+                            Color(0xffeef2f3),
+                            Color(0xff005aa7),
                           ],
-                          borderRadius: BorderRadius.circular(10),
                         ),
-                        child: InkWell(
-                          onTap: () {
-                            Clipboard.setData(
-                                    const ClipboardData(text: 'MTGPXY'))
-                                .then(
-                              (_) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    duration: Duration(seconds: 1),
-                                    content: Text("کد دعوت کپی شد"),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
-                              Text('کد دعوت'),
-                              Text('MTGPXY'),
-                              Icon(Icons.copy),
-                            ],
-                          ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(0, 3),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          Clipboard.setData(const ClipboardData(text: 'MTGPXY'))
+                              .then(
+                            (_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  duration: Duration(seconds: 1),
+                                  content: Text("کد دعوت کپی شد"),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: const [
+                            Text('کد دعوت'),
+                            Text('MTGPXY'),
+                            Icon(Icons.copy),
+                          ],
                         ),
                       ),
+                    ),
                   ),
                 ),
               ),
@@ -214,11 +213,10 @@ class _FriendsState extends State<Friends> {
                         width: size.width,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            elevation: 3,
-                            shape:RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6),
-                            ) 
-                          ),
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6),
+                              )),
                           onPressed: () {
                             Share.share(_content);
                           },
@@ -234,7 +232,6 @@ class _FriendsState extends State<Friends> {
                 ),
               ),
             ],
-            
           ),
         ),
       ),
