@@ -90,14 +90,15 @@ class CartItem extends StatelessWidget {
                     height: 5,
                   ),
                   Divider(),
+                  
                   Container(
                     padding: EdgeInsets.zero,
                     alignment: Alignment.bottomLeft,
                     // color: Colors.amber,
                     child: TextButton(
                       onPressed: onDeleteButtonClicked,
-                      child: const Text(
-                        'حذف از سبد خرید',
+                      child: data.deleteButtonLoading ? CupertinoActivityIndicator(): Text(
+                       'حذف از سبد خرید',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.pink,

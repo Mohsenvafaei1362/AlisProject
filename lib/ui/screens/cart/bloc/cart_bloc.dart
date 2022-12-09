@@ -28,8 +28,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             //     .firstWhere((element) => element.id == event.cartItemId);
             final index = successState.cartResponse.indexWhere(
                 (element) => element.product_id == event.cartItemId);
-            // successState.cartResponse.deleteButtonLoading =
-            //     true;
+            successState.cartResponse[index].deleteButtonLoading = true;
+           await Future.delayed(Duration(seconds: 10));
             emit(CartSuccess(successState.cartResponse));
           }
           await cartRepository.delete(event.cartItemId);
