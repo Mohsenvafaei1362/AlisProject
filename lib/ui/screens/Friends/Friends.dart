@@ -16,7 +16,6 @@ class _FriendsState extends State<Friends> {
   @override
   void initState() {
     super.initState();
-    //startTimer();
   }
 
   @override
