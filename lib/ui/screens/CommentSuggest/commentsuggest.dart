@@ -11,8 +11,13 @@ class _CommentSuggestState extends State<CommentSuggest> {
     super.initState();
   }
 
+  final TextEditingController question_1 = TextEditingController();
+  final TextEditingController question_2 = TextEditingController();
+  final TextEditingController question_3 = TextEditingController();
+  final TextEditingController question_4 = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       // appBar: AppBar(
       //   backgroundColor: Colors.green.shade400,
@@ -45,16 +50,6 @@ class _CommentSuggestState extends State<CommentSuggest> {
                           ),
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(right: 30),
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.center,
-                      //     children: [
-                      //       Image.asset('assets/images/images.jpg',
-                      //           width: 100, height: 100),
-                      //     ],
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
@@ -65,133 +60,76 @@ class _CommentSuggestState extends State<CommentSuggest> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(
-                          right: 15,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 14, left: 6),
-                          child: Text(
+                      Title(
+                        title:
                             'آیا امکانات سایت و اپلیکیشن ما را خوب ارزیابی می کنید',
-                            style: TextStyle(
-                              fontFamily: 'IransansDn',
-                              fontSize: 12,
-                              color: Colors.black87,
+                      ),
+                      Question(
+                        question_1: question_1,
+                        hint: 'لطفا سوال اول را پاسخ دهید',
+                      ),
+                      Title(
+                          title:
+                              'از چه طریقی با سایت و اپلیکیشن عالیس آشنا شده اید'),
+                      Question(
+                          question_1: question_2,
+                          hint: 'لطفا سوال دوم را پاسخ دهید'),
+                      Title(
+                          title:
+                              'کدام محصول عالیس بیشترین مصرف را در خانواده شما دارد'),
+                      Question(
+                          question_1: question_3,
+                          hint: 'لطفا سوال سوم را پاسخ دهید'),
+                      Title(
+                          title:
+                              'اپلیکیشن و سایت عالیس را چگونه ارزیابی می کنید'),
+                      Question(
+                          question_1: question_4,
+                          hint: 'لطفا سوال چهارم را پاسخ دهید'),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: size.width * 0.9,
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              child: Text(
+                                'ثبت نظر',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsets.only(top: 20, right: 12, left: 12),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: TextField(
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.grey.shade300,
-                              hintText: 'لطفا سوال اول را پاسخ دهید',
+                        padding: const EdgeInsets.only(top: 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'با تشکر از پاسخگویی شما مشتری گرامی',
+                              style: TextStyle(
+                                shadows: [
+                                  Shadow(
+                                    offset: Offset(2, 4),
+                                    blurRadius: 4,
+                                    color: Color.fromARGB(255, 165, 158, 158),
+                                  )
+                                ],
+                                fontFamily: 'IransansDn',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 14, left: 6),
-                        child: Text(
-                          'از چه طریقی با سایت و اپلیکیشن عالیس آشنا شده اید',
-                          style: TextStyle(
-                            fontFamily: 'IransansDn',
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(top: 20, right: 12, left: 12),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: TextField(
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.grey.shade300,
-                              hintText: 'لطفا سوال دوم را پاسخ دهید',
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 14),
-                        child: Text(
-                          'کدام محصول عالیس بیشترین مصرف را در خانواده شما دارد',
-                          style: TextStyle(
-                            fontFamily: 'IransansDn',
-                            fontSize: 11,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(top: 20, right: 12, left: 12),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: TextField(
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.grey.shade300,
-                              hintText: 'لطفا سوال سوم را پاسخ دهید',
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 40, top: 14),
-                        child: ClipRRect(
-                          child: Text(
-                            'اپلیکیشن و سایت عالیس را چگونه ارزیابی می کنید',
-                            style: TextStyle(
-                              fontFamily: 'IransansDn',
-                              fontSize: 11,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(top: 20, right: 12, left: 12),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: TextField(
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.grey.shade300,
-                              hintText: 'لطفا سوال چهارم را پاسخ دهید',
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 55, top: 14),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 24),
-                        child: Text(
-                          'با تشکر از پاسخگویی شما مشتری گرامی',
-                          style: TextStyle(
-                            shadows: [
-                              Shadow(
-                                offset: Offset(2, 2),
-                                blurRadius: 4,
-                                color: Color.fromARGB(255, 231, 40, 40),
-                              )
-                            ],
-                            fontFamily: 'IransansDn',
-                            fontWeight: FontWeight.bold,
-                          ),
+                          ],
                         ),
                       ),
                     ],
@@ -200,6 +138,62 @@ class _CommentSuggestState extends State<CommentSuggest> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class Question extends StatelessWidget {
+  const Question({
+    Key? key,
+    required this.question_1,
+    required this.hint,
+  }) : super(key: key);
+
+  final TextEditingController question_1;
+  final String hint;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, right: 12, left: 12),
+      child: TextFormField(
+        controller: question_1,
+        obscureText: true,
+        inputFormatters: const [],
+        style: const TextStyle(
+          fontFamily: 'IransansDn',
+        ),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          labelText: hint,
+          // prefixIcon: const Icon(Icons.key_outlined),
+        ),
+      ),
+    );
+  }
+}
+
+class Title extends StatelessWidget {
+  final String title;
+  const Title({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(right: 20, top: 15),
+      child: Text(
+        title,
+        style: TextStyle(
+          fontFamily: 'IransansDn',
+          fontSize: 12,
+          color: Colors.black87,
         ),
       ),
     );

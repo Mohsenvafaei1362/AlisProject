@@ -118,7 +118,7 @@ class _RootScreenState extends State<RootScreen> {
                             value: value.toPersianDigit(),
                           );
                         },
-                        child: const Badge(value: '2'),
+                        // child: const Badge(value: '2'),
                       ),
                     ),
                   ],

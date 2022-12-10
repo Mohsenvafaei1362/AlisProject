@@ -5,6 +5,7 @@ import 'package:local_notification_flutter_project/ui/controller/controller.dart
 import 'package:local_notification_flutter_project/ui/data/repo/Club_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/Ghole_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/auth_repository.dart';
+import 'package:local_notification_flutter_project/ui/data/repo/cart_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/customer_club_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/message_box_repository.dart';
 import 'package:local_notification_flutter_project/ui/root.dart';
@@ -72,6 +73,7 @@ class _ProfileState extends State<Profile> {
       return Future.value(false);
     }
     await authRepository.singOut();
+    CartRepository.cartItemCountNotifier.value = '0';
     return Future.value(true);
   }
 

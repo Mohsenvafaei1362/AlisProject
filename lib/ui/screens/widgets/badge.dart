@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:local_notification_flutter_project/ui/screens/widgets/pricelable.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 
 class Badge extends StatelessWidget {
   const Badge({key, required this.value});
@@ -8,8 +8,8 @@ class Badge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      // visible: value == 0 ? false : true,
-      visible: value.isNotEmpty,
+      visible: value == '0'.toPersianDigit() ? false : true,
+      // visible: value.isNotEmpty,
       child: Container(
         width: 18,
         height: 18,

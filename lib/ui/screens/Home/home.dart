@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:local_notification_flutter_project/ui/screens/Notification/home_page.dart';
 import 'package:local_notification_flutter_project/ui/screens/Notification/services/notification_service.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/banner.dart';
@@ -21,7 +19,6 @@ import 'package:local_notification_flutter_project/ui/screens/Drawer/drawer.dart
 import 'package:local_notification_flutter_project/ui/screens/Festival/Festival.dart';
 import 'package:local_notification_flutter_project/ui/screens/Ghole/ghole.dart';
 import 'package:local_notification_flutter_project/ui/screens/Home/bloc/home_bloc.dart';
-import 'package:local_notification_flutter_project/ui/screens/MessageBox/message_box.dart';
 import 'package:local_notification_flutter_project/ui/screens/Product_List/product_list.dart';
 import 'package:local_notification_flutter_project/ui/screens/Search/search.dart';
 import 'package:local_notification_flutter_project/ui/screens/details/details.dart';

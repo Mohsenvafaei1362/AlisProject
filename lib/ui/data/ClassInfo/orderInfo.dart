@@ -15,8 +15,14 @@ class CreateOrderParams {
   final String address;
   final PaymentMethod paymentMethod;
 
-  CreateOrderParams(this.firstName, this.lastName, this.phoneNumber,
-      this.postalCode, this.address, this.paymentMethod);
+  CreateOrderParams(
+    this.firstName,
+    this.lastName,
+    this.phoneNumber,
+    this.postalCode,
+    this.address,
+    this.paymentMethod,
+  );
 }
 
 enum PaymentMethod { online, cashOnDelivery }

@@ -74,20 +74,21 @@ class _CartScreenState extends State<CartScreen> {
           margin: const EdgeInsets.only(right: 48, left: 48),
           child: FloatingActionButton.extended(
             onPressed: () {
-              // payablePrice = _data!.product_price * _data!.product_code;
-              // shipping = _data!.product_price <= 2500000 ? 300000 : 0;
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: ShippingScreen(
-                      payablePrice: _payablePrice + _shippingCost,
-                      totalPrice: _payablePrice,
-                      shippingCost: _shippingCost,
+              final state = cartBloc?.state;
+              if (state is CartSuccess) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: ShippingScreen(
+                        payablePrice: _payablePrice + _shippingCost,
+                        totalPrice: _payablePrice,
+                        shippingCost: _shippingCost,
+                      ),
                     ),
                   ),
-                ),
-              );
+                );
+              }
             },
             label: const Text('پرداخت'),
           ),
