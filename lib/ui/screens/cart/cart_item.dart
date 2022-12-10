@@ -45,14 +45,16 @@ class CartItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                    onPressed: onDecreaseButton,
+                    onPressed:
+                        data.changeCountLoading ? null : onDecreaseButton,
                     icon: const Icon(CupertinoIcons.minus_rectangle),
                   ),
                   data.changeCountLoading
                       ? CupertinoActivityIndicator()
                       : Text(data.product_code.toString().toPersianDigit()),
                   IconButton(
-                    onPressed: onIncreaseButton,
+                    onPressed:
+                        data.changeCountLoading ? null : onIncreaseButton,
                     icon: const Icon(CupertinoIcons.plus_rectangle),
                   ),
                 ],
@@ -97,7 +99,9 @@ class CartItem extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     // color: Colors.amber,
                     child: TextButton(
-                      onPressed: onDeleteButtonClicked,
+                      onPressed: data.deleteButtonLoading
+                          ? null
+                          : onDeleteButtonClicked,
                       child: data.deleteButtonLoading
                           ? CupertinoActivityIndicator()
                           : Text(

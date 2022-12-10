@@ -29,7 +29,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             final index = successState.cartResponse.indexWhere(
                 (element) => element.product_id == event.cartItemId);
             successState.cartResponse[index].deleteButtonLoading = true;
-            await Future.delayed(Duration(seconds: 2));
+            // await Future.delayed(Duration(seconds: 2));
             emit(CartSuccess(successState.cartResponse));
           }
           await cartRepository.delete(event.cartItemId);
@@ -41,7 +41,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             if (successState.cartResponse.isEmpty) {
               emit(CartEmpty());
             } else {
-              emit(CartSuccess(successState.cartResponse));
+              // emit(CartSuccess(successState.cartResponse));
+              emit(calculatePriceInfo(successState.cartResponse));
             }
           }
         } catch (e) {
@@ -76,8 +77,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             //     true;
             // final index = successState.cartResponse.cartItems
             //     .indexWhere((element) => element.id == cartItemId);
-            successState.cartResponse[index].changeCountLoading =
-                true;
+            successState.cartResponse[index].changeCountLoading = true;
             emit(CartSuccess(successState.cartResponse));
             final newCount = event is IncreaseCountButtonClicked
                 ? ++successState.cartResponse[index].product_code
@@ -88,7 +88,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             //   final successState = (state as CartSuccess);
             successState.cartResponse
                 .firstWhere((element) => element.product_id == cartItemId)
-                .product_code = newCount;
+              ..product_code = newCount
+              ..changeCountLoading = false;
 
             // emit(CartSuccess(successState.cartResponse));
             emit(calculatePriceInfo(successState.cartResponse));

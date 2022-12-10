@@ -76,8 +76,9 @@ class PriceInfo extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('هزینه ارسال'),
-                    RichText(
-                      text: TextSpan(
+                    if (shippingCost != 0)
+                      RichText(
+                        text: TextSpan(
                           text: shippingCost.separateByComma
                               .toString()
                               .beToman()
@@ -90,20 +91,23 @@ class PriceInfo extends StatelessWidget {
                           ),
                           children: const [
                             TextSpan(
-                                text: ' تومان',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 10,
-                                )),
-                          ]),
-                    ),
-                    // Text(
-                    //   shippingCost.withPriceLable,
-                    //   style: TextStyle(
-                    //     color: Colors.black54,
-                    //     // fontWeight: FontWeight.bold,
-                    //   ),
-                    // )
+                              text: ' تومان',
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    if (shippingCost == 0)
+                      Text(
+                        'رایگان',
+                        style: TextStyle(
+                          color: Colors.black45,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
                   ],
                 ),
               ),
