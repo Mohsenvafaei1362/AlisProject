@@ -48,7 +48,9 @@ class CartItem extends StatelessWidget {
                     onPressed: onDecreaseButton,
                     icon: const Icon(CupertinoIcons.minus_rectangle),
                   ),
-                  Text(data.product_code.toString().toPersianDigit()),
+                  data.changeCountLoading
+                      ? CupertinoActivityIndicator()
+                      : Text(data.product_code.toString().toPersianDigit()),
                   IconButton(
                     onPressed: onIncreaseButton,
                     icon: const Icon(CupertinoIcons.plus_rectangle),
@@ -90,20 +92,21 @@ class CartItem extends StatelessWidget {
                     height: 5,
                   ),
                   Divider(),
-                  
                   Container(
                     padding: EdgeInsets.zero,
                     alignment: Alignment.bottomLeft,
                     // color: Colors.amber,
                     child: TextButton(
                       onPressed: onDeleteButtonClicked,
-                      child: data.deleteButtonLoading ? CupertinoActivityIndicator(): Text(
-                       'حذف از سبد خرید',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.pink,
-                        ),
-                      ),
+                      child: data.deleteButtonLoading
+                          ? CupertinoActivityIndicator()
+                          : Text(
+                              'حذف از سبد خرید',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.pink,
+                              ),
+                            ),
                     ),
                   ),
                 ],

@@ -25,6 +25,7 @@ class CartResponseFake {
   String product_category;
   String image_product;
   bool deleteButtonLoading = false;
+  bool changeCountLoading = false;
 
   CartResponseFake.fromJson(Map<String, dynamic> json)
       : product_id = json['product_id'][0] ?? 0,
