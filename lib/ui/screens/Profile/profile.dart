@@ -228,7 +228,7 @@ class _ProfileState extends State<Profile> {
                               Rich_text(
                                 dl: _dl,
                                 title: 'تلفن : ',
-                                value: ' ${_dl.PhoneNumber}',
+                                value: ' ${_dl.PhoneNumber}'.toPersianDigit(),
                               ),
                               Divider(
                                 height: 2,
