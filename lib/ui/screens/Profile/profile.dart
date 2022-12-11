@@ -135,8 +135,8 @@ class _ProfileState extends State<Profile> {
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black54,
-                                  blurRadius: 3,
-                                  offset: Offset(1, 1),
+                                  blurRadius: 1,
+                                  offset: Offset(0, 0),
                                 )
                               ]),
                           child: Padding(
@@ -290,34 +290,42 @@ class _ProfileState extends State<Profile> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.amber[200],
-                                  onPrimary: Colors.black,
-                                ),
-                                onPressed: () {},
-                                child: const Text(
-                                  'ویرایش اطلاعات',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                              SizedBox(
+                                width: size.width*0.4,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 2,
+                                    backgroundColor: Colors.amber[200],
+                                    onPrimary: Colors.black,
+                                  ),
+                                  onPressed: () {},
+                                  child: const Text(
+                                    'ویرایش اطلاعات',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
                               SizedBox(
                                 width: 10,
                               ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.pink[200],
-                                  onPrimary: Colors.black,
-                                ),
-                                onPressed: () {
-                                  onWillPop();
-                                },
-                                child: const Text(
-                                  'خروج از حساب کاربری',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                              SizedBox(
+                                width: size.width*0.4,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 2,
+                                    backgroundColor: Colors.pink[200],
+                                    onPrimary: Colors.black,
+                                  ),
+                                  onPressed: () {
+                                    onWillPop();
+                                  },
+                                  child: const Text(
+                                    'خروج از حساب کاربری',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
