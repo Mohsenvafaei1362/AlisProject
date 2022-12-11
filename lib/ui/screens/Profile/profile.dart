@@ -20,6 +20,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:local_notification_flutter_project/ui/screens/auth/auth.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/empty_state.dart';
+import 'package:local_notification_flutter_project/ui/screens/widgets/pricelable.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -120,293 +121,491 @@ class _ProfileState extends State<Profile> {
             builder: (context, state) {
               if (state is ProfileSuccess) {
                 return SafeArea(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.only(bottom: 30),
-                    child: Column(
-                      children: [
-                        Container(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Container(
                           width: size.width,
-                          height: size.height * 0.8,
-                          color: Colors.white,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.vertical(
+                                bottom: Radius.circular(30),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black54,
+                                  blurRadius: 10,
+                                  offset: Offset(1, 1),
+                                )
+                              ]),
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 16, left: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ClipOval(
+                                  child: Image.memory(
+                                    _avatarImage,
+                                    width: 50,
+                                    height: 50,
+                                  ),
+                                ),
+                                Text(
+                                  ' امتیاز شما : ${state.club.first.Value}'
+                                      .toPersianDigit(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          width: size.width,
+                          // color: Colors.red,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 16, left: 16),
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  'assets/icons/wallet.png',
+                                  width: 35,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'موجودی حساب',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Spacer(),
+                                Text(240000.withPriceLable.toPersianDigit()),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          width: size.width,
+                          // color: Colors.blue,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 16),
+                                child: Text(
+                                  'اطلاعات شخصی',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black54,
+                                  ),
+                                ),
+                              ),
+                              Divider(
+                                height: 2,
+                              ),
+                              Rich_text(
+                                dl: _dl,
+                                title: 'نام و نام خانوادگی : ',
+                                value: ' ${_dl.FName.value} ${_dl.LName.value}',
+                              ),
+                              Rich_text(
+                                dl: _dl,
+                                title: 'ایمیل : ',
+                                value: ' ${_dl.Email} ',
+                              ),
+                              Rich_text(
+                                dl: _dl,
+                                title: 'تلفن : ',
+                                value: ' ${_dl.PhoneNumber}',
+                              ),
+                              Divider(
+                                height: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                          width: size.width,
+                          // color: Colors.green,
                           child: Column(
                             children: [
-                              Container(
-                                height: size.height * 0.1,
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(30),
-                                    bottomRight: Radius.circular(30),
-                                  ),
-                                  color: Colors.blue,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    ClipOval(
-                                      child: Image.memory(
-                                        _avatarImage,
-                                        width: 50,
-                                        height: 50,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 50,
-                                    ),
-                                    Text(
-                                      ' امتیاز شما : ${state.club.first.Value}'
-                                          .toPersianDigit(),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              MenuItems(
+                                press: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) => Settings()),
+                                  );
+                                },
+                                image: 'assets/icons/settings.png',
+                                title: 'تنظیمات',
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(24, 24, 24, 0),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
+                              MenuItems(
+                                press: () {
+                                  // Navigator.of(context).push(
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => Settings()),
+                                  // );
+                                },
+                                image: 'assets/icons/shopping-cart.png',
+                                title: 'سفارش های من',
+                              ),
+                              MenuItems(
+                                press: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
                                         builder: (context) =>
-                                            const Directionality(
-                                          textDirection: TextDirection.rtl,
-                                          child: Wallet(),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Row(children: [
-                                    Image.asset(
-                                      'assets/icons/wallet.png',
-                                      width: 32,
-                                      height: 32,
-                                    ),
-                                    const SizedBox(
-                                      width: 15,
-                                    ),
-                                    const Text('موجودی حساب'),
-                                    const Spacer(),
-                                    const Text('10'),
-                                    Image.asset(
-                                      'assets/icons/tom.png',
-                                      width: 24,
-                                      height: 24,
-                                    ),
-                                  ]),
+                                            TransactionList()),
+                                  );
+                                },
+                                image: 'assets/icons/wallet20.png',
+                                title: 'پرداخت های من',
+                              ),
+                              Divider(
+                                height: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          width: size.width,
+                          // color: Colors.grey,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.amber[200],
+                                  onPrimary: Colors.black,
+                                ),
+                                onPressed: () {},
+                                child: const Text(
+                                  'ویرایش اطلاعات',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                              Container(
-                                width: size.width,
-
-                                padding:
-                                    const EdgeInsets.fromLTRB(32, 15, 32, 15),
-                                // color: Colors.red,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      'اطلاعات شخصی',
-                                      style: TextStyle(color: Colors.black45),
-                                    ),
-                                    const Divider(),
-                                    Text(
-                                      'نام و نام خانوادگی :  ${_dl.FName.value} ${_dl.LName.value}',
-                                      style: const TextStyle(
-                                        color: Colors.black87,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                    // SizedBox(
-                                    //   height: 20,
-                                    // ),
-                                    // Text(
-                                    //   'نام خانوادگی :  ${user[1].lname}',
-                                    //   style: TextStyle(
-                                    //     color: Colors.black87,
-                                    //     fontSize: 15,
-                                    //   ),
-                                    // ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          ' ایمیل : ',
-                                          style: TextStyle(
-                                            color: Colors.black87,
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                        Text(
-                                          _dl.Email.value,
-                                          style: const TextStyle(
-                                            color: Colors.black87,
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Text(
-                                      'شماره تلفن :  ${_dl.PhoneNumber.value}'
-                                          .toPersianDigit(),
-                                      style: const TextStyle(
-                                        color: Colors.black87,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                    const Divider(
-                                      height: 1,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(12),
-                                      child: InkWell(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Settings()),
-                                          );
-                                          // Get.to(
-                                          //   () => Directionality(
-                                          //     textDirection: TextDirection.rtl,
-                                          //     child: Settings(),
-                                          //   ),
-                                          // );
-                                        },
-                                        child: Row(children: [
-                                          Image.asset(
-                                            'assets/icons/settings.png',
-                                            width: 48,
-                                            height: 48,
-                                          ),
-                                          const SizedBox(width: 20),
-                                          const Text('تنظیمات'),
-                                          const Spacer(),
-                                          const Icon(Icons.keyboard_arrow_left),
-                                        ]),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(12),
-                                      child: InkWell(
-                                        onTap: () {
-                                          // Get.to(
-                                          //   const Directionality(
-                                          //     textDirection: TextDirection.rtl,
-                                          //     child: Buy(),
-                                          //   ),
-                                          // );
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Image.asset(
-                                              'assets/icons/shopping-cart.png',
-                                              width: 48,
-                                              height: 48,
-                                            ),
-                                            const SizedBox(width: 20),
-                                            const Text('سفارش های من'),
-                                            const Spacer(),
-                                            const Icon(
-                                                Icons.keyboard_arrow_left),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(12),
-                                      child: InkWell(
-                                        onTap: () {
-                                          Get.to(
-                                            const Directionality(
-                                              textDirection: TextDirection.rtl,
-                                              child: TransactionList(),
-                                            ),
-                                          );
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Image.asset(
-                                              'assets/icons/wallet20.png',
-                                              width: 48,
-                                              height: 48,
-                                            ),
-                                            const SizedBox(width: 20),
-                                            const Text('پرداخت های من'),
-                                            const Spacer(),
-                                            const Icon(
-                                                Icons.keyboard_arrow_left),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                              SizedBox(
+                                width: 10,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.pink[200],
+                                  onPrimary: Colors.black,
+                                ),
+                                onPressed: () {
+                                  onWillPop();
+                                },
+                                child: const Text(
+                                  'خروج از حساب کاربری',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: size.height * 0.06,
-                              child: Center(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.grey[300],
-                                    onPrimary: Colors.black,
-                                    minimumSize: size * 0.9,
-                                  ),
-                                  onPressed: () {},
-                                  child: const Text(
-                                    'ویرایش اطلاعات',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            SizedBox(
-                              height: size.height * 0.06,
-                              child: Center(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.grey[300],
-                                    onPrimary: Colors.black,
-                                    minimumSize: size * 0.9,
-                                  ),
-                                  onPressed: () {
-                                    onWillPop();
-                                  },
-                                  child: const Text(
-                                    'خروج از حساب کاربری',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                      ),
+                      // Container(
+                      //   width: size.width,
+                      //   height: size.height * 0.8,
+                      //   color: Colors.white,
+                      //   child: Column(
+                      //     children: [
+                      //       Container(
+                      //         height: size.height * 0.1,
+                      //         decoration: const BoxDecoration(
+                      //           borderRadius: BorderRadius.only(
+                      //             bottomLeft: Radius.circular(30),
+                      //             bottomRight: Radius.circular(30),
+                      //           ),
+                      //           color: Colors.blue,
+                      //         ),
+                      //         child: Row(
+                      //           mainAxisAlignment:
+                      //               MainAxisAlignment.spaceEvenly,
+                      //           children: [
+                      //             ClipOval(
+                      //               child: Image.memory(
+                      //                 _avatarImage,
+                      //                 width: 50,
+                      //                 height: 50,
+                      //               ),
+                      //             ),
+                      //             const SizedBox(
+                      //               width: 50,
+                      //             ),
+                      //             Text(
+                      //               ' امتیاز شما : ${state.club.first.Value}'
+                      //                   .toPersianDigit(),
+                      //               style: const TextStyle(
+                      //                 color: Colors.white,
+                      //                 fontSize: 20,
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //       Padding(
+                      //         padding:
+                      //             const EdgeInsets.fromLTRB(24, 24, 24, 0),
+                      //         child: InkWell(
+                      //           onTap: () {
+                      //             Navigator.push(
+                      //               context,
+                      //               MaterialPageRoute(
+                      //                 builder: (context) =>
+                      //                     const Directionality(
+                      //                   textDirection: TextDirection.rtl,
+                      //                   child: Wallet(),
+                      //                 ),
+                      //               ),
+                      //             );
+                      //           },
+                      //           child: Row(children: [
+                      //             Image.asset(
+                      //               'assets/icons/wallet.png',
+                      //               width: 32,
+                      //               height: 32,
+                      //             ),
+                      //             const SizedBox(
+                      //               width: 15,
+                      //             ),
+                      //             const Text('موجودی حساب'),
+                      //             const Spacer(),
+                      //             const Text('10'),
+                      //             Image.asset(
+                      //               'assets/icons/tom.png',
+                      //               width: 24,
+                      //               height: 24,
+                      //             ),
+                      //           ]),
+                      //         ),
+                      //       ),
+                      //       Container(
+                      //         width: size.width,
+
+                      //         padding:
+                      //             const EdgeInsets.fromLTRB(32, 15, 32, 15),
+                      //         // color: Colors.red,
+                      //         child: Column(
+                      //           crossAxisAlignment: CrossAxisAlignment.start,
+                      //           children: [
+                      //             const Text(
+                      //               'اطلاعات شخصی',
+                      //               style: TextStyle(color: Colors.black45),
+                      //             ),
+                      //             const Divider(),
+                      //             Text(
+                      //               'نام و نام خانوادگی :  ${_dl.FName.value} ${_dl.LName.value}',
+                      //               style: const TextStyle(
+                      //                 color: Colors.black87,
+                      //                 fontSize: 15,
+                      //               ),
+                      //             ),
+                      //             // SizedBox(
+                      //             //   height: 20,
+                      //             // ),
+                      //             // Text(
+                      //             //   'نام خانوادگی :  ${user[1].lname}',
+                      //             //   style: TextStyle(
+                      //             //     color: Colors.black87,
+                      //             //     fontSize: 15,
+                      //             //   ),
+                      //             // ),
+                      //             const SizedBox(
+                      //               height: 20,
+                      //             ),
+                      //             Row(
+                      //               children: [
+                      //                 const Text(
+                      //                   ' ایمیل : ',
+                      //                   style: TextStyle(
+                      //                     color: Colors.black87,
+                      //                     fontSize: 15,
+                      //                   ),
+                      //                 ),
+                      //                 Text(
+                      //                   _dl.Email.value,
+                      //                   style: const TextStyle(
+                      //                     color: Colors.black87,
+                      //                     fontSize: 15,
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //             const SizedBox(
+                      //               height: 20,
+                      //             ),
+                      //             Text(
+                      //               'شماره تلفن :  ${_dl.PhoneNumber.value}'
+                      //                   .toPersianDigit(),
+                      //               style: const TextStyle(
+                      //                 color: Colors.black87,
+                      //                 fontSize: 15,
+                      //               ),
+                      //             ),
+                      //             const SizedBox(
+                      //               height: 15,
+                      //             ),
+                      //             const Divider(
+                      //               height: 1,
+                      //             ),
+                      //             Padding(
+                      //               padding: const EdgeInsets.all(12),
+                      //               child: InkWell(
+                      //                 onTap: () {
+                      //                   Navigator.of(context).push(
+                      //                     MaterialPageRoute(
+                      //                         builder: (context) =>
+                      //                             Settings()),
+                      //                   );
+                      //                   // Get.to(
+                      //                   //   () => Directionality(
+                      //                   //     textDirection: TextDirection.rtl,
+                      //                   //     child: Settings(),
+                      //                   //   ),
+                      //                   // );
+                      //                 },
+                      //                 child: Row(children: [
+                      //                   Image.asset(
+                      //                     'assets/icons/settings.png',
+                      //                     width: 48,
+                      //                     height: 48,
+                      //                   ),
+                      //                   const SizedBox(width: 20),
+                      //                   const Text('تنظیمات'),
+                      //                   const Spacer(),
+                      //                   const Icon(Icons.keyboard_arrow_left),
+                      //                 ]),
+                      //               ),
+                      //             ),
+                      //             Padding(
+                      //               padding: const EdgeInsets.all(12),
+                      //               child: InkWell(
+                      //                 onTap: () {
+                      //                   // Get.to(
+                      //                   //   const Directionality(
+                      //                   //     textDirection: TextDirection.rtl,
+                      //                   //     child: Buy(),
+                      //                   //   ),
+                      //                   // );
+                      //                 },
+                      //                 child: Row(
+                      //                   children: [
+                      //                     Image.asset(
+                      //                       'assets/icons/shopping-cart.png',
+                      //                       width: 48,
+                      //                       height: 48,
+                      //                     ),
+                      //                     const SizedBox(width: 20),
+                      //                     const Text('سفارش های من'),
+                      //                     const Spacer(),
+                      //                     const Icon(
+                      //                         Icons.keyboard_arrow_left),
+                      //                   ],
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //             Padding(
+                      //               padding: const EdgeInsets.all(12),
+                      //               child: InkWell(
+                      //                 onTap: () {
+                      //                   Get.to(
+                      //                     const Directionality(
+                      //                       textDirection: TextDirection.rtl,
+                      //                       child: TransactionList(),
+                      //                     ),
+                      //                   );
+                      //                 },
+                      //                 child: Row(
+                      //                   children: [
+                      //                     Image.asset(
+                      //                       'assets/icons/wallet20.png',
+                      //                       width: 48,
+                      //                       height: 48,
+                      //                     ),
+                      //                     const SizedBox(width: 20),
+                      //                     const Text('پرداخت های من'),
+                      //                     const Spacer(),
+                      //                     const Icon(
+                      //                         Icons.keyboard_arrow_left),
+                      //                   ],
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // Column(
+                      //   children: [
+                      //     SizedBox(
+                      //       height: size.height * 0.06,
+                      //       child: Center(
+                      //         child: ElevatedButton(
+                      //           style: ElevatedButton.styleFrom(
+                      //             backgroundColor: Colors.grey[300],
+                      //             onPrimary: Colors.black,
+                      //             minimumSize: size * 0.9,
+                      //           ),
+                      //           onPressed: () {},
+                      //           child: const Text(
+                      //             'ویرایش اطلاعات',
+                      //             style: TextStyle(
+                      //               fontWeight: FontWeight.bold,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     const SizedBox(
+                      //       height: 5,
+                      //     ),
+                      //     SizedBox(
+                      //       height: size.height * 0.06,
+                      //       child: Center(
+                      //         child: ElevatedButton(
+                      //           style: ElevatedButton.styleFrom(
+                      //             backgroundColor: Colors.grey[300],
+                      //             onPrimary: Colors.black,
+                      //             minimumSize: size * 0.9,
+                      //           ),
+                      //           onPressed: () {
+                      //             onWillPop();
+                      //           },
+                      //           child: const Text(
+                      //             'خروج از حساب کاربری',
+                      //             style: TextStyle(
+                      //               fontWeight: FontWeight.bold,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                    ],
                   ),
                 );
               } else if (state is ProfileRequired) {
@@ -450,6 +649,78 @@ class _ProfileState extends State<Profile> {
             },
           ),
         ),
+      ),
+    );
+  }
+}
+
+class MenuItems extends StatelessWidget {
+  const MenuItems({
+    Key? key,
+    required this.press,
+    required this.image,
+    required this.title,
+  }) : super(key: key);
+  final GestureTapCallback press;
+  final String image;
+  final String title;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+      child: InkWell(
+        onTap: press,
+        child: Row(children: [
+          Image.asset(
+            image,
+            width: 48,
+            height: 48,
+          ),
+          const SizedBox(width: 20),
+          Text(title),
+          const Spacer(),
+          const Icon(Icons.keyboard_arrow_left),
+        ]),
+      ),
+    );
+  }
+}
+
+class Rich_text extends StatelessWidget {
+  const Rich_text({
+    Key? key,
+    required UiDl dl,
+    required this.title,
+    required this.value,
+  })  : _dl = dl,
+        super(key: key);
+
+  final UiDl _dl;
+  final String title;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: RichText(
+        text: TextSpan(
+            text: title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontSize: 12,
+            ),
+            children: [
+              TextSpan(
+                text: value,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: Colors.black54,
+                ),
+              ),
+            ]),
       ),
     );
   }
