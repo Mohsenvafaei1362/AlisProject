@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:local_notification_flutter_project/test.dart';
 import 'package:local_notification_flutter_project/ui/screens/Notification/services/notification_service.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/banner.dart';
@@ -21,6 +22,7 @@ import 'package:local_notification_flutter_project/ui/screens/Ghole/ghole.dart';
 import 'package:local_notification_flutter_project/ui/screens/Home/bloc/home_bloc.dart';
 import 'package:local_notification_flutter_project/ui/screens/Product_List/product_list.dart';
 import 'package:local_notification_flutter_project/ui/screens/Search/search.dart';
+import 'package:local_notification_flutter_project/ui/screens/SliderDetailes/SliderDetails.dart';
 import 'package:local_notification_flutter_project/ui/screens/details/details.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/image_loading_service.dart';
 import 'package:local_notification_flutter_project/ui/screens/Home/productItem.dart';
@@ -1153,43 +1155,21 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
     for (var element in link) {
       linkUrl.add(element);
     }
-    // List _url = [];
-    // for (var element in linkUrl) {
-    //   _url.add(Uri.parse(element));
-    // }
     return CarouselSlider.builder(
       // itemCount: state.banners.length,
       itemCount: img.length,
       itemBuilder: (context, index, realIndex) {
         return InkWell(
             onTap: () {
-              // print(index);
-              // print(linkUrl[index]);
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => DetailScreen(
-                    product: state.products[index],
-                    data: index,
-                  ),
-                ),
+                    builder: (context) => SliderDetails(
+                          img: img[index],
+                          link: linkUrl[index],
+                        )),
               );
-              // print(_url[index]);
-              // launch(_url[index]);
-              // launchUrl(_url[index]);
             },
-            child: Image.memory(img[index])
-            // child: CachedNetworkImage(
-            //   placeholder: (context, url) => Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: const [
-            //       CupertinoActivityIndicator(
-            //         radius: 28,
-            //       ),
-            //     ],
-            //   ),
-            //   imageUrl: '${Image.memory(img[index])}',
-            // ),
-            );
+            child: Image.memory(img[index]));
       },
       options: CarouselOptions(
         enlargeCenterPage: true,

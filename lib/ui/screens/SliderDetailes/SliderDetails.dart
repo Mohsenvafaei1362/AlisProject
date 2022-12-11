@@ -2,15 +2,15 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-class Test extends StatefulWidget {
-  const Test({
-    key,
-  });
+class SliderDetails extends StatefulWidget {
+  const SliderDetails({key, required this.img, required this.link});
+  final Uint8List img;
+  final String link;
   @override
-  State<Test> createState() => _TestState();
+  State<SliderDetails> createState() => _SliderDetailsState();
 }
 
-class _TestState extends State<Test> {
+class _SliderDetailsState extends State<SliderDetails> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -24,7 +24,8 @@ class _TestState extends State<Test> {
                 height: size.height,
                 child: Column(
                   children: [
-                    Text('page is test'),
+                    Image.memory(widget.img),
+                    Text(widget.link),
                   ],
                 ),
               ),
