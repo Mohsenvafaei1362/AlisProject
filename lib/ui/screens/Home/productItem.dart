@@ -44,7 +44,7 @@ class _ProductItemState extends State<ProductItem> {
     final Size size = MediaQuery.of(context).size;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
+      padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
       child: InkWell(
         borderRadius: widget.borderRadius,
         onTap: () {

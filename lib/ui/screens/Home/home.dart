@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/gestures.dart';
 import 'package:local_notification_flutter_project/test.dart';
 import 'package:local_notification_flutter_project/ui/screens/Notification/services/notification_service.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
@@ -501,11 +502,17 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                           return CategoryList();
                         case 3:
                           return NewProduct(
-                            size,
-                            state,
-                            'جدیدترین',
-                            'مشاهده',
-                            () {
+                            size: size,
+                            state: state,
+                            title: 'جدیدترین',
+                            show: 'مشاهده همه  >',
+                            titr: 'پیشنهاد\nشگفت\nانگیز',
+                            backgroundColor: Colors.red,
+                            image: 'assets/images/discount.png',
+                            textColor: Colors.white,
+                            itemCount: state.products.length + 1,
+                            // discount: state.products[index].discount != 0,
+                            press: () {
                               Navigator.of(context, rootNavigator: true).push(
                                 CupertinoPageRoute<bool>(
                                   // settings: RouteSettings(name: ),
@@ -540,11 +547,16 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                           );
                         case 6:
                           return NewProduct(
-                            size,
-                            state,
-                            'محصولات',
-                            'مشاهده',
-                            () {},
+                            size: size,
+                            state: state,
+                            title: 'محصولات',
+                            show: 'مشاهده',
+                            titr: 'پیشنهاد\nشگفت\nانگیز',
+                            backgroundColor: Colors.white,
+                            image: 'assets/images/discount.png',
+                            textColor: Colors.white,
+                            itemCount: state.products.length,
+                            press: () {},
                           );
                         case 7:
                           return FestivalProducts(size, context);
@@ -1178,37 +1190,92 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
     );
   }
 
-  Column NewProduct(Size size, HomeSuccess state, String title, String show,
-      Function() press) {
+  Column NewProduct({
+    required Size size,
+    required int itemCount,
+    required HomeSuccess state,
+    required String title,
+    required String show,
+    required String titr,
+    required String image,
+    required Color backgroundColor,
+    required Color textColor,
+    required Function() press,
+  }) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(title),
-              TextButton(
-                onPressed: press,
-                child: Text(show),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 12),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       Text(title),
+        //       TextButton(
+        //         onPressed: press,
+        //         child: Text(show),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        Container(
           width: size.width,
           height: size.height * 0.44,
-          // color: Colors.amber,
+          color: backgroundColor,
           child: ListView.builder(
+            reverse: true,
+            // shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            itemCount: state.products.length,
-            itemBuilder: ((context, index) {
-              final data = state.products[index];
-              return ProductItem(
-                product: data,
-                borderRadius: BorderRadius.circular(25),
-              );
-            }),
+            itemCount: itemCount,
+            itemBuilder: (context, index) {
+              int revercedIndex = state.products.length - 1 - index;
+              if (index < state.products.length) {
+                final data = state.products[revercedIndex];
+                final d = state.products.reversed.toList();
+                // if (data.discount != 0)
+                return ProductItem(
+                  product: data,
+                  borderRadius: BorderRadius.circular(25),
+                );
+                // return Container();
+              } else {
+                return Container(
+                  width: size.width * 0.45,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        titr,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                          color: textColor,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Image.asset(
+                        image,
+                        width: 100,
+                        height: 100,
+                      ),
+                      TextButton(
+                        onPressed: press,
+                        child: Text(
+                          show,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
           ),
         ),
       ],
