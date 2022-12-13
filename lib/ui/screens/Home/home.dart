@@ -107,11 +107,16 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
     eventTime = null;
   }
 
+  ScrollController controller = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final PageController _controller = PageController();
     const rankPepole = Pepole.pepoles;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.position.maxScrollExtent;
+    });
 
     return BlocProvider(
       create: (context) {
@@ -511,6 +516,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             image: 'assets/images/discount.png',
                             textColor: Colors.white,
                             itemCount: state.products.length + 1,
+                            reverse: true,
                             // discount: state.products[index].discount != 0,
                             press: () {
                               Navigator.of(context, rootNavigator: true).push(
@@ -556,6 +562,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             image: 'assets/images/discount.png',
                             textColor: Colors.white,
                             itemCount: state.products.length,
+                            reverse: false,
                             press: () {},
                           );
                         case 7:
@@ -1193,6 +1200,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
   Column NewProduct({
     required Size size,
     required int itemCount,
+    required bool reverse,
     required HomeSuccess state,
     required String title,
     required String show,
@@ -1204,25 +1212,13 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
   }) {
     return Column(
       children: [
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: 12),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //     children: [
-        //       Text(title),
-        //       TextButton(
-        //         onPressed: press,
-        //         child: Text(show),
-        //       ),
-        //     ],
-        //   ),
-        // ),
         Container(
           width: size.width,
           height: size.height * 0.44,
           color: backgroundColor,
           child: ListView.builder(
-            reverse: true,
+            controller: controller,
+            // reverse: reverse,
             // shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemCount: itemCount,
@@ -1230,7 +1226,6 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
               int revercedIndex = state.products.length - 1 - index;
               if (index < state.products.length) {
                 final data = state.products[revercedIndex];
-                final d = state.products.reversed.toList();
                 // if (data.discount != 0)
                 return ProductItem(
                   product: data,
