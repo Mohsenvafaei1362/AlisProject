@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 
@@ -6,6 +8,8 @@ final favoritmanager = FavoritManager();
 class FavoritManager {
   static const _boxName = 'favorits';
   final _box = Hive.box<ProductEntity>(_boxName);
+  ValueListenable<Box<ProductEntity>> get listenable =>
+      Hive.box<ProductEntity>(_boxName).listenable();
 
   static init() async {
     await Hive.initFlutter();
