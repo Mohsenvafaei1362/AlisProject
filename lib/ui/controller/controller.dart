@@ -520,6 +520,10 @@ class UserInfo extends GetxController {
   RxInt userGroups = 0.obs;
 }
 
+class TestApi extends GetxController {
+  var token = ''.obs;
+}
+
 class UiAddressIp {
   // ignore: non_constant_identifier_names
   String Get_url(String code) {

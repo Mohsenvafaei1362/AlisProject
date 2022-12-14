@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:local_notification_flutter_project/test.dart';
+import 'package:local_notification_flutter_project/test/test.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_manager.dart';
 import 'package:local_notification_flutter_project/ui/root.dart';
 import 'package:local_notification_flutter_project/ui/screens/Register/Map/providers/point_provider.dart';
@@ -90,38 +90,38 @@ class MyApp extends StatelessWidget {
                   // AddPointScreen()
                   // Ui_AddPointScreen()
                   // Congratulation()
-                  Splash(),
-              // PreviewInfo()
-              // HomeScreen_Ui()
-              // RootScreen()
-              // ComplaintForm()
-              // Step123456()
-              // Confirmation()
-              // MapInfo(),
-              // Documents()
-              // Confirmation()
-              // RootScreen(),
-              // HomeScreen1(),
-              // AddPointScreen(),
-              // Login_(onChanged: (value) {}),
-              // Support_Message(),
-              // Category(),
-              // Body(),
-              // StepperPage(),
-              // EndFollowUp(),
-              // EndRegister()
-              // FollowUp(),
-              // Body(),
-              // Message(),
-              // CartProducts(),
-              // Wallet(),
-              // Settings_Store(),
-              // OnlinePayment(),
-              // Cart3(),
-              // DetailOnline(),
-              // Buy(),
-              // LoginFour_1(),
-              // Test(),
+                  // Splash(),
+                  // PreviewInfo()
+                  // HomeScreen_Ui()
+                  // RootScreen()
+                  // ComplaintForm()
+                  // Step123456()
+                  // Confirmation()
+                  // MapInfo(),
+                  // Documents()
+                  // Confirmation()
+                  // RootScreen(),
+                  // HomeScreen1(),
+                  // AddPointScreen(),
+                  // Login_(onChanged: (value) {}),
+                  // Support_Message(),
+                  // Category(),
+                  // Body(),
+                  // StepperPage(),
+                  // EndFollowUp(),
+                  // EndRegister()
+                  // FollowUp(),
+                  // Body(),
+                  // Message(),
+                  // CartProducts(),
+                  // Wallet(),
+                  // Settings_Store(),
+                  // OnlinePayment(),
+                  // Cart3(),
+                  // DetailOnline(),
+                  // Buy(),
+                  // LoginFour_1(),
+                  Test(),
               // MySample()
               // Festival(),
               // NazarSanje(),
