@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_manager.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/cart_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/product_repository.dart';
@@ -140,11 +141,18 @@ class _ProductItemState extends State<ProductItem> {
                               onPressed: () {
                                 setState(() {
                                   isFavorite = !isFavorite;
-                                  BlocProvider.of<ProductsBloc>(context).add(
-                                    ProductAddToFavoriteButtonClicked(
-                                      widget.product.id,
-                                    ),
-                                  );
+                                  if (!favoritmanager
+                                      .isFavorite(widget.product)) {
+                                    favoritmanager.addFavorite(widget.product);
+                                  } else {
+                                    favoritmanager.delete(widget.product);
+                                  }
+                                  setState(() {});
+                                  // BlocProvider.of<ProductsBloc>(context).add(
+                                  //   ProductAddToFavoriteButtonClicked(
+                                  //     widget.product.id,
+                                  //   ),
+                                  // );
                                 });
                               },
                               icon: Icon(

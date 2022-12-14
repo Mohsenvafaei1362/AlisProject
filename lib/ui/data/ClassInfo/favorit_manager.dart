@@ -13,17 +13,17 @@ class FavoritManager {
     Hive.openBox<ProductEntity>(_boxName);
   }
 
-  // void addFavorite(UiProductEntity product) {
-  //   _box.put(product.id, product);
-  // }
+  void addFavorite(ProductEntity product) {
+    _box.put(product.id, product);
+  }
 
-  // void delete(UiProductEntity product) {
-  //   _box.delete(product.id);
-  // }
+  void delete(ProductEntity product) {
+    _box.delete(product.id);
+  }
 
-  // List<UiProductEntity> get favorites => _box.values.toList();
+  List<ProductEntity> get favorites => _box.values.toList();
 
-  // bool isFavorite(UiProductEntity product) {
-  //   return _box.containsKey(product.id);
-  // }
+  bool isFavorite(ProductEntity product) {
+    return _box.containsKey(product.id);
+  }
 }

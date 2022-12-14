@@ -17,9 +17,10 @@ main() async {
   //     statusBarIconBrightness: Brightness.dark,
   //   ),
   // );
-  // await favoritmanager.init();
+  await FavoritManager.init();
   await Hive.initFlutter();
   await Hive.openBox("points");
+
   // Bloc.observer = UseBlocObserver();
   runApp(const MyApp());
 }
@@ -90,38 +91,38 @@ class MyApp extends StatelessWidget {
                   // AddPointScreen()
                   // Ui_AddPointScreen()
                   // Congratulation()
-                  // Splash(),
-                  // PreviewInfo()
-                  // HomeScreen_Ui()
-                  // RootScreen()
-                  // ComplaintForm()
-                  // Step123456()
-                  // Confirmation()
-                  // MapInfo(),
-                  // Documents()
-                  // Confirmation()
-                  // RootScreen(),
-                  // HomeScreen1(),
-                  // AddPointScreen(),
-                  // Login_(onChanged: (value) {}),
-                  // Support_Message(),
-                  // Category(),
-                  // Body(),
-                  // StepperPage(),
-                  // EndFollowUp(),
-                  // EndRegister()
-                  // FollowUp(),
-                  // Body(),
-                  // Message(),
-                  // CartProducts(),
-                  // Wallet(),
-                  // Settings_Store(),
-                  // OnlinePayment(),
-                  // Cart3(),
-                  // DetailOnline(),
-                  // Buy(),
-                  // LoginFour_1(),
-                  Test(),
+                  Splash(),
+              // PreviewInfo()
+              // HomeScreen_Ui()
+              // RootScreen()
+              // ComplaintForm()
+              // Step123456()
+              // Confirmation()
+              // MapInfo(),
+              // Documents()
+              // Confirmation()
+              // RootScreen(),
+              // HomeScreen1(),
+              // AddPointScreen(),
+              // Login_(onChanged: (value) {}),
+              // Support_Message(),
+              // Category(),
+              // Body(),
+              // StepperPage(),
+              // EndFollowUp(),
+              // EndRegister()
+              // FollowUp(),
+              // Body(),
+              // Message(),
+              // CartProducts(),
+              // Wallet(),
+              // Settings_Store(),
+              // OnlinePayment(),
+              // Cart3(),
+              // DetailOnline(),
+              // Buy(),
+              // LoginFour_1(),
+              // Test(),
               // MySample()
               // Festival(),
               // NazarSanje(),
