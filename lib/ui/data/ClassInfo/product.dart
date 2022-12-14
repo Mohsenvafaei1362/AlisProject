@@ -1,6 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
-// part 'product.g.dart';
+part 'product.g.dart';
 
 class UiProductSort {
   static const int latest = 0;

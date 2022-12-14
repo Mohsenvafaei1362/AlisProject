@@ -1,16 +1,17 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 
 final favoritmanager = FavoritManager();
 
 class FavoritManager {
-  // static const _boxName = 'favorits';
-  // final _box = Hive.box<UiProductEntity>(_boxName);
+  static const _boxName = 'favorits';
+  final _box = Hive.box<ProductEntity>(_boxName);
 
-  // static init() async {
-  //   await Hive.initFlutter();
-  //   // Hive.registerAdapter(ProductEntityAdapter());
-  //   Hive.openBox<UiProductEntity>(_boxName);
-  // }
+  static init() async {
+    await Hive.initFlutter();
+    Hive.registerAdapter(ProductEntityAdapter());
+    Hive.openBox<ProductEntity>(_boxName);
+  }
 
   // void addFavorite(UiProductEntity product) {
   //   _box.put(product.id, product);

@@ -1217,8 +1217,8 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
           height: size.height * 0.44,
           color: backgroundColor,
           child: ListView.builder(
-            controller: controller,
-            // reverse: reverse,
+            // controller: controller,
+            reverse: reverse,
             // shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemCount: itemCount,
