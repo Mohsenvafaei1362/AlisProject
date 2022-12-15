@@ -283,7 +283,7 @@ class _ProfileState extends State<Profile> {
                                         builder: (context) => FavoriteList()),
                                   );
                                 },
-                                image: 'assets/icons/wallet20.png',
+                                image: 'assets/images/favorite.jfif',
                                 title: 'لیست علاقه مندی های من',
                               ),
                               Divider(
