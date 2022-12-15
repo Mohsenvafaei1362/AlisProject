@@ -9,6 +9,7 @@ import 'package:local_notification_flutter_project/ui/data/repo/cart_repository.
 import 'package:local_notification_flutter_project/ui/data/repo/customer_club_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/message_box_repository.dart';
 import 'package:local_notification_flutter_project/ui/root.dart';
+import 'package:local_notification_flutter_project/ui/screens/Favorite/favorite.dart';
 import 'package:local_notification_flutter_project/ui/screens/Profile/bloc/profile_bloc.dart';
 import 'package:local_notification_flutter_project/ui/screens/Setting/Setting.dart';
 import 'package:local_notification_flutter_project/ui/screens/TransactionList/transaction_list.dart';
@@ -238,7 +239,7 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       Expanded(
-                        flex: 3,
+                        flex: 4,
                         child: Container(
                           width: size.width,
                           // color: Colors.green,
@@ -275,6 +276,16 @@ class _ProfileState extends State<Profile> {
                                 image: 'assets/icons/wallet20.png',
                                 title: 'پرداخت های من',
                               ),
+                              MenuItems(
+                                press: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) => FavoriteList()),
+                                  );
+                                },
+                                image: 'assets/icons/wallet20.png',
+                                title: 'لیست علاقه مندی های من',
+                              ),
                               Divider(
                                 height: 2,
                               ),
@@ -291,7 +302,7 @@ class _ProfileState extends State<Profile> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SizedBox(
-                                width: size.width*0.4,
+                                width: size.width * 0.4,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     elevation: 2,
@@ -311,7 +322,7 @@ class _ProfileState extends State<Profile> {
                                 width: 10,
                               ),
                               SizedBox(
-                                width: size.width*0.4,
+                                width: size.width * 0.4,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     elevation: 2,
@@ -333,7 +344,6 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                       ),
-                      
                     ],
                   ),
                 );
@@ -396,7 +406,7 @@ class MenuItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+      padding: const EdgeInsets.fromLTRB(16, 7, 16, 7),
       child: InkWell(
         onTap: press,
         child: Row(children: [

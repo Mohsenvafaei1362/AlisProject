@@ -25,12 +25,14 @@ class FavoriteList extends StatelessWidget {
                 width: size.width,
                 height: size.height,
                 child: ListView.builder(
+                  scrollDirection: Axis.vertical,
                   itemCount: products.length,
                   itemBuilder: (context, index) {
                     final data = products[index];
                     return Container(
                       width: size.width,
-                      height: size.height,
+                      height: size.height * 0.15,
+                      color: Colors.grey[100],
                       child: InkWell(
                         onTap: () {
                           Navigator.push(
@@ -46,7 +48,21 @@ class FavoriteList extends StatelessWidget {
                         },
                         child: Row(
                           children: [
-                            Text('data'),
+                            Image.network(
+                              data.imageUrl,
+                              width: 100,
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(data.title),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(data.price.toString()),
+                              ],
+                            ),
                           ],
                         ),
                       ),
