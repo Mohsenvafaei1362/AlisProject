@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_manager.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
+import 'package:local_notification_flutter_project/ui/screens/details/details.dart';
 
 class FavoriteList extends StatelessWidget {
   const FavoriteList({key});
@@ -30,10 +31,24 @@ class FavoriteList extends StatelessWidget {
                     return Container(
                       width: size.width,
                       height: size.height,
-                      child: Column(
-                        children: [
-                          Text('data'),
-                        ],
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailScreen(product: data, data: 1),
+                            ),
+                          );
+                        },
+                        onLongPress: () {
+                          favoritmanager.delete(data);
+                        },
+                        child: Row(
+                          children: [
+                            Text('data'),
+                          ],
+                        ),
                       ),
                     );
                   },
