@@ -284,6 +284,8 @@ class _ProfileState extends State<Profile> {
                                   );
                                 },
                                 image: 'assets/images/favorite.jfif',
+                                width: 40,
+                                height: 40,
                                 title: 'لیست علاقه مندی های من',
                               ),
                               Divider(
@@ -399,10 +401,14 @@ class MenuItems extends StatelessWidget {
     required this.press,
     required this.image,
     required this.title,
+    this.width = 48,
+    this.height = 48,
   }) : super(key: key);
   final GestureTapCallback press;
   final String image;
   final String title;
+  final double? width;
+  final double? height;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -412,8 +418,8 @@ class MenuItems extends StatelessWidget {
         child: Row(children: [
           Image.asset(
             image,
-            width: 48,
-            height: 48,
+            width: width,
+            height: height,
           ),
           const SizedBox(width: 20),
           Text(title),
