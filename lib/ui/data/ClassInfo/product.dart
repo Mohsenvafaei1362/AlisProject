@@ -17,7 +17,7 @@ class UiProductSort {
 }
 
 @HiveType(typeId: 0)
-class ProductEntity {
+class ProductEntity extends HiveObject {
   // final int product_id;
   @HiveField(0)
   final int id;

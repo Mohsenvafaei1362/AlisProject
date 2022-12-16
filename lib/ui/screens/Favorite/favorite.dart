@@ -33,7 +33,6 @@ class _FavoriteListState extends State<FavoriteList> {
               final products = box.values.toList();
               if (products.length > 0) {
                 color = Colors.grey[200];
-
                 return Container(
                   width: size.width,
                   height: size.height,
