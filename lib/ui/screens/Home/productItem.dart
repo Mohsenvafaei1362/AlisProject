@@ -139,21 +139,19 @@ class _ProductItemState extends State<ProductItem> {
                               splashColor: Colors.white,
                               highlightColor: Colors.white,
                               onPressed: () {
-                                setState(() {
-                                  // isFavorite = !isFavorite;
-                                  if (!favoritmanager
-                                      .isFavorite(widget.product)) {
-                                    favoritmanager.addFavorite(widget.product);
-                                  } else {
-                                    favoritmanager.delete(widget.product);
-                                  }
-                                  setState(() {});
-                                  // BlocProvider.of<ProductsBloc>(context).add(
-                                  //   ProductAddToFavoriteButtonClicked(
-                                  //     widget.product.id,
-                                  //   ),
-                                  // );
-                                });
+                                // isFavorite = !isFavorite;
+                                if (!favoritmanager
+                                    .isFavorite(widget.product)) {
+                                  favoritmanager.addFavorite(widget.product);
+                                } else {
+                                  favoritmanager.delete(widget.product);
+                                }
+                                setState(() {});
+                                // BlocProvider.of<ProductsBloc>(context).add(
+                                //   ProductAddToFavoriteButtonClicked(
+                                //     widget.product.id,
+                                //   ),
+                                // );
                               },
                               icon: Icon(
                                 favoritmanager.isFavorite(widget.product)

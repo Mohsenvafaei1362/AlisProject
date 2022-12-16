@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_manager.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/product_repository.dart';
 import 'package:local_notification_flutter_project/ui/models/Comment/comment.dart';
@@ -212,17 +213,21 @@ class _DetailScreenState extends State<DetailScreen> {
                           splashColor: Colors.white,
                           highlightColor: Colors.white,
                           onPressed: () {
-                            setState(() {
-                              isFavorite = !isFavorite;
-                            });
+                            if (!favoritmanager.isFavorite(widget.product)) {
+                              favoritmanager.addFavorite(widget.product);
+                            } else {
+                              favoritmanager.delete(widget.product);
+                            }
+                            setState(() {});
                           },
                           icon: Icon(
-                            isFavorite
-                                ? CupertinoIcons.heart
-                                : CupertinoIcons.heart_fill,
-                            color:
-                                isFavorite ? Colors.black87 : Colors.pink[300],
-                            size: 26,
+                            favoritmanager.isFavorite(widget.product)
+                                ? CupertinoIcons.heart_fill
+                                : CupertinoIcons.heart,
+                            color: favoritmanager.isFavorite(widget.product)
+                                ? Colors.pink[300]
+                                : Colors.black38,
+                            size: 24,
                           ),
                         ),
                         Padding(
