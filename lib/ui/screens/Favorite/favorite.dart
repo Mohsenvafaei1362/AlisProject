@@ -3,6 +3,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_manager.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/screens/details/details.dart';
+import 'package:local_notification_flutter_project/ui/screens/widgets/pricelable.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 
 class FavoriteList extends StatelessWidget {
   const FavoriteList({key});
@@ -11,6 +13,7 @@ class FavoriteList extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text('لیست علاقه مندی ها'),
         centerTitle: true,
@@ -32,7 +35,11 @@ class FavoriteList extends StatelessWidget {
                     return Container(
                       width: size.width,
                       height: size.height * 0.15,
-                      color: Colors.grey[100],
+                      margin: EdgeInsets.fromLTRB(8, 2, 8, 2),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
                       child: InkWell(
                         onTap: () {
                           Navigator.push(
@@ -44,10 +51,11 @@ class FavoriteList extends StatelessWidget {
                           );
                         },
                         onLongPress: () {
-                          favoritmanager.delete(data);
+                          // favoritmanager.delete(data);
                         },
                         child: Row(
                           children: [
+                            // Text('ddddd')
                             Image.network(
                               data.imageUrl,
                               width: 100,
@@ -60,7 +68,11 @@ class FavoriteList extends StatelessWidget {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Text(data.price.toString()),
+                                Text(
+                                  data.price.withPriceLable
+                                      .toString()
+                                      .toPersianDigit(),
+                                ),
                               ],
                             ),
                           ],

@@ -140,7 +140,7 @@ class _ProductItemState extends State<ProductItem> {
                               highlightColor: Colors.white,
                               onPressed: () {
                                 setState(() {
-                                  isFavorite = !isFavorite;
+                                  // isFavorite = !isFavorite;
                                   if (!favoritmanager
                                       .isFavorite(widget.product)) {
                                     favoritmanager.addFavorite(widget.product);
@@ -156,11 +156,11 @@ class _ProductItemState extends State<ProductItem> {
                                 });
                               },
                               icon: Icon(
-                                isFavorite
-                                    ? CupertinoIcons.heart
-                                    : CupertinoIcons.heart_fill,
-                                color: isFavorite
-                                    ? Colors.black87
+                                favoritmanager.isFavorite(widget.product)
+                                    ? CupertinoIcons.heart_fill
+                                    : CupertinoIcons.heart,
+                                color: favoritmanager.isFavorite(widget.product)
+                                    ? Colors.black38
                                     : Colors.pink[300],
                                 size: 24,
                               ),

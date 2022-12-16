@@ -42,9 +42,8 @@ class ProductEntity {
   );
 
   ProductEntity.fromJson(Map json)
-      :
-        // product_id = json['product_id'],
-        id = 100,
+      : id = json['product_id'][0],
+        // id = 100,
         title = json['product_name'],
         imageUrl = json['image_product'],
         price = json['product_price'],
