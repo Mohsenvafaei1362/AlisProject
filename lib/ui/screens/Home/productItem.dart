@@ -160,8 +160,8 @@ class _ProductItemState extends State<ProductItem> {
                                     ? CupertinoIcons.heart_fill
                                     : CupertinoIcons.heart,
                                 color: favoritmanager.isFavorite(widget.product)
-                                    ? Colors.black38
-                                    : Colors.pink[300],
+                                    ? Colors.pink[300]
+                                    : Colors.black38,
                                 size: 24,
                               ),
                             ),

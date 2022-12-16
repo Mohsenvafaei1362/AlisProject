@@ -14,6 +14,9 @@ class EmptyView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         image,
+        SizedBox(
+          height: 10,
+        ),
         Text(
           message,
           textAlign: TextAlign.center,
