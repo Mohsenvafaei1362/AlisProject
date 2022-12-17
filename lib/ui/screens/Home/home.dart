@@ -1229,6 +1229,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
               // int revercedIndex = state.products.length - 1 - index;
               if (index == indexcount) {
                 final data = state.products[0];
+
                 return Container(
                   width: size.width * 0.9,
                   child: Row(
@@ -1270,6 +1271,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                           ],
                         ),
                       ),
+                      // if (data.discount != 0)
                       ProductItem(
                         product: data,
                         borderRadius: BorderRadius.circular(25),

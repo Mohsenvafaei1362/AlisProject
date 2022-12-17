@@ -20,6 +20,14 @@ final httpClient = Dio(
 //     },
 //   ),
 // );
+final httpProduct = Dio(
+  BaseOptions(
+    baseUrl: "http://192.168.1.173:3000/",
+    // baseUrl: "http://185.135.229.96:806/",
+  ),
+);
+
+///////////////////////////////////////////////////////////////////////////////////////////
 final httpClient2 = Dio(
   BaseOptions(
     baseUrl: "http://217.219.74.100/api/1.0/alis/",
@@ -35,12 +43,6 @@ final httpClient2 = Dio(
       },
     ),
   );
-final httpProduct = Dio(
-  BaseOptions(
-    baseUrl: "http://192.168.1.173:3000/",
-    // baseUrl: "http://185.135.229.96:806/",
-  ),
-);
 
 final httpNike = Dio(
   BaseOptions(baseUrl: 'https://fakestoreapi.com/'),
