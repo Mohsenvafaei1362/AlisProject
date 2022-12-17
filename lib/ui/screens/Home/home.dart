@@ -1228,38 +1228,51 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
             itemBuilder: (context, index) {
               // int revercedIndex = state.products.length - 1 - index;
               if (index == indexcount) {
+                final data = state.products[0];
                 return Container(
-                  width: size.width * 0.45,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  width: size.width * 0.9,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        titr,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                          color: textColor,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              titr,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                                color: textColor,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Image.asset(
+                              image,
+                              width: 100,
+                              height: 100,
+                            ),
+                            TextButton(
+                              onPressed: press,
+                              child: Text(
+                                show,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Image.asset(
-                        image,
-                        width: 100,
-                        height: 100,
-                      ),
-                      TextButton(
-                        onPressed: press,
-                        child: Text(
-                          show,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                        ),
+                      ProductItem(
+                        product: data,
+                        borderRadius: BorderRadius.circular(25),
                       ),
                     ],
                   ),
