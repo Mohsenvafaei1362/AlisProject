@@ -59,6 +59,7 @@ class _DetailScreenState extends State<DetailScreen> {
         child: BlocBuilder<DetailesBloc, DetailesState>(
           builder: (context, state) {
             return Scaffold(
+              backgroundColor: Colors.grey[200],
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
               floatingActionButton: SizedBox(
@@ -183,28 +184,17 @@ class _DetailScreenState extends State<DetailScreen> {
                   physics: defaultScrollPhysics,
                   slivers: [
                     SliverAppBar(
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(120),
+                          bottomRight: Radius.circular(2),
+                        ),
+                      ),
                       expandedHeight: MediaQuery.of(context).size.width,
-                      flexibleSpace: Stack(
-                        children: [
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            left: 0,
-                            child: ClipOval(
-                              child: Container(
-                                // width: size.width * 0.2,
-                                height: size.height * 0.04,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[100],
-                                ),
-                              ),
-                            ),
-                          ),
-                          ImageLoadingService(
-                            imageUrl: widget.product.imageUrl,
-                            width: size.width,
-                          ),
-                        ],
+                      flexibleSpace: ImageLoadingService(
+                        imageUrl: widget.product.imageUrl,
+                        width: size.width,
                       ),
                       foregroundColor: LightThemeColors.primaryTextColors,
                       backgroundColor: Colors.white,
@@ -277,25 +267,36 @@ class _DetailScreenState extends State<DetailScreen> {
                               children: [
                                 Container(
                                   width: size.width,
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 5),
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 10),
                                   padding: const EdgeInsets.all(32.0),
                                   decoration: BoxDecoration(
-                                      // color: Colors.yellow,
-                                      color: Colors.grey.withOpacity(0.1),
-                                      borderRadius: BorderRadius.circular(30)
-                                      // BorderRadius.only(
-                                      //   topLeft: Radius.circular(30),
-                                      //   topRight: Radius.circular(30),
-                                      // ),
-                                      ),
+                                    borderRadius: BorderRadius.circular(30),
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 1,
+                                    ),
+                                    // color: Colors.yellow,
+                                    // color: Colors.white.withOpacity(0.9),
+                                    // borderRadius: BorderRadius.circular(30),
+                                    // BorderRadius.only(
+                                    //   topLeft: Radius.circular(30),
+                                    //   topRight: Radius.circular(30),
+                                    // ),
+                                  ),
                                   child: Column(
                                     children: [
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Text(widget.product.title),
+                                          Text(
+                                            widget.product.title,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black54,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -319,8 +320,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                             '${widget.product.discount}'
                                                 .toPersianDigit(),
                                             style: const TextStyle(
-                                                fontSize: 10,
-                                                color: Colors.black45),
+                                              fontSize: 10,
+                                              color: Colors.black45,
+                                            ),
                                           ),
                                           const SizedBox(
                                             width: 15,
@@ -328,8 +330,10 @@ class _DetailScreenState extends State<DetailScreen> {
                                           Text(
                                             'دیدگاه کاربران',
                                             style: TextStyle(
-                                                fontSize: 10,
-                                                color: Colors.blue[200]),
+                                              fontSize: 10,
+                                              color: Colors.blue[200],
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                           const SizedBox(
                                             width: 15,
@@ -337,8 +341,10 @@ class _DetailScreenState extends State<DetailScreen> {
                                           Text(
                                             'پرسش و پاسخ',
                                             style: TextStyle(
-                                                fontSize: 10,
-                                                color: Colors.blue[200]),
+                                              fontSize: 10,
+                                              color: Colors.blue[200],
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -363,6 +369,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                             style: const TextStyle(
                                               color: Colors.black54,
                                               fontSize: 10,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ],
@@ -380,7 +387,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                   width: size.width,
                                   decoration: BoxDecoration(
                                     // color: Colors.yellow,
-                                    // color: Colors.white,
+                                    color: Colors.white,
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(30),
                                       topRight: Radius.circular(30),
