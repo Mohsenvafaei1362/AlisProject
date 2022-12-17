@@ -149,16 +149,22 @@ class Question extends StatelessWidget {
     Key? key,
     required this.question_1,
     required this.hint,
+    this.keyboardType,
+    // this.line,
   }) : super(key: key);
 
   final TextEditingController question_1;
   final String hint;
+  final TextInputType? keyboardType;
+  // final int? line;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, right: 12, left: 12),
       child: TextFormField(
+        keyboardType: keyboardType,
+        // maxLines: line,
         controller: question_1,
         obscureText: true,
         inputFormatters: const [],

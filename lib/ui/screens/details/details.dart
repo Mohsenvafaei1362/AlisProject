@@ -4,7 +4,7 @@ import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_man
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/product_repository.dart';
 import 'package:local_notification_flutter_project/ui/models/Comment/comment.dart';
-import 'package:local_notification_flutter_project/ui/models/comment_product.dart';
+import 'package:local_notification_flutter_project/ui/screens/Comment_Product/comment_product.dart';
 import 'package:local_notification_flutter_project/ui/screens/Home/bloc/products_bloc.dart';
 import 'package:local_notification_flutter_project/ui/screens/cart/cart.dart';
 import 'package:local_notification_flutter_project/ui/screens/details/bloc/detailes_bloc.dart';
