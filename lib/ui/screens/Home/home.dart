@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/gestures.dart';
-import 'package:local_notification_flutter_project/test/test.dart';
 import 'package:local_notification_flutter_project/ui/screens/Notification/services/notification_service.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/banner.dart';
@@ -24,7 +22,6 @@ import 'package:local_notification_flutter_project/ui/screens/Home/bloc/home_blo
 import 'package:local_notification_flutter_project/ui/screens/Product_List/product_list.dart';
 import 'package:local_notification_flutter_project/ui/screens/Search/search.dart';
 import 'package:local_notification_flutter_project/ui/screens/SliderDetailes/SliderDetails.dart';
-import 'package:local_notification_flutter_project/ui/screens/details/details.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/image_loading_service.dart';
 import 'package:local_notification_flutter_project/ui/screens/Home/productItem.dart';
 import 'package:badges/badges.dart';
@@ -47,6 +44,7 @@ class HomeScreen_Ui extends StatefulWidget {
 
   final double itemWidth;
   final double itemHeight;
+
   @override
   State<HomeScreen_Ui> createState() => _HomeScreen_UiState();
 }
@@ -547,12 +545,20 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             height: 5,
                           );
                         case 5:
-                          return Advertise(
-                            size,
-                            'https://static.cdn.asset.aparat.com/avt/14831296-7391-b__8068.jpg',
-                            size.height * 0.2,
+                          return Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: Advertise(
+                                size,
+                                'https://static.cdn.asset.aparat.com/avt/14831296-7391-b__8068.jpg',
+                                size.height * 0.2,
+                              ),
+                            ),
                           );
                         case 6:
+                          return Advertise_1(size: size);
+                        case 7:
                           return NewProduct(
                             size: size,
                             state: state,
@@ -567,21 +573,27 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             indexcount: state.products.length + 1,
                             press: () {},
                           );
-                        case 7:
-                          return FestivalProducts(size, context);
                         case 8:
-                          return TopPepole(size, rankPepole, size.width, 120);
+                          return FestivalProducts(size, context);
                         case 9:
-                          return Race();
+                          return TopPepole(size, rankPepole, size.width, 120);
                         case 10:
-                          return Advertise(
-                            size,
-                            'https://www.boursenews.ir/files/fa/news/1399/3/17/195744_674.jpg',
-                            size.height * 0.3,
-                          );
+                          return Race();
                         case 11:
-                          return Survey();
+                          return Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: Advertise(
+                                size,
+                                'https://www.boursenews.ir/files/fa/news/1399/3/17/195744_674.jpg',
+                                size.height * 0.3,
+                              ),
+                            ),
+                          );
                         case 12:
+                          return Survey();
+                        case 13:
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SurveryText(size, context),
@@ -1217,7 +1229,8 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
       children: [
         Container(
           width: size.width,
-          height: size.height * 0.44,
+          height: size.height * 0.47,
+          padding: EdgeInsets.symmetric(vertical: 8),
           color: backgroundColor,
           child: ListView.builder(
             // controller: controller,
@@ -1292,6 +1305,81 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class Advertise_1 extends StatelessWidget {
+  const Advertise_1({
+    Key? key,
+    required this.size,
+  }) : super(key: key);
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Card(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.white70, width: 1),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            elevation: 5,
+            child: SizedBox(
+              width: size.width * 0.3,
+              height: size.height * 0.12,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.asset(
+                  'assets/images/30.jpg',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          Card(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.white70, width: 1),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            elevation: 5,
+            child: SizedBox(
+              width: size.width * 0.3,
+              height: size.height * 0.12,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.asset(
+                  'assets/images/40.jpg',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          Card(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.white70, width: 1),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            elevation: 5,
+            child: SizedBox(
+              width: size.width * 0.3,
+              height: size.height * 0.12,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.asset(
+                  'assets/images/0502 (1).JPG',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
