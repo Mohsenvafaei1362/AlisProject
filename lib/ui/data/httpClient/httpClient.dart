@@ -5,8 +5,8 @@ import 'package:local_notification_flutter_project/ui/controller/controller.dart
 final TestApi testApi = Get.put(TestApi());
 final httpClient = Dio(
   BaseOptions(
-    // baseUrl: "http://192.168.1.173/AlisApi/api/v1/",
-    baseUrl: "http://185.135.229.96:805/AlisApi/api/v1/",
+    baseUrl: "http://192.168.1.173/AlisApi/api/v1/",
+    // baseUrl: "http://185.135.229.96:805/AlisApi/api/v1/",
   ),
 );
 // ..interceptors.add(
@@ -37,8 +37,8 @@ final httpClient2 = Dio(
   );
 final httpProduct = Dio(
   BaseOptions(
-    // baseUrl: "http://192.168.1.173:3000/",
-    baseUrl: "http://185.135.229.96:806/",
+    baseUrl: "http://192.168.1.173:3000/",
+    // baseUrl: "http://185.135.229.96:806/",
   ),
 );
 

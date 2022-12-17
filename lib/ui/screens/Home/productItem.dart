@@ -205,7 +205,7 @@ class _ProductItemState extends State<ProductItem> {
                           ),
                           Row(
                             // mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Icon(
                                 Icons.star,
                                 color: Colors.amber,
@@ -214,7 +214,7 @@ class _ProductItemState extends State<ProductItem> {
                               SizedBox(
                                 width: 5,
                               ),
-                              Text('5'),
+                              Text('5'.toPersianDigit()),
                             ],
                           ),
                           Row(

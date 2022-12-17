@@ -517,6 +517,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             textColor: Colors.white,
                             itemCount: state.products.length + 1,
                             reverse: true,
+                            indexcount: 0,
                             // discount: state.products[index].discount != 0,
                             press: () {
                               Navigator.of(context, rootNavigator: true).push(
@@ -563,6 +564,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             textColor: Colors.white,
                             itemCount: state.products.length,
                             reverse: false,
+                            indexcount: state.products.length,
                             press: () {},
                           );
                         case 7:
@@ -1200,6 +1202,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
   Column NewProduct({
     required Size size,
     required int itemCount,
+    required int indexcount,
     required bool reverse,
     required HomeSuccess state,
     required String title,
@@ -1218,21 +1221,13 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
           color: backgroundColor,
           child: ListView.builder(
             // controller: controller,
-            reverse: reverse,
+            // reverse: reverse,
             // shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemCount: itemCount,
             itemBuilder: (context, index) {
-              int revercedIndex = state.products.length - 1 - index;
-              if (index < state.products.length) {
-                final data = state.products[revercedIndex];
-                // if (data.discount != 0)
-                return ProductItem(
-                  product: data,
-                  borderRadius: BorderRadius.circular(25),
-                );
-                // return Container();
-              } else {
+              // int revercedIndex = state.products.length - 1 - index;
+              if (index == indexcount) {
                 return Container(
                   width: size.width * 0.45,
                   child: Column(
@@ -1269,6 +1264,14 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                     ],
                   ),
                 );
+              } else if (index < state.products.length) {
+                final data = state.products[index];
+                return ProductItem(
+                  product: data,
+                  borderRadius: BorderRadius.circular(25),
+                );
+              } else {
+                return Container();
               }
             },
           ),

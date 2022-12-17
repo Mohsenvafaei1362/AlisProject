@@ -20,7 +20,7 @@ class _FavoriteListState extends State<FavoriteList> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: color,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('لیست علاقه مندی ها'),
         centerTitle: true,
@@ -46,16 +46,24 @@ class _FavoriteListState extends State<FavoriteList> {
                         height: size.height * 0.15,
                         margin: EdgeInsets.fromLTRB(8, 2, 8, 2),
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          border: Border.all(
+                            color: Colors.black12,
+                            width: 1,
+                          ),
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
                         ),
                         child: InkWell(
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    DetailScreen(product: data, data: 1),
+                                builder: (context) => DetailScreen(
+                                  product: data,
+                                  data: 1,
+                                ),
                               ),
                             );
                           },
@@ -103,7 +111,7 @@ class _FavoriteListState extends State<FavoriteList> {
                   message:
                       'تا کنون هیچ محصولی به لیست علاقه مندی ها اضافه نکرده اید',
                   image: Image.asset(
-                    'assets/images/folderfavorite.jfif',
+                    'assets/images/emptyfavorite.png',
                     fit: BoxFit.cover,
                     width: 200,
                   ),

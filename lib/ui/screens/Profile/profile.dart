@@ -252,7 +252,7 @@ class _ProfileState extends State<Profile> {
                                         builder: (context) => Settings()),
                                   );
                                 },
-                                image: 'assets/icons/settings.png',
+                                image: 'assets/images/setting.png',
                                 title: 'تنظیمات',
                               ),
                               MenuItems(
@@ -262,7 +262,7 @@ class _ProfileState extends State<Profile> {
                                   //       builder: (context) => Settings()),
                                   // );
                                 },
-                                image: 'assets/icons/shopping-cart.png',
+                                image: 'assets/images/order.png',
                                 title: 'سفارش های من',
                               ),
                               MenuItems(
@@ -273,7 +273,7 @@ class _ProfileState extends State<Profile> {
                                             TransactionList()),
                                   );
                                 },
-                                image: 'assets/icons/wallet20.png',
+                                image: 'assets/images/payment.png',
                                 title: 'پرداخت های من',
                               ),
                               MenuItems(
@@ -283,7 +283,7 @@ class _ProfileState extends State<Profile> {
                                         builder: (context) => FavoriteList()),
                                   );
                                 },
-                                image: 'assets/images/favorite.jfif',
+                                image: 'assets/images/favorite.png',
                                 width: 40,
                                 height: 40,
                                 title: 'لیست علاقه مندی های من',
