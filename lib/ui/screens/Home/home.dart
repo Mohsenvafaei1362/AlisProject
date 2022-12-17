@@ -564,7 +564,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             textColor: Colors.white,
                             itemCount: state.products.length,
                             reverse: false,
-                            indexcount: state.products.length,
+                            indexcount: state.products.length + 1,
                             press: () {},
                           );
                         case 7:
