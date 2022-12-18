@@ -565,7 +565,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             title: 'محصولات',
                             show: 'مشاهده',
                             titr: 'پیشنهاد\nشگفت\nانگیز',
-                            backgroundColor: Colors.white,
+                            backgroundColor: Colors.grey.withOpacity(0.05),
                             image: 'assets/images/discount.png',
                             textColor: Colors.white,
                             itemCount: state.products.length,
