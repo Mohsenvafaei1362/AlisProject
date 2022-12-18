@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_notification_flutter_project/ui/data/repo/CommentProduct_repository.dart';
 import 'package:local_notification_flutter_project/ui/screens/CommentSuggest/commentsuggest.dart';
+import 'package:local_notification_flutter_project/ui/screens/Comment_Product/bloc/comment_product_bloc.dart';
 
 class Comment_Product extends StatefulWidget {
   bool isChecked = false;
@@ -25,46 +28,62 @@ class _Comment_ProductState extends State<Comment_Product> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: Color.fromARGB(255, 255, 197, 110),
-        //   toolbarHeight: 20,
-        // ),
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Icon(
-                          Icons.keyboard_arrow_right_rounded,
+      // appBar: AppBar(
+      //   backgroundColor: Color.fromARGB(255, 255, 197, 110),
+      //   toolbarHeight: 20,
+      // ),
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: BlocProvider<CommentProductBloc>(
+            create: (context) {
+              final bloc = CommentProductBloc(
+                commentProductRepository: commentProductRepository,
+              );
+              bloc.add(CommentProductStarted());
+              return bloc;
+            },
+            child: BlocBuilder<CommentProductBloc, CommentProductState>(
+              builder: (context, state) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(
+                              Icons.keyboard_arrow_right_rounded,
+                            ),
+                          ),
+                          const Text(
+                            'نظر سنجی',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'دیدگاه خود را شرح دهید',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const Text(
-                        'نظر سنجی',
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('دیدگاه خود را شرح دهید'),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                      ],
+                    ),
                     Question(
                       question_1: question_1,
                       hint: 'عنوان نظر',
@@ -77,129 +96,83 @@ class _Comment_ProductState extends State<Comment_Product> {
                       question_1: question_3,
                       hint: 'نقاط ضعف',
                     ),
-                    Question(
-                      question_1: question_4,
-                      hint: 'متن نظر',
-                      keyboardType: TextInputType.multiline,
-                      // line: 4,
-                    ),
-
-                    // Padding(
-                    //   padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                    //   child: ClipRRect(
-                    //     borderRadius: BorderRadius.circular(12),
-                    //     child: TextField(
-                    //       textAlign: TextAlign.right,
-                    //       keyboardType: TextInputType.multiline,
-                    //       maxLines: 4,
-                    //       decoration: InputDecoration(
-                    //         border: InputBorder.none,
-                    //         fillColor: Colors.grey.shade300,
-                    //         filled: true,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 7),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        value: isChecked,
-                        onChanged: (value) {
-                          setState(() {
-                            isChecked = value!;
-                          });
-                        },
-                        activeColor: Colors.blue,
-                        checkColor: Colors.white,
-                      ),
-                      const Text(' ارسال دیدگاه به صورت ناشناس  '),
-                    ],
-                  ),
-                ),
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 25,
-                      child: Divider(
-                        thickness: 1,
-                        color: Colors.grey.shade300,
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextFormField(
+                        controller: question_4,
+                        textAlign: TextAlign.right,
+                        keyboardType: TextInputType.multiline,
+                        maxLines: 4,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          // fillColor: Colors.grey.shade300,
+                          filled: true,
+                          labelText: 'متن مورد نظر',
+                        ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(7, 0, 8, 0),
-                          child: ClipRRect(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                border: Border.all(
-                                  color: Colors.grey.shade300,
+                        SizedBox(
+                          width: size.width * 0.9,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              BlocProvider.of<CommentProductBloc>(context).add(
+                                CommentProductClickdButton(
+                                  question_1.text,
+                                  question_2.text,
+                                  question_3.text,
+                                  question_4.text,
                                 ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                      height: 50,
-                                      child: TextButton(
-                                        autofocus: false,
-                                        onPressed: () {},
-                                        child: Text(
-                                          'ثبت دیدگاه ها',
-                                          style: TextStyle(
-                                              color: Colors.grey.shade600),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                            ),
+                              );
+                            },
+                            child: state is CommentProductLoading
+                                ? CupertinoActivityIndicator()
+                                : Text(
+                                    'ثبت دیدگاه',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 33),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(4, 11, 7, 0),
-                                child: RichText(
-                                  text: TextSpan(
-                                      style: TextStyle(
-                                          color: Colors.grey.shade600,
-                                          fontSize: 16),
-                                      children: [
-                                        const TextSpan(
-                                            text:
-                                                "ثبت دیدگاه به معنی موافقت با "),
-                                        const TextSpan(
-                                          text: "قوانین هلدینگ عالیس",
-                                          style: TextStyle(
-                                            color: Color(0xff00Acc1),
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        const TextSpan(text: " "),
-                                        const TextSpan(text: "است"),
-                                      ]),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
                       ],
-                    )
+                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     RichText(
+                    //       text: TextSpan(
+                    //         text: 'ثبت دیدگاه به معنی موافقت با ',
+                    //         style: const TextStyle(
+                    //           fontWeight: FontWeight.bold,
+                    //           color: Colors.black54,
+                    //           fontSize: 16,
+                    //         ),
+                    //         children: const [
+                    //           TextSpan(
+                    //             text: "قوانین هلدینگ عالیس",
+                    //             style: TextStyle(
+                    //               fontWeight: FontWeight.bold,
+                    //               color: Colors.blueAccent,
+                    //               fontSize: 16,
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                   ],
-                )
-              ],
+                );
+              },
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
