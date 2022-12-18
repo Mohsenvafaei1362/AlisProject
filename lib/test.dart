@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_add_to_cart_button/flutter_add_to_cart_button.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Test1 extends StatefulWidget {
   @override
@@ -10,7 +9,6 @@ class Test1 extends StatefulWidget {
 
 class _Test1State extends State<Test1> {
   AddToCartButtonStateId stateId = AddToCartButtonStateId.idle;
-  final RefreshController _refreshController = RefreshController();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,23 +20,65 @@ class _Test1State extends State<Test1> {
         appBar: AppBar(
           title: Text('Flutter Add To Cart'),
         ),
-        body: SmartRefresher(
-            controller: _refreshController,
-            header: const ClassicHeader(
-              completeText: 'با موفقیت انجام شد',
-              refreshingText: 'در حال به روز رسانی',
-              idleText: 'برای به روز رسانی پایین بکشید',
-              releaseText: 'رها کنید',
-              failedText: 'خطای نا مشخص',
-              spacing: 2,
-              completeIcon: Icon(
-                CupertinoIcons.check_mark_circled,
-                color: Colors.grey,
-                size: 20,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: AddToCartButton(
+                    trolley: Icon(CupertinoIcons.cart),
+                    // trolley: Image.asset(
+                    //   'assets/images/ic_cart.png',
+                    //   width: 24,
+                    //   height: 24,
+                    //   color: Colors.white,
+                    // ),
+                    text: Text(
+                      'Add to cart',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.fade,
+                    ),
+                    check: SizedBox(
+                      width: 48,
+                      height: 48,
+                      child: Icon(
+                        Icons.check,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(24),
+                    backgroundColor: Colors.deepOrangeAccent,
+                    onPressed: (id) {
+                      if (id == AddToCartButtonStateId.idle) {
+                        //handle logic when pressed on idle state button.
+                        setState(() {
+                          stateId = AddToCartButtonStateId.loading;
+                          Future.delayed(Duration(seconds: 3), () {
+                            setState(() {
+                              stateId = AddToCartButtonStateId.done;
+                            });
+                          });
+                        });
+                      } else if (id == AddToCartButtonStateId.done) {
+                        //handle logic when pressed on done state button.
+                        setState(() {
+                          stateId = AddToCartButtonStateId.idle;
+                        });
+                      }
+                    },
+                    stateId: stateId,
+                  ),
+                ),
               ),
-            ),
-            onRefresh: () {},
-            child: Text('data')),
+            ],
+          ),
+        ),
       ),
     );
   }
