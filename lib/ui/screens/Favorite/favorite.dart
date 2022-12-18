@@ -36,7 +36,8 @@ class _FavoriteListState extends State<FavoriteList> {
                 color = Colors.grey[200];
                 return Container(
                   width: size.width,
-                  height: size.height,
+                  height: size.height * 0.85,
+                  padding: EdgeInsets.only(bottom: 30),
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: products.length,
