@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:local_notification_flutter_project/test/test.dart';
 import 'package:local_notification_flutter_project/ui/screens/Notification/services/notification_service.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/banner.dart';
@@ -507,8 +508,9 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                           return NewProduct(
                             size: size,
                             state: state,
-                            title: 'جدیدترین',
-                            show: 'مشاهده همه  >',
+                            // title: '',
+                            // show: '',
+                            showindex: 'مشاهده همه  >',
                             titr: 'پیشنهاد\nشگفت\nانگیز',
                             backgroundColor: Colors.red,
                             image: 'assets/images/discount.png',
@@ -562,16 +564,30 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                           return NewProduct(
                             size: size,
                             state: state,
-                            title: 'محصولات',
-                            show: 'مشاهده',
-                            titr: 'پیشنهاد\nشگفت\nانگیز',
-                            backgroundColor: Colors.grey.withOpacity(0.05),
-                            image: 'assets/images/discount.png',
-                            textColor: Colors.white,
+                            // title: 'محصولات',
+                            // show: 'مشاهده همه  >',
+                            // titr: 'پیشنهاد\nشگفت\nانگیز',
+                            // backgroundColor: Colors.grey.withOpacity(0.05),
+                            // image: 'assets/images/discount.png',
+                            // textColor: Colors.white,
                             itemCount: state.products.length,
                             reverse: false,
                             indexcount: state.products.length + 1,
-                            press: () {},
+                            press: () {
+                              Navigator.of(context, rootNavigator: true).push(
+                                CupertinoPageRoute<bool>(
+                                  // settings: RouteSettings(name: ),
+                                  fullscreenDialog: true,
+                                  builder: (BuildContext context) =>
+                                      const Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: ProductListScreen(
+                                      sort: UiProductSort.latest,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                           );
                         case 8:
                           return FestivalProducts(size, context);
@@ -1217,16 +1233,42 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
     required int indexcount,
     required bool reverse,
     required HomeSuccess state,
-    required String title,
-    required String show,
-    required String titr,
-    required String image,
-    required Color backgroundColor,
-    required Color textColor,
+    // String? title,
+    // String? show,
+    String? showindex,
+    String? titr,
+    String? image,
+    Color? backgroundColor,
+    Color? textColor,
     required Function() press,
   }) {
     return Column(
       children: [
+        // Padding(
+        //   padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       Text(
+        //         title!,
+        //         style: TextStyle(
+        //           fontWeight: FontWeight.bold,
+        //           color: Colors.black45,
+        //         ),
+        //       ),
+        //       TextButton(
+        //         onPressed: press,
+        //         child: Text(
+        //           show!,
+        //           style: TextStyle(
+        //             fontWeight: FontWeight.bold,
+        //             color: Colors.black45,
+        //           ),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
         Container(
           width: size.width,
           height: size.height * 0.47,
@@ -1254,7 +1296,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              titr,
+                              titr!,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -1266,14 +1308,14 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                               height: 15,
                             ),
                             Image.asset(
-                              image,
+                              image!,
                               width: 100,
                               height: 100,
                             ),
                             TextButton(
                               onPressed: press,
                               child: Text(
-                                show,
+                                showindex!,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -1320,65 +1362,61 @@ class Advertise_1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+      padding: const EdgeInsets.fromLTRB(5, 8, 5, 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Card(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(color: Colors.white70, width: 1),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            elevation: 5,
-            child: SizedBox(
-              width: size.width * 0.3,
-              height: size.height * 0.12,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
-                  'assets/images/30.jpg',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+          CardItem(
+            size: size,
+            elevation: 2,
+            image: 'assets/images/36.jpg',
           ),
-          Card(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(color: Colors.white70, width: 1),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            elevation: 5,
-            child: SizedBox(
-              width: size.width * 0.3,
-              height: size.height * 0.12,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
-                  'assets/images/40.jpg',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+          CardItem(
+            size: size,
+            elevation: 15,
+            image: 'assets/images/82.jpg',
           ),
-          Card(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(color: Colors.white70, width: 1),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            elevation: 5,
-            child: SizedBox(
-              width: size.width * 0.3,
-              height: size.height * 0.12,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
-                  'assets/images/0502 (1).JPG',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+          CardItem(
+            size: size,
+            elevation: 2,
+            image: 'assets/images/41.jpg',
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CardItem extends StatelessWidget {
+  const CardItem({
+    Key? key,
+    required this.size,
+    required this.image,
+    required this.elevation,
+  }) : super(key: key);
+
+  final Size size;
+  final String image;
+  final double elevation;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.white70, width: 1),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      elevation: elevation,
+      child: SizedBox(
+        width: size.width * 0.3,
+        height: size.height * 0.16,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Image.asset(
+            image,
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }
