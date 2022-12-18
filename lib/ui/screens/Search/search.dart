@@ -23,38 +23,29 @@ class _SearchState extends State<Search> {
       /// You have also control over the suffixIcon, prefixIcon, helpText and animationDurationInMilli
       child: Container(
         width: size.width,
-        height: size.height * 0.06,
-        color: Colors.white,
+        height: size.height * 0.04,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            border: Border.all(
+              color: Colors.black12,
+              width: 1,
+            )),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
-              child: IconButton(
-                  // onPressed: () {
-                  //   print('kkkkkkkkkkkk');
-                  // },
-                  onPressed: widget.press,
-                  icon: Icon(CupertinoIcons.search)),
+              padding: const EdgeInsets.only(
+                right: 10,
+              ),
+              child: InkWell(
+                onTap: widget.press,
+                child: Icon(
+                  CupertinoIcons.search,
+                ),
+              ),
             ),
-            // AnimSearchBar(
-            //   rtl: true,
-            //   helpText: 'جستجو',
-            //   style: const TextStyle(fontFamily: 'IransansDn'),
-            //   width: size.width * 0.8,
-            //   animationDurationInMilli: 700,
-            //   textController: textController,
-            //   onSuffixTap: () {
-            //     setState(() {
-            //       print(textController.text);
-            //       textController.clear();
-            //     });
-            //   },
-            // ),
-            // SizedBox(
-            //   width: 30,
-            // ),
             const Spacer(),
             InkWell(
               onTap: () {
@@ -69,7 +60,7 @@ class _SearchState extends State<Search> {
                 // );
               },
               child: Container(
-                margin: const EdgeInsets.fromLTRB(15, 5, 0, 5),
+                margin: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                 width: size.width * 0.05,
                 height: size.height * 0.05,
                 child: const Icon(CupertinoIcons.line_horizontal_3_decrease),
