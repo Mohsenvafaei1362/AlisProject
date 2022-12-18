@@ -24,6 +24,7 @@ import 'package:local_notification_flutter_project/ui/screens/widgets/empty_stat
 import 'package:local_notification_flutter_project/ui/screens/widgets/pricelable.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Profile extends StatefulWidget {
   const Profile({
@@ -39,6 +40,7 @@ class _ProfileState extends State<Profile> {
   final UiTimerUser timerUser = Get.put(UiTimerUser());
   // final UiFlag flag = Get.put(UiFlag());
   final UiDl _dl = Get.put(UiDl());
+  final RefreshController _refreshController = RefreshController();
 
   StreamSubscription? streamSubscription;
   ProfileBloc? profileBloc;
@@ -58,6 +60,7 @@ class _ProfileState extends State<Profile> {
   void dispose() {
     super.dispose();
     profileBloc?.close();
+    streamSubscription?.cancel();
   }
 
   DateTime? currentBackPressTime;
@@ -91,21 +94,18 @@ class _ProfileState extends State<Profile> {
           gholeRepository: gholeRepository,
           messageBoxRepository: messageBoxRepository,
         );
-        bloc.add(ProfileStarted(AuthRepository.authChangeNotifire.value!));
-        // streamSubscription = bloc.stream.listen((state) {
-        //   if (state is ProfileSuccess) {
-        //   } else if (state is ProfileLoading) {
-        //     const Center(
-        //       child: CupertinoActivityIndicator(),
-        //     );
-        //   } else if (state is ProfileError) {
-        //     Center(
-        //       child: Text(state.exception.message),
-        //     );
-        //   } else {
-        //     throw Exception('state is not supported');
-        //   }
-        // });
+        bloc.add(
+            ProfileStarted(AuthRepository.authChangeNotifire.value!, false));
+        streamSubscription = bloc.stream.listen((state) {
+          if (_refreshController.isRefresh) {
+            if (state is ProfileSuccess) {
+              _refreshController.refreshCompleted();
+            } else if (state is ProfileError) {
+              _refreshController.refreshFailed();
+            }
+          }
+        });
+
         profileBloc = bloc;
         return bloc;
       },
@@ -121,232 +121,258 @@ class _ProfileState extends State<Profile> {
             // },
             builder: (context, state) {
               if (state is ProfileSuccess) {
-                return SafeArea(
-                  child: Column(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          width: size.width,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.vertical(
-                                bottom: Radius.circular(30),
+                return SmartRefresher(
+                  controller: _refreshController,
+                  header: const ClassicHeader(
+                    completeText: 'با موفقیت انجام شد',
+                    refreshingText: 'در حال به روز رسانی',
+                    idleText: 'برای به روز رسانی پایین بکشید',
+                    releaseText: 'رها کنید',
+                    failedText: 'خطای نا مشخص',
+                    spacing: 2,
+                    completeIcon: Icon(
+                      CupertinoIcons.check_mark_circled,
+                      color: Colors.grey,
+                      size: 20,
+                    ),
+                  ),
+                  onRefresh: () {
+                    BlocProvider.of<ProfileBloc>(context).add(
+                      ProfileStarted(
+                          AuthRepository.authChangeNotifire.value!, true),
+                    );
+                  },
+                  child: SafeArea(
+                    child: Column(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            width: size.width,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.vertical(
+                                  bottom: Radius.circular(30),
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black54,
+                                    blurRadius: 1,
+                                    offset: Offset(0, 0),
+                                  )
+                                ]),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 18, left: 18),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ClipOval(
+                                    child: Image.memory(
+                                      _avatarImage,
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                  ),
+                                  Text(
+                                    ' امتیاز شما : ${state.club.first.Value}'
+                                        .toPersianDigit(),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black54,
-                                  blurRadius: 1,
-                                  offset: Offset(0, 0),
-                                )
-                              ]),
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 18, left: 18),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            width: size.width,
+                            // color: Colors.red,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 16, left: 16),
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/icons/wallet.png',
+                                    width: 35,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'موجودی حساب',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Text(240000.withPriceLable.toPersianDigit()),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            width: size.width,
+                            // color: Colors.blue,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                ClipOval(
-                                  child: Image.memory(
-                                    _avatarImage,
-                                    width: 50,
-                                    height: 50,
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 16),
+                                  child: Text(
+                                    'اطلاعات شخصی',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black54,
+                                    ),
                                   ),
                                 ),
-                                Text(
-                                  ' امتیاز شما : ${state.club.first.Value}'
-                                      .toPersianDigit(),
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                  ),
+                                Divider(
+                                  height: 2,
+                                ),
+                                Rich_text(
+                                  dl: _dl,
+                                  title: 'نام و نام خانوادگی : ',
+                                  value:
+                                      ' ${_dl.FName.value} ${_dl.LName.value}',
+                                ),
+                                Rich_text(
+                                  dl: _dl,
+                                  title: 'ایمیل : ',
+                                  value: ' ${_dl.Email} ',
+                                ),
+                                Rich_text(
+                                  dl: _dl,
+                                  title: 'تلفن : ',
+                                  value: ' ${_dl.PhoneNumber}'.toPersianDigit(),
+                                ),
+                                Divider(
+                                  height: 2,
                                 ),
                               ],
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          width: size.width,
-                          // color: Colors.red,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 16, left: 16),
-                            child: Row(
+                        Expanded(
+                          flex: 4,
+                          child: Container(
+                            width: size.width,
+                            // color: Colors.green,
+                            child: Column(
                               children: [
-                                Image.asset(
-                                  'assets/icons/wallet.png',
-                                  width: 35,
+                                MenuItems(
+                                  press: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) => Settings()),
+                                    );
+                                  },
+                                  image: 'assets/images/setting.png',
+                                  title: 'تنظیمات',
+                                ),
+                                MenuItems(
+                                  press: () {
+                                    // Navigator.of(context).push(
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) => Settings()),
+                                    // );
+                                  },
+                                  image: 'assets/images/order.png',
+                                  title: 'سفارش های من',
+                                ),
+                                MenuItems(
+                                  press: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              TransactionList()),
+                                    );
+                                  },
+                                  image: 'assets/images/payment.png',
+                                  title: 'پرداخت های من',
+                                ),
+                                MenuItems(
+                                  press: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) => FavoriteList()),
+                                    );
+                                  },
+                                  image: 'assets/images/favorite.png',
+                                  width: 40,
+                                  height: 40,
+                                  title: 'لیست علاقه مندی های من',
+                                ),
+                                Divider(
+                                  height: 2,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            width: size.width,
+                            // color: Colors.grey,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: size.width * 0.4,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      elevation: 2,
+                                      backgroundColor: Colors.amber[200],
+                                      onPrimary: Colors.black,
+                                    ),
+                                    onPressed: () {},
+                                    child: const Text(
+                                      'ویرایش اطلاعات',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text(
-                                  'موجودی حساب',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                SizedBox(
+                                  width: size.width * 0.4,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      elevation: 2,
+                                      backgroundColor: Colors.pink[200],
+                                      onPrimary: Colors.black,
+                                    ),
+                                    onPressed: () {
+                                      onWillPop();
+                                    },
+                                    child: const Text(
+                                      'خروج از حساب کاربری',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                Spacer(),
-                                Text(240000.withPriceLable.toPersianDigit()),
                               ],
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          width: size.width,
-                          // color: Colors.blue,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 16),
-                                child: Text(
-                                  'اطلاعات شخصی',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-                              ),
-                              Divider(
-                                height: 2,
-                              ),
-                              Rich_text(
-                                dl: _dl,
-                                title: 'نام و نام خانوادگی : ',
-                                value: ' ${_dl.FName.value} ${_dl.LName.value}',
-                              ),
-                              Rich_text(
-                                dl: _dl,
-                                title: 'ایمیل : ',
-                                value: ' ${_dl.Email} ',
-                              ),
-                              Rich_text(
-                                dl: _dl,
-                                title: 'تلفن : ',
-                                value: ' ${_dl.PhoneNumber}'.toPersianDigit(),
-                              ),
-                              Divider(
-                                height: 2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: Container(
-                          width: size.width,
-                          // color: Colors.green,
-                          child: Column(
-                            children: [
-                              MenuItems(
-                                press: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) => Settings()),
-                                  );
-                                },
-                                image: 'assets/images/setting.png',
-                                title: 'تنظیمات',
-                              ),
-                              MenuItems(
-                                press: () {
-                                  // Navigator.of(context).push(
-                                  //   MaterialPageRoute(
-                                  //       builder: (context) => Settings()),
-                                  // );
-                                },
-                                image: 'assets/images/order.png',
-                                title: 'سفارش های من',
-                              ),
-                              MenuItems(
-                                press: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            TransactionList()),
-                                  );
-                                },
-                                image: 'assets/images/payment.png',
-                                title: 'پرداخت های من',
-                              ),
-                              MenuItems(
-                                press: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) => FavoriteList()),
-                                  );
-                                },
-                                image: 'assets/images/favorite.png',
-                                width: 40,
-                                height: 40,
-                                title: 'لیست علاقه مندی های من',
-                              ),
-                              Divider(
-                                height: 2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          width: size.width,
-                          // color: Colors.grey,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: size.width * 0.4,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    elevation: 2,
-                                    backgroundColor: Colors.amber[200],
-                                    onPrimary: Colors.black,
-                                  ),
-                                  onPressed: () {},
-                                  child: const Text(
-                                    'ویرایش اطلاعات',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              SizedBox(
-                                width: size.width * 0.4,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    elevation: 2,
-                                    backgroundColor: Colors.pink[200],
-                                    onPrimary: Colors.black,
-                                  ),
-                                  onPressed: () {
-                                    onWillPop();
-                                  },
-                                  child: const Text(
-                                    'خروج از حساب کاربری',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               } else if (state is ProfileRequired) {
@@ -374,14 +400,31 @@ class _ProfileState extends State<Profile> {
                   child: CupertinoActivityIndicator(),
                 );
               } else if (state is ProfileError) {
-                return Center(
-                  child: Text(
-                    state.exception.message,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.pink[200],
-                      fontSize: 18,
+                return SmartRefresher(
+                  controller: _refreshController,
+                  header: const ClassicHeader(
+                    completeText: 'با موفقیت انجام شد',
+                    refreshingText: 'در حال به روز رسانی',
+                    idleText: 'برای به روز رسانی پایین بکشید',
+                    releaseText: 'رها کنید',
+                    failedText: 'خطای نا مشخص',
+                    spacing: 2,
+                    completeIcon: Icon(
+                      CupertinoIcons.check_mark_circled,
+                      color: Colors.grey,
+                      size: 20,
                     ),
+                  ),
+                  onRefresh: () {
+                    BlocProvider.of<ProfileBloc>(context).add(
+                      ProfileStarted(
+                        AuthRepository.authChangeNotifire.value!,
+                        true,
+                      ),
+                    );
+                  },
+                  child: Center(
+                    child: Text(state.exception.message),
                   ),
                 );
               } else {

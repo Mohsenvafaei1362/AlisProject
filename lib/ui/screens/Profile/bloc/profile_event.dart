@@ -8,8 +8,9 @@ abstract class ProfileEvent extends Equatable {
 
 class ProfileStarted extends ProfileEvent {
   final AuthInfo authInfo;
+  final bool? isActive;
 
-  ProfileStarted(this.authInfo);
+  ProfileStarted(this.authInfo, this.isActive);
 }
 
 class ProfileClickedButtonEdit extends ProfileEvent {}

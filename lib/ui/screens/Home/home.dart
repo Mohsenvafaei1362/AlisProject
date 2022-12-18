@@ -1222,7 +1222,9 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
             child: Image.memory(img[index]));
       },
       options: CarouselOptions(
-        enlargeCenterPage: true, aspectRatio: 16 / 7.2, viewportFraction: 0.72,
+        enlargeCenterPage: true,
+        aspectRatio: 16 / 7.2,
+        viewportFraction: 0.75,
         // autoPlay: true,
       ),
     );

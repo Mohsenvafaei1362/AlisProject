@@ -141,8 +141,10 @@ class _CartScreenState extends State<CartScreen> {
                 ),
                 onRefresh: () {
                   cartBloc?.add(
-                    CartStarted(AuthRepository.authChangeNotifire.value,
-                        isRefreshing: true),
+                    CartStarted(
+                      AuthRepository.authChangeNotifire.value,
+                      isRefreshing: true,
+                    ),
                   );
                 },
                 child: Center(
