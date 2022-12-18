@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:local_notification_flutter_project/test.dart';
 import 'package:local_notification_flutter_project/test/test.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_manager.dart';
 import 'package:local_notification_flutter_project/ui/root.dart';
@@ -92,6 +93,7 @@ class MyApp extends StatelessWidget {
                   // Ui_AddPointScreen()
                   // Congratulation()
                   Splash(),
+              // Test1()
               // PreviewInfo()
               // HomeScreen_Ui()
               // RootScreen()
