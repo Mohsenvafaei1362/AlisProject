@@ -1212,16 +1212,17 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                    builder: (context) => SliderDetails(
-                          img: img[index],
-                          link: linkUrl[index],
-                        )),
+                  builder: (context) => SliderDetails(
+                    img: img[index],
+                    link: linkUrl[index],
+                  ),
+                ),
               );
             },
             child: Image.memory(img[index]));
       },
       options: CarouselOptions(
-        enlargeCenterPage: true,
+        enlargeCenterPage: true, aspectRatio: 16 / 7.2, viewportFraction: 0.72,
         // autoPlay: true,
       ),
     );
