@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_manager.dart';
@@ -83,7 +84,7 @@ class _FavoriteListState extends State<FavoriteList> {
                                 children: [
                                   Text(data.title),
                                   SizedBox(
-                                    height: 5,
+                                    height: 10,
                                   ),
                                   Text(
                                     data.price.withPriceLable
@@ -92,6 +93,15 @@ class _FavoriteListState extends State<FavoriteList> {
                                   ),
                                 ],
                               ),
+                              Spacer(),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                child: Icon(
+                                  Icons.favorite,
+                                  color: Colors.pink,
+                                  size: 30,
+                                ),
+                              )
                             ],
                           ),
                         ),
