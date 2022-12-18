@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/CommentProduct_repository.dart';
 import 'package:local_notification_flutter_project/ui/screens/CommentSuggest/commentsuggest.dart';
 import 'package:local_notification_flutter_project/ui/screens/Comment_Product/bloc/comment_product_bloc.dart';
@@ -120,14 +121,33 @@ class _Comment_ProductState extends State<Comment_Product> {
                           width: size.width * 0.9,
                           child: ElevatedButton(
                             onPressed: () {
-                              BlocProvider.of<CommentProductBloc>(context).add(
-                                CommentProductClickdButton(
-                                  question_1.text,
-                                  question_2.text,
-                                  question_3.text,
-                                  question_4.text,
-                                ),
-                              );
+                              if (question_1.text.length > 0 &&
+                                  question_2.text.length > 0 &&
+                                  question_3.text.length > 0 &&
+                                  question_4.text.length > 0) {
+                                BlocProvider.of<CommentProductBloc>(context)
+                                    .add(
+                                  CommentProductClickdButton(
+                                    question_1.text,
+                                    question_2.text,
+                                    question_3.text,
+                                    question_4.text,
+                                  ),
+                                );
+                              } else {
+                                Get.defaultDialog(
+                                  title: 'کابر گرامی',
+                                  middleText: ' لطفا تمامی فیلدها پر شوند',
+                                  middleTextStyle:
+                                      TextStyle(color: Colors.pink[300]),
+                                  onCancel: () {},
+                                  textCancel: 'متوجه شدم',
+                                  titleStyle: TextStyle(
+                                    color: Colors.amber,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                );
+                              }
                             },
                             child: state is CommentProductLoading
                                 ? CupertinoActivityIndicator()
