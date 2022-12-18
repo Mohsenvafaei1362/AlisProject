@@ -1287,7 +1287,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                       // if (data.discount != 0)
                       ProductItem(
                         product: data,
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ],
                   ),
@@ -1296,7 +1296,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                 final data = state.products[index];
                 return ProductItem(
                   product: data,
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(10),
                 );
               } else {
                 return Container();
