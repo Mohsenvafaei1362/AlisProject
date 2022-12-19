@@ -92,18 +92,32 @@ class _DrawerScreenState extends State<DrawerScreen> {
         children: [
           UserAccountsDrawerHeader(
             accountName: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Text('فرهاد رضوانی'),
-                Text(_dl.FName.value + ' ' + _dl.LName.value),
-                // Text('${showInfo.data.map((e) => e['full_name'])}'),
-                const Spacer(),
+                Text(
+                  _dl.FName.value + ' ' + _dl.LName.value,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  _dl.Role.toString(),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: Text(
                     'امتیاز شما : ${widget.club.first.Value}'.toPersianDigit(),
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 11,
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
