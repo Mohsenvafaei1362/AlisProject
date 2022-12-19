@@ -41,6 +41,11 @@ class _EditInfoUserState extends State<EditInfoUser> {
               bloc.stream.listen((state) {
                 if (state is EditInfoUserSuccess) {
                   Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('اطلاعات با موفقیت ویرایش شد'),
+                    ),
+                  );
                 }
               });
               return bloc;

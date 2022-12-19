@@ -76,12 +76,12 @@ class _ProductItemState extends State<ProductItem> {
                   ),
                 );
               } else if (state is ProductAddToCartError) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    duration: const Duration(seconds: 1),
-                    content: Text(state.exception.message),
-                  ),
-                );
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   SnackBar(
+                //     duration: const Duration(seconds: 1),
+                //     content: Text(state.exception.message),
+                //   ),
+                // );
               }
             });
             return bloc;
