@@ -193,22 +193,17 @@ class _DrawerScreenState extends State<DrawerScreen> {
           ),
           ListTile(
             leading: const Icon(Icons.account_circle_rounded),
-            title: InkWell(
-                onTap: () {
-                  Get.to(() => const Profile());
-                },
-                child: const Text('پروفایل')),
+            title: const Text('پروفایل'),
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => Directionality(
-              //       textDirection: TextDirection.rtl,
-              //       child: Profile(size: size),
-              //       // child: Profile(),
-              //     ),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Profile(),
+                  ),
+                ),
+              );
             },
           ),
           ListTile(

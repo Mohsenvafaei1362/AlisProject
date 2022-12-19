@@ -5,6 +5,7 @@ import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_man
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/screens/details/details.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/empty_state.dart';
+import 'package:local_notification_flutter_project/ui/screens/widgets/image_loading_service.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/pricelable.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
@@ -74,9 +75,8 @@ class _FavoriteListState extends State<FavoriteList> {
                           },
                           child: Row(
                             children: [
-                              // Text('ddddd')
-                              Image.network(
-                                data.imageUrl,
+                              ImageLoadingService(
+                                imageUrl: data.imageUrl,
                                 width: 100,
                               ),
                               Column(
