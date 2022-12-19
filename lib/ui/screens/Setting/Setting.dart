@@ -58,19 +58,11 @@ class _SettingsState extends State<Settings> {
                 ),
                 Container(
                   width: size.width,
-                  height: size.height * 0.1,
-                  decoration: const BoxDecoration(
-                      // color: Colors.red,
-                      ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Image.asset(
-                        'assets/icons/user.png',
-                        width: 68,
-                        height: 68,
-                      ),
-                    ],
+                  height: size.height * 0.11,
+                  child: Image.asset(
+                    'assets/images/setting.png',
+                    width: 80,
+                    height: 80,
                   ),
                 ),
                 Padding(
@@ -89,143 +81,138 @@ class _SettingsState extends State<Settings> {
                           ),
                         ],
                       ),
-                      Column(
-                        children: [
-                          SizedBox(
-                            width: size.width,
-                            height: size.height * 0.07,
-                            child: InkWell(
-                              onTap: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.fingerprint,
-                                      color: Colors.black54,
-                                      size: 28,
-                                    ),
-                                    // Image.asset(
-                                    //   'assets/icons/lock.png',
-                                    //   width: 25,
-                                    // ),
-                                    const SizedBox(
-                                      width: 30,
-                                    ),
-                                    const Text('ورود با اثر انگشت'),
-                                    const Spacer(),
-                                    StatefulBuilder(
-                                      builder:
-                                          (BuildContext context, setState) =>
-                                              Switch(
-                                        onChanged: (bool v) {
-                                          setState(() => isSwitched = v);
-                                        },
-                                        value: isSwitched,
-                                      ),
-                                    ),
-                                  ],
+                      SizedBox(
+                        width: size.width,
+                        height: size.height * 0.07,
+                        child: InkWell(
+                          onTap: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.fingerprint,
+                                  color: Colors.black54,
+                                  size: 28,
                                 ),
-                              ),
+                                // Image.asset(
+                                //   'assets/icons/lock.png',
+                                //   width: 25,
+                                // ),
+                                const SizedBox(
+                                  width: 30,
+                                ),
+                                const Text('ورود با اثر انگشت'),
+                                const Spacer(),
+                                StatefulBuilder(
+                                  builder: (BuildContext context, setState) =>
+                                      Switch(
+                                    onChanged: (bool v) {
+                                      setState(() => isSwitched = v);
+                                    },
+                                    value: isSwitched,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          ListItems(
-                            size: size,
-                            title: 'تغییر رمز عبور',
-                            image: 'assets/icons/key (1).png',
-                            press: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: ChangePassword(),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          ListItems(
-                            size: size,
-                            title: 'دستگاه های من',
-                            image: 'assets/images/phone-message.png',
-                            press: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: MyDevice(),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          ListItems(
-                            size: size,
-                            title: 'فروشگاه های من',
-                            image: 'assets/images/shop.png',
-                            press: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: MyStore(),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          ListItems(
-                            size: size,
-                            title: 'همکاران من',
-                            image: 'assets/icons/share.png',
-                            press: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: Partners(),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          ListItems(
-                            size: size,
-                            title: 'معرفی حساب بانکی',
-                            image: 'assets/icons/savings.png',
-                            press: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Directionality(
-                                    textDirection: TextDirection.ltr,
-                                    child: BankAccount(),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          ListItems(
-                            size: size,
-                            title: 'درباره ما',
-                            image: 'assets/icons/group.png',
-                            press: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: AboutScreen(),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
+                        ),
+                      ),
+                      ListItems(
+                        size: size,
+                        title: 'تغییر رمز عبور',
+                        image: 'assets/icons/key (1).png',
+                        press: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: ChangePassword(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      ListItems(
+                        size: size,
+                        title: 'دستگاه های من',
+                        image: 'assets/images/phone-message.png',
+                        press: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: MyDevice(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      ListItems(
+                        size: size,
+                        title: 'فروشگاه های من',
+                        image: 'assets/images/shop.png',
+                        press: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: MyStore(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      ListItems(
+                        size: size,
+                        title: 'همکاران من',
+                        image: 'assets/icons/share.png',
+                        press: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: Partners(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      ListItems(
+                        size: size,
+                        title: 'معرفی حساب بانکی',
+                        image: 'assets/icons/savings.png',
+                        press: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Directionality(
+                                textDirection: TextDirection.ltr,
+                                child: BankAccount(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      ListItems(
+                        size: size,
+                        title: 'درباره ما',
+                        image: 'assets/icons/group.png',
+                        press: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: AboutScreen(),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                       const Center(
                         child: Text(

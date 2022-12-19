@@ -56,6 +56,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
   final UiCartController cartController = Get.put(UiCartController());
   final UiShowInfo showInfo = Get.put(UiShowInfo());
   final UiDl _dl = Get.put(UiDl());
+  final Club _club = Get.put(Club());
   HomeBloc? bloc;
   StreamSubscription<HomeState>? streamSubscription;
   // int _page = 1;
@@ -147,9 +148,13 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is HomeSuccess) {
+            _club.score.value = state.club.first.Value;
+
             // Uint8List avatar = base64.decode(state.messageCount.first.Avatar);
             Uint8List _avatarImage = base64.decode(_dl.Avatar.value);
             Uint8List _avatarLevel = base64.decode(state.ghole.first.Avatar);
+            _club.image = _avatarImage;
+            _club.imageLevel = _avatarLevel;
             List<Uint8List> _avatarLevellst = [];
             List<String> _avatarLevellink = [];
             for (var element in state.slider) {

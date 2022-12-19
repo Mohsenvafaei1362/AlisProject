@@ -10,6 +10,7 @@ import 'package:local_notification_flutter_project/ui/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'ui/screens/SplashScreen/splashScreen.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 
 main() async {
   // SystemChrome.setSystemUIOverlayStyle(
@@ -80,61 +81,61 @@ class MyApp extends StatelessWidget {
             ),
             // home: SplashScreen(),
             home: Directionality(
-                textDirection: TextDirection.rtl,
-                child:
-                    //
-                    // SplashScreen(),
-                    // CartScreen()
-                    // PaymentReceiptScreen()
-                    // ShippingScreen(
-                    //     payablePrice: 100, shippingCost: 200, totalPrice: 2000)
-                    // Ui_AddPointScreen()
-                    // AddPointScreen()
-                    // Ui_AddPointScreen()
-                    // Congratulation()
-                    Splash(),
-                    // Test1()
-                // PreviewInfo()
-                // HomeScreen_Ui()
-                // RootScreen()
-                // ComplaintForm()
-                // Step123456()
-                // Confirmation()
-                // MapInfo(),
-                // Documents()
-                // Confirmation()
-                // RootScreen(),
-                // HomeScreen1(),
-                // AddPointScreen(),
-                // Login_(onChanged: (value) {}),
-                // Support_Message(),
-                // Category(),
-                // Body(),
-                // StepperPage(),
-                // EndFollowUp(),
-                // EndRegister()
-                // FollowUp(),
-                // Body(),
-                // Message(),
-                // CartProducts(),
-                // Wallet(),
-                // Settings_Store(),
-                // OnlinePayment(),
-                // Cart3(),
-                // DetailOnline(),
-                // Buy(),
-                // LoginFour_1(),
-                // Test(),
-                // MySample()
-                // Festival(),
-                // NazarSanje(),
-                // Operation(),
-                // Filter(),
-                // Login_Sex(),
-                // LoginFour(),
-                // LoginFive(),
-                // TestLocation(),
-                // CodeMoraf(onChanged: ((value) {}))
-                )));
+              textDirection: TextDirection.rtl,
+              child:
+                  //
+                  // SplashScreen(),
+                  // CartScreen()
+                  // PaymentReceiptScreen()
+                  // ShippingScreen(
+                  //     payablePrice: 100, shippingCost: 200, totalPrice: 2000)
+                  // Ui_AddPointScreen()
+                  // AddPointScreen()
+                  // Ui_AddPointScreen()
+                  // Congratulation()
+                  Splash(),
+              // Test1()
+              // PreviewInfo()
+              // HomeScreen_Ui()
+              // RootScreen()
+              // ComplaintForm()
+              // Step123456()
+              // Confirmation()
+              // MapInfo(),
+              // Documents()
+              // Confirmation()
+              // RootScreen(),
+              // HomeScreen1(),
+              // AddPointScreen(),
+              // Login_(onChanged: (value) {}),
+              // Support_Message(),
+              // Category(),
+              // Body(),
+              // StepperPage(),
+              // EndFollowUp(),
+              // EndRegister()
+              // FollowUp(),
+              // Body(),
+              // Message(),
+              // CartProducts(),
+              // Wallet(),
+              // Settings_Store(),
+              // OnlinePayment(),
+              // Cart3(),
+              // DetailOnline(),
+              // Buy(),
+              // LoginFour_1(),
+              // Test(),
+              // MySample()
+              // Festival(),
+              // NazarSanje(),
+              // Operation(),
+              // Filter(),
+              // Login_Sex(),
+              // LoginFour(),
+              // LoginFive(),
+              // TestLocation(),
+              // CodeMoraf(onChanged: ((value) {}))
+            )));
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:local_notification_flutter_project/ui/screens/Register/GetSmsCode/get_sms_code.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -711,77 +712,7 @@ class UiAddressIp {
 
 class Club extends GetxController {
   RxInt value = 0.obs;
+  late Uint8List image;
+  late Uint8List imageLevel;
+  RxInt score = 0.obs;
 }
-
-
-// class UiLoginClass {
-//   final UiLog log = Get.put(UiLog());
-
-//   Future<int> sendlog(String phoneController) async {
-//     var urllog = Uri.parse(UiAddressIp().Get_url('RegisterReq'));
-//     await http
-//         .post(
-//       urllog,
-//       headers: <String, String>{
-//         'Content-Type': 'application/json; charset=UTF-8',
-//       },
-//       body: jsonEncode(<String, String>{
-//         "phonenumber": phoneController,
-//         // "pass": phoneController.passwordController.text.toString(),
-//         "phoneserial": log.id.value.toString(),
-//         "phonebrand": log.brand.value.toString(),
-//         "phonemodel": log.model.value.toString(),
-//         // "fingerprint": log.fingerprint.value.toString(),
-//         // "date": DateTime.now().toPersianDate(),
-//         // "login": '${showInfo.data.length == 1 ? true : false}',
-//       }),
-//     )
-//         .then((response) {
-//       return 0;
-//     })
-//         // showInfo.data.value = jsonDecode(response.body) as List)
-//         .catchError((err) => print(err));
-//     // print(urllog);
-//     return 1;
-//   }
-
-//   Future<int> RegisterGetSmsTime(String model) async {
-//     var urllog = Uri.parse(UiAddressIp().Get_url('RegisterGetSmsTime'));
-//     await http
-//         .post(
-//       urllog,
-//       headers: <String, String>{
-//         'Content-Type': 'application/json; charset=UTF-8',
-//       },
-//       body: jsonEncode(<String, String>{
-//         "model": model,
-//       }),
-//     )
-//         .then((response) {
-//       return (int.parse(response.body));
-//     })
-//         // showInfo.data.value = jsonDecode(response.body) as List)
-//         .catchError((err) {
-//       return 0;
-//     });
-//     throw "";
-//   }
-
-//   Future<http.Response> RegisterSmsCode(String model, String phonenumber,
-//       String phoneserial, String phonemodel, String phonebrand) {
-//     var urllog = Uri.parse(UiAddressIp().Get_url('RegisterSmsCode'));
-//     return http.post(
-//       urllog,
-//       headers: <String, String>{
-//         'Content-Type': 'application/json; charset=UTF-8',
-//       },
-//       body: jsonEncode(<String, String>{
-//         "model": model,
-//         "phonenumber": phonenumber,
-//         "phoneserial": phoneserial,
-//         "phonemodel": phonemodel,
-//         "phonebrand": phonebrand
-//       }),
-//     );
-//   }
-// }

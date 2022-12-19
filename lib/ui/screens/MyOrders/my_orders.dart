@@ -390,6 +390,9 @@ class _MyOrdersState extends State<MyOrders> {
                                                           'با ثبت امتیاز خود، ما را در بالابردن کیفیت خدمت رسانی یاری فرمایید. با تشکر',
                                                           textAlign:
                                                               TextAlign.center,
+                                                          style: TextStyle(
+                                                            fontSize: 10,
+                                                          ),
                                                         ),
                                                         actions: [
                                                           Column(
@@ -519,14 +522,9 @@ class _MyOrdersState extends State<MyOrders> {
                                                               ),
                                                               ElevatedButton(
                                                                 onPressed: () {
-                                                                  // Get.to(
-                                                                  //   const Directionality(
-                                                                  //     textDirection:
-                                                                  //         TextDirection.rtl,
-                                                                  //     child:
-                                                                  //         Buy2(),
-                                                                  //   ),
-                                                                  // );
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
                                                                 },
                                                                 child: const Text(
                                                                     'ذخیره امتیاز'),

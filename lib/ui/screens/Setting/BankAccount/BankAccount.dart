@@ -222,9 +222,24 @@ class _BankAccountState extends State<BankAccount> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 8.0, top: 16.0),
-          child: Text(
-            '$title',
-            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '$title',
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black54,
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(Icons.keyboard_arrow_right),
+              ),
+            ],
           ),
         ),
         // Padding(

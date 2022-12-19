@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 
 class Friends extends StatefulWidget {
   const Friends({Key? key}) : super(key: key);
@@ -83,8 +84,9 @@ class _FriendsState extends State<Friends> {
                         const SizedBox(
                           height: 20,
                         ),
-                        const Text(
-                          '10 نفر از دوستان خود را به عالیس دعوت کنید و برای هر باز کردن حساب موفق 30 امتیاز هدیه بگیرید',
+                        Text(
+                          '10 نفر از دوستان خود را به عالیس دعوت کنید و برای هر باز کردن حساب موفق 30 امتیاز هدیه بگیرید'
+                              .toPersianDigit(),
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 12),
                         ),

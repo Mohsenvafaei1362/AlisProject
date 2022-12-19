@@ -150,12 +150,14 @@ class Question extends StatelessWidget {
     required this.question_1,
     required this.hint,
     this.keyboardType,
+    this.showhide = false,
     // this.line,
   }) : super(key: key);
 
   final TextEditingController question_1;
   final String hint;
   final TextInputType? keyboardType;
+  final bool? showhide;
   // final int? line;
 
   @override
@@ -165,8 +167,9 @@ class Question extends StatelessWidget {
       child: TextFormField(
         keyboardType: keyboardType,
         // maxLines: line,
+
         controller: question_1,
-        obscureText: true,
+        obscureText: showhide!,
         inputFormatters: const [],
         style: const TextStyle(
           fontFamily: 'IransansDn',

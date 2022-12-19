@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:get/get.dart';
+import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/customer_club_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/topPepole_repository.dart';
 import 'package:local_notification_flutter_project/ui/models/Pepole/pepole.dart';
@@ -32,10 +34,12 @@ class _CustomerClubState extends State<CustomerClub> {
     // streamSubscription?.cancel();
   }
 
+  final UiDl _dl = Get.put(UiDl());
+  final Club _club = Get.put(Club());
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    const rankPepole = Pepole.pepoles;
+    // const rankPepole = Pepole.pepoles;
 
     return SafeArea(
       child: Scaffold(
@@ -60,8 +64,9 @@ class _CustomerClubState extends State<CustomerClub> {
                   return Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 16, 32, 0),
+                        padding: const EdgeInsets.fromLTRB(16, 16, 32, 0),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GestureDetector(
                                 onTap: () {
@@ -79,7 +84,12 @@ class _CustomerClubState extends State<CustomerClub> {
                             const SizedBox(
                               width: 15,
                             ),
-                            const Text('باشگاه مشتریان'),
+                            const Text(
+                              'باشگاه مشتریان',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -87,36 +97,54 @@ class _CustomerClubState extends State<CustomerClub> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 32, 0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Row(
-                              children: [
-                                // Icon(
-                                //   Icons.account_circle,
-                                //   size: 50,
-                                // ),
-                                ClipOval(
-                                  child: Image.asset(
-                                    'assets/icons/user.png',
-                                    height: 60,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                const Text('امتیاز'),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  '0'.toPersianDigit(),
-                                  style: const TextStyle(color: Colors.green),
-                                ),
-                              ],
+                            ClipOval(
+                              child: Image.memory(
+                                _club.image,
+                                width: 50,
+                                height: 50,
+                              ),
                             ),
-                            // Image.asset(
-                            //   'assets/images/10.jpg',
-                            //   height: 100,
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              ' ${_dl.FName} ${_dl.LName}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black54,
+                              ),
+                            ),
+                            // RichText(
+                            //   text: TextSpan(
+                            //       text: _club.score.toString().toPersianDigit(),
+                            //       style: const TextStyle(
+                            //         fontWeight: FontWeight.bold,
+                            //         color: Colors.black54,
+                            //         fontSize: 16,
+                            //       ),
+                            //       children: const [
+                            //         TextSpan(
+                            //           text: ' تومان',
+                            //           style: TextStyle(
+                            //             fontWeight: FontWeight.normal,
+                            //             fontSize: 10,
+                            //             color: Colors.black54,
+                            //           ),
+                            //         ),
+                            //       ]),
+                            // ),
+                            // const SizedBox(
+                            //   width: 15,
+                            // ),
+                            // const Text('امتیاز'),
+                            // const SizedBox(
+                            //   width: 5,
+                            // ),
+                            // Text(
+                            //   _club.score.toString().toPersianDigit(),
+                            //   style: const TextStyle(color: Colors.green),
                             // ),
                           ],
                         ),
@@ -270,20 +298,18 @@ class _CustomerClubState extends State<CustomerClub> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
-                                    // Text(
-                                    //   state.userInfo[0].Score
-                                    //       .toString()
-                                    //       .toPersianDigit(),
-                                    //   style: const TextStyle(
-                                    //       color: Colors.green, fontSize: 30),
-                                    // ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
                                     const Text(
                                       'امتیاز',
                                       style: TextStyle(color: Colors.white),
+                                    ),
+                                    Text(
+                                      _club.score.toString().toPersianDigit(),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -293,15 +319,21 @@ class _CustomerClubState extends State<CustomerClub> {
                                 ),
                                 Column(
                                   children: [
-                                    Image.asset(
-                                      'assets/images/medal.png',
-                                      height: 45,
+                                    ClipOval(
+                                      child: Image.memory(
+                                        _club.imageLevel,
+                                        width: 30,
+                                      ),
                                     ),
+                                    // Image.asset(
+                                    //   'assets/images/medal.png',
+                                    //   height: 45,
+                                    // ),
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                    const Text(
-                                      'عادی',
+                                    Text(
+                                      _dl.Role.toString(),
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ],
@@ -363,7 +395,7 @@ class _CustomerClubState extends State<CustomerClub> {
                               children: [
                                 const Text('مجموع امتیاز:',
                                     style: TextStyle(color: Colors.black45)),
-                                Text('26,569'.toPersianDigit(),
+                                Text(_club.score.toString().toPersianDigit(),
                                     style:
                                         const TextStyle(color: Colors.black45)),
                               ],

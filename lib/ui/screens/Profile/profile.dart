@@ -9,7 +9,9 @@ import 'package:local_notification_flutter_project/ui/data/repo/cart_repository.
 import 'package:local_notification_flutter_project/ui/data/repo/customer_club_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/message_box_repository.dart';
 import 'package:local_notification_flutter_project/ui/root.dart';
+import 'package:local_notification_flutter_project/ui/screens/EditInfoUser/edit_info_user.dart';
 import 'package:local_notification_flutter_project/ui/screens/Favorite/favorite.dart';
+import 'package:local_notification_flutter_project/ui/screens/MyOrders/my_orders.dart';
 import 'package:local_notification_flutter_project/ui/screens/Profile/bloc/profile_bloc.dart';
 import 'package:local_notification_flutter_project/ui/screens/Setting/Setting.dart';
 import 'package:local_notification_flutter_project/ui/screens/TransactionList/transaction_list.dart';
@@ -165,8 +167,8 @@ class _ProfileState extends State<Profile> {
                               padding:
                                   const EdgeInsets.only(right: 18, left: 18),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                // mainAxisAlignment:
+                                //     MainAxisAlignment.spaceBetween,
                                 children: [
                                   ClipOval(
                                     child: Image.memory(
@@ -175,6 +177,11 @@ class _ProfileState extends State<Profile> {
                                       height: 50,
                                     ),
                                   ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(_dl.Role.toString()),
+                                  Spacer(),
                                   Text(
                                     ' امتیاز شما : ${state.club.first.Value}'
                                         .toPersianDigit(),
@@ -282,10 +289,14 @@ class _ProfileState extends State<Profile> {
                                 ),
                                 MenuItems(
                                   press: () {
-                                    // Navigator.of(context).push(
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) => Settings()),
-                                    // );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child: MyOrders()),
+                                      ),
+                                    );
                                   },
                                   image: 'assets/images/order.png',
                                   title: 'سفارش های من',
@@ -336,7 +347,20 @@ class _ProfileState extends State<Profile> {
                                       backgroundColor: Colors.amber[200],
                                       onPrimary: Colors.black,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context, rootNavigator: true)
+                                          .push(
+                                        CupertinoPageRoute<bool>(
+                                          // settings: RouteSettings(name: 'dvsd'),
+                                          fullscreenDialog: true,
+                                          builder: (BuildContext context) =>
+                                              Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child: EditInfoUser(),
+                                          ),
+                                        ),
+                                      );
+                                    },
                                     child: const Text(
                                       'ویرایش اطلاعات',
                                       style: TextStyle(
