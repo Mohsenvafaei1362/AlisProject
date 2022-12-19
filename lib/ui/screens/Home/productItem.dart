@@ -88,173 +88,177 @@ class _ProductItemState extends State<ProductItem> {
           },
           child: BlocBuilder<ProductsBloc, ProductsState>(
             builder: (context, state) {
-              return Card(
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.white70, width: 1),
-                  borderRadius: widget.borderRadius,
-                ),
-                elevation: 2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Stack(
-                      children: [
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          left: 0,
-                          child: ClipOval(
-                            child: Container(
-                              // width: size.width * 0.2,
-                              height: size.height * 0.04,
-                              decoration: BoxDecoration(
-                                color: Colors.grey[100],
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          // color: Colors.amber,
-                          width: widget.itemWidth,
-                          height: widget.itemHeight,
-                          child: Hero(
-                            transitionOnUserGestures: true,
-                            tag: 'image',
-                            child: ImageLoadingService(
-                              imageUrl: widget.product.imageUrl,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 0,
-                          right: 20,
-                          child: Container(
-                            width: 32,
-                            height: 32,
-                            alignment: Alignment.center,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            child: IconButton(
-                              splashColor: Colors.white,
-                              highlightColor: Colors.white,
-                              onPressed: () {
-                                // isFavorite = !isFavorite;
-                                if (!favoritmanager
-                                    .isFavorite(widget.product)) {
-                                  favoritmanager.addFavorite(widget.product);
-                                } else {
-                                  favoritmanager.delete(widget.product);
-                                }
-                                setState(() {});
-                                // BlocProvider.of<ProductsBloc>(context).add(
-                                //   ProductAddToFavoriteButtonClicked(
-                                //     widget.product.id,
-                                //   ),
-                                // );
-                              },
-                              icon: Icon(
-                                favoritmanager.isFavorite(widget.product)
-                                    ? CupertinoIcons.heart_fill
-                                    : CupertinoIcons.heart,
-                                color: favoritmanager.isFavorite(widget.product)
-                                    ? Colors.pink[300]
-                                    : Colors.black38,
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        ),
-                        widget.product.discount != 0
-                            ? Positioned(
-                                top: 10,
-                                left: 20,
-                                child: Container(
-                                    width: 32,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: Colors.pink[400],
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      widget.product.discount
-                                          .toString()
-                                          .toPersianDigit()
-                                          .withDiscountLable,
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )),
-                              )
-                            : Text(''),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10, left: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+              return SizedBox(
+                width: size.width * 0.45,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.white70, width: 1),
+                    borderRadius: widget.borderRadius,
+                  ),
+                  elevation: 5,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Stack(
                         children: [
-                          Text(
-                            widget.product.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Row(
-                            // mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 15,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text('5'.toPersianDigit()),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              widget.product.discount != 0
-                                  ? Text(
-                                      '${(widget.product.price - (widget.product.price * (widget.product.discount / 100))).withPriceLable}'
-                                          .toPersianDigit(),
-                                    )
-                                  : Text(
-                                      widget.product.price.withPriceLable
-                                          .toPersianDigit(),
-                                    ),
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                alignment: Alignment.centerLeft,
-                                onPressed: () {
-                                  // print(widget.product.title);
-                                  // print(widget.product.id);
-                                  BlocProvider.of<ProductsBloc>(context).add(
-                                    ProductAddToCartButtonClicked(
-                                        widget.product.id),
-                                  );
-                                },
-                                icon: const Icon(
-                                  CupertinoIcons.cart_badge_plus,
-                                  color: Colors.green,
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            left: 0,
+                            child: ClipOval(
+                              child: Container(
+                                // width: size.width * 0.2,
+                                height: size.height * 0.04,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[100],
                                 ),
                               ),
-                              // const Icon(
-                              //   CupertinoIcons.cart_badge_plus,
-                              //   color: Colors.green,
-                              // ),
-                            ],
+                            ),
                           ),
+                          SizedBox(
+                            // color: Colors.amber,
+                            width: widget.itemWidth,
+                            height: widget.itemHeight,
+                            child: Hero(
+                              transitionOnUserGestures: true,
+                              tag: 'image',
+                              child: ImageLoadingService(
+                                imageUrl: widget.product.imageUrl,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 20,
+                            child: Container(
+                              width: 32,
+                              height: 32,
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: IconButton(
+                                splashColor: Colors.white,
+                                highlightColor: Colors.white,
+                                onPressed: () {
+                                  // isFavorite = !isFavorite;
+                                  if (!favoritmanager
+                                      .isFavorite(widget.product)) {
+                                    favoritmanager.addFavorite(widget.product);
+                                  } else {
+                                    favoritmanager.delete(widget.product);
+                                  }
+                                  setState(() {});
+                                  // BlocProvider.of<ProductsBloc>(context).add(
+                                  //   ProductAddToFavoriteButtonClicked(
+                                  //     widget.product.id,
+                                  //   ),
+                                  // );
+                                },
+                                icon: Icon(
+                                  favoritmanager.isFavorite(widget.product)
+                                      ? CupertinoIcons.heart_fill
+                                      : CupertinoIcons.heart,
+                                  color:
+                                      favoritmanager.isFavorite(widget.product)
+                                          ? Colors.pink[300]
+                                          : Colors.black38,
+                                  size: 24,
+                                ),
+                              ),
+                            ),
+                          ),
+                          widget.product.discount != 0
+                              ? Positioned(
+                                  top: 10,
+                                  left: 20,
+                                  child: Container(
+                                      width: 32,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: Colors.pink[400],
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(10),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        widget.product.discount
+                                            .toString()
+                                            .toPersianDigit()
+                                            .withDiscountLable,
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )),
+                                )
+                              : Text(''),
                         ],
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10, left: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.product.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Row(
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                  size: 15,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text('5'.toPersianDigit()),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                widget.product.discount != 0
+                                    ? Text(
+                                        '${(widget.product.price - (widget.product.price * (widget.product.discount / 100))).withPriceLable}'
+                                            .toPersianDigit(),
+                                      )
+                                    : Text(
+                                        widget.product.price.withPriceLable
+                                            .toPersianDigit(),
+                                      ),
+                                IconButton(
+                                  padding: EdgeInsets.zero,
+                                  alignment: Alignment.centerLeft,
+                                  onPressed: () {
+                                    // print(widget.product.title);
+                                    // print(widget.product.id);
+                                    BlocProvider.of<ProductsBloc>(context).add(
+                                      ProductAddToCartButtonClicked(
+                                          widget.product.id),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    CupertinoIcons.cart_badge_plus,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                                // const Icon(
+                                //   CupertinoIcons.cart_badge_plus,
+                                //   color: Colors.green,
+                                // ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
