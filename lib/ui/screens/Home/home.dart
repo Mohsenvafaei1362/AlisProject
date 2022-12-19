@@ -653,8 +653,24 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                   const HomeStarted(isRefreshing: true),
                 );
               },
-              child: Center(
-                child: Text(state.exception.message),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(state.exception.message),
+                  ElevatedButton(
+                    onPressed: () {
+                      BlocProvider.of<HomeBloc>(context).add(
+                        const HomeStarted(isRefreshing: true),
+                      );
+                    },
+                    child: Text(
+                      'تلاش دوباره',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           } else {

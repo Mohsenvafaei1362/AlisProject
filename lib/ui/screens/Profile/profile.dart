@@ -447,8 +447,27 @@ class _ProfileState extends State<Profile> {
                       ),
                     );
                   },
-                  child: Center(
-                    child: Text(state.exception.message),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(state.exception.message),
+                      ElevatedButton(
+                        onPressed: () {
+                          BlocProvider.of<ProfileBloc>(context).add(
+                            ProfileStarted(
+                              AuthRepository.authChangeNotifire.value!,
+                              true,
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'تلاش دوباره',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 );
               } else {

@@ -147,8 +147,27 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   );
                 },
-                child: Center(
-                  child: Text(state.exception.message),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(state.exception.message),
+                    ElevatedButton(
+                      onPressed: () {
+                        cartBloc?.add(
+                          CartStarted(
+                            AuthRepository.authChangeNotifire.value,
+                            isRefreshing: true,
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'تلاش دوباره',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               );
             } else if (state is CartSuccess) {

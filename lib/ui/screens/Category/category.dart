@@ -235,8 +235,24 @@ class _CategoryState extends State<Category> {
                       const CategoryStarted(isRefreshing: true),
                     );
                   },
-                  child: Center(
-                    child: Text(state.exception.message),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(state.exception.message),
+                      ElevatedButton(
+                        onPressed: () {
+                          BlocProvider.of<CategoryBloc>(context).add(
+                            const CategoryStarted(isRefreshing: true),
+                          );
+                        },
+                        child: Text(
+                          'تلاش دوباره',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 );
               } else {

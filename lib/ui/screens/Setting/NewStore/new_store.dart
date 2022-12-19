@@ -383,7 +383,7 @@ class _NewStoreState extends State<NewStore> {
                                 address: address.text == ''
                                     ? product.title9
                                     : address.text,
-                                image: _file1 == null ? 'kkkkkkkk' : _image1!,
+                                image: _file1 == null ? '' : _image1!,
                                 branchtype: _selectedLocation ?? product.title,
                                 phoneNumber: phoneStore.text.isEmpty
                                     ? int.parse(product.title7)
