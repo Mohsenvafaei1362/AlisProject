@@ -22,11 +22,7 @@ class _PreviewInfoState extends State<PreviewInfo> {
 
   PreviewInfoBloc? previewInfoBloc;
 
-  @override
-  void initState() {
-    final UiDl _dl = Get.put(UiDl());
-    super.initState();
-  }
+ 
 
   @override
   void dispose() {

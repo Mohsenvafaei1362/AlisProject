@@ -159,6 +159,12 @@ class _RoleState extends State<Role> {
                     ),
                   );
                   isClickedButton = true;
+                  _dl.FName.value = controlfname.text;
+                  _dl.LName.value = controllname.text;
+                  _dl.NastinalCode.value = controlcode.text;
+                  _dl.Email.value = controlemail.text;
+                  _dl.PostalCode.value = int.parse(controlcodeposti.text);
+                  _dl.Role.value = gender!;
                 },
               );
             } else {
@@ -619,71 +625,7 @@ class _RoleState extends State<Role> {
                           ),
                         ),
 
-                      ////////////////////////////////////////////////////////////////////////////////////////////////
-                      // if (roleBloc?.state is RoleScreenSuccess)
-                      //   // if (stateSuccess == true)
-                      //   FutureBuilder<List<EditDlDto>>(
-                      //     future: EditDl(
-                      //       EditDlDto(
-                      //         controlfname.text,
-                      //         controllname.text,
-                      //         controlemail.text,
-                      //         int.parse(controlcode.text.toEnglishDigit()),
-                      //         getinfo.ostanid.value,
-                      //         getinfo.cityid.value,
-                      //         int.parse(controlcodeposti.text.toEnglishDigit()),
-                      //         getinfo.city.value,
-                      //         getinfo.ostan.value,
-                      //       ),
-                      //     ),
-                      //     // future: putregistermemberlevel(3, '3', 'Loginfive'),
-                      //     builder: (context, snapshot) {
-                      //       if (snapshot.connectionState ==
-                      //           ConnectionState.waiting) {
-                      //         return const Text('');
-                      //         // const Center(
-                      //         //   child: CircularProgressIndicator(),
-                      //         // );
-                      //       } else if (snapshot.connectionState ==
-                      //           ConnectionState.done) {
-                      //         if (snapshot.hasData && snapshot.data != null) {
-                      //           WidgetsBinding.instance
-                      //               .addPostFrameCallback((timeStamp) {
-                      //             _dl.Company.value = 'هلدینگ عالیس';
-                      //             _dl.CompanyRef.value = 1;
-                      //             _dl.DlCode.value = '-1';
-                      //             _dl.Email.value = controlemail.text;
-                      //             _dl.FName.value = controlfname.text;
-                      //             _dl.LName.value = controllname.text;
-                      //             _dl.PostalCode.value = int.parse(
-                      //                 controlcodeposti.text.toEnglishDigit());
-                      //             _dl.Role.value = gender.toString();
-                      //             // _dl.UserId.value = -1;
-                      //             // _dl.UserName.value = '-1';
-                      //             _dl.FullName.value =
-                      //                 controlfname.text + controllname.text;
-                      //             _dl.NastinalCode.value = controlcode.text
-                      //                 .toEnglishDigit()
-                      //                 .toString();
-                      //             _dl.DlState.value = 1;
-                      //             putregistermemberlevel(4, '4', 'Map');
-                      //             // setState(() {
-                      //             //   getdl = !getdl;
-                      //             //   print('okkkkkkkkkk');
-                      //             // });
-                      //           });
-                      //           return Container();
-                      //         } else {
-                      //           return const Text('Empty data');
-                      //         }
-                      //       } else {
-                      //         return const Text('');
-                      //         // const Center(
-                      //         //   child: CircularProgressIndicator(),
-                      //         // );
-                      //       }
-                      //     },
-                      //   ),
+                      //////////////////////////////////////////////////////////////////////////////////////////////
                     ],
                   ),
                 ),
