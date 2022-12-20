@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/httpClient/httpClient.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/new_ticket_repository.dart';
@@ -26,6 +30,69 @@ class _NewTicketState extends State<NewTicket> {
   final UiTimerUser timerUser = Get.put(UiTimerUser());
   final UiPhoneController getinfo = Get.put(UiPhoneController());
   final UiDl _dl = Get.put(UiDl());
+  final picker1 = ImagePicker();
+  File? _file1;
+
+  String? _image1;
+  Future getImage() async {
+    final pickedFile = await picker1.getImage(source: ImageSource.camera);
+    setState(() {
+      if (pickedFile != null) {
+        _file1 = File(pickedFile.path);
+        List<int> bytes = utf8.encode(pickedFile.path);
+        final imageEncoded = base64.encode(bytes);
+        _image1 = imageEncoded;
+
+        ///Check Size Image
+        final _bytes = _file1!.readAsBytesSync().lengthInBytes;
+        double m = ((_bytes / 1024.0) / 1024.0);
+        if (m > 5) {
+          // showDialog(
+          //   context: context,
+          //   builder: ((context) => Dialog(
+          //       context: context,
+          //       warning: '!!! توجه',
+          //       title:
+          //           'حجم عکس نباید بیشتر از 5 مگا بایت باشد'.toPersianDigit(),
+          //       button: 'متوجه شدم')),
+          // );
+        }
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future getgallery() async {
+    final pickedFile = await picker1.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _file1 = File(pickedFile.path);
+        //  var magebytes =  _file1!.readAsBytes();
+        List<int> bytes = utf8.encode(pickedFile.path);
+        final imageEncoded = base64.encode(bytes);
+        _image1 = imageEncoded;
+
+        ///Check Size Image
+        final _bytes = _file1!.readAsBytesSync().lengthInBytes;
+        double m = ((_bytes / 1024.0) / 1024.0);
+        if (m > 5) {
+          // showDialog(
+          //   context: context,
+          //   builder: ((context) => Dialog(
+          //       context: context,
+          //       warning: '!!! توجه',
+          //       title:
+          //           'حجم عکس نباید بیشتر از 5 مگا بایت باشد'.toPersianDigit(),
+          //       button: 'متوجه شدم')),
+          // );
+        }
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
   // final UiFlag flag = Get.put(UiFlag());
   final List<String> items = [
     'مشکل در سفارش',
@@ -51,7 +118,7 @@ class _NewTicketState extends State<NewTicket> {
 
   @override
   Widget build(BuildContext context) {
-    // final Size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: BlocProvider<NewTicketBloc>(
         create: (context) =>
@@ -151,8 +218,8 @@ class _NewTicketState extends State<NewTicket> {
                           padding: EdgeInsets.all(32),
                           child: Text(
                             'برای پیگیری سفارش یا طرح سوالات خود، از طریق فرم زیر با ما در ارتباط باشید . تلاش میکنیم هرچه سریعتر به مشکل شما رسیدگی کنیم',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(fontSize: 15),
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(fontSize: 10),
                           ),
                         ),
                         Padding(
@@ -241,6 +308,22 @@ class _NewTicketState extends State<NewTicket> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Container(
+                                child: _file1 == null
+                                    ? Image.asset(
+                                        'assets/images/upload.png',
+                                        width: 68,
+                                        height: 68,
+                                      )
+                                    : Image.file(
+                                        _file1!,
+                                        width: 100,
+                                        height: 68,
+                                      ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Container(
                                 height: 40,
                                 width: 70,
                                 decoration: const BoxDecoration(
@@ -260,25 +343,95 @@ class _NewTicketState extends State<NewTicket> {
                               const SizedBox(
                                 width: 20,
                               ),
-                              Container(
-                                height: 40,
-                                width: 110,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.green),
-                                  borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Text('پیوست فایل'),
-                                    Icon(
-                                      Icons.upload,
-                                      color: Colors.green,
+                              InkWell(
+                                onTap: () {
+                                  showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      // title: Center(
+                                      //     child: const Text('اسکن مدارک')),
+                                      content: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          TextButton(
+                                            onPressed: () {
+                                              getgallery();
+                                              Navigator.of(context).pop();
+                                              // getmadrak();
+                                            },
+                                            child: Container(
+                                              width: size.width * 0.2,
+                                              height: size.height * 0.05,
+                                              padding: const EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey[100],
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: const Center(
+                                                child: Text(
+                                                  'گالری',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 17,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              getImage();
+                                              Navigator.of(context).pop();
+                                              // getmadrak();
+                                            },
+                                            child: Container(
+                                              width: size.width * 0.2,
+                                              height: size.height * 0.05,
+                                              padding: const EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey[100],
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: const Center(
+                                                child: Text(
+                                                  'دوربین',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 17,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ],
+                                  );
+                                },
+                                child: Container(
+                                  height: 40,
+                                  width: 110,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.green),
+                                    borderRadius: const BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Text('پیوست فایل'),
+                                      Icon(
+                                        Icons.upload,
+                                        color: Colors.green,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
