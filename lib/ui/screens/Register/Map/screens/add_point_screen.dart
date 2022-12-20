@@ -13,6 +13,7 @@ import 'package:local_notification_flutter_project/ui/screens/Register/Map/widge
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
+import 'package:local_notification_flutter_project/ui/screens/widgets/AlertDialog.dart';
 import 'package:provider/provider.dart';
 // import 'package:point_app/DB/boxes.dart';
 // import 'package:point_app/DB/db_helper.dart';
@@ -61,7 +62,7 @@ class _Ui_AddPointScreenState extends State<Ui_AddPointScreen> {
     if (_titleController.text.isEmpty ||
         _image == null ||
         _selectedLocation == null) {
-      return;
+      return Alert_Dialog().alert;
     }
 
     await Provider.of<Ui_PointProvider>(context, listen: false)
@@ -110,9 +111,13 @@ class _Ui_AddPointScreenState extends State<Ui_AddPointScreen> {
           floatingActionButton: FloatingActionButton.extended(
             backgroundColor: Colors.red,
             onPressed: () {
+              // if (_titleController.text.length != 0 || _image != null || _selectedLocation != null) {
               addPointScreenBloc!.state is AddPointScreenLoading
                   ? null
                   : _save();
+              // } else {
+              //   Alert_Dialog().alert;
+              // }
             },
             label: Row(
               children: const [

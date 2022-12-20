@@ -6,6 +6,7 @@ import 'package:local_notification_flutter_project/ui/controller/controller.dart
 import 'package:local_notification_flutter_project/ui/data/repo/EditInfoUser_Repository.dart';
 import 'package:local_notification_flutter_project/ui/screens/CommentSuggest/commentsuggest.dart';
 import 'package:local_notification_flutter_project/ui/screens/EditInfoUser/bloc/edit_info_user_bloc.dart';
+import 'package:local_notification_flutter_project/ui/screens/widgets/AlertDialog.dart';
 
 class EditInfoUser extends StatefulWidget {
   const EditInfoUser({key});
@@ -90,18 +91,7 @@ class _EditInfoUserState extends State<EditInfoUser> {
                                 ),
                               );
                             } else {
-                              Get.defaultDialog(
-                                title: 'کابر گرامی',
-                                middleText: ' لطفا تمامی فیلدها پر شوند',
-                                middleTextStyle:
-                                    TextStyle(color: Colors.pink[300]),
-                                onCancel: () {},
-                                textCancel: 'متوجه شدم',
-                                titleStyle: TextStyle(
-                                  color: Colors.amber,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              );
+                              Alert_Dialog().alert;
                             }
                           },
                           child: state is EditInfoUserLoading

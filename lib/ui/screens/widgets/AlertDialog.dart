@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AlertDialog_ {
+class Alert_Dialog {
   get alert => Get.defaultDialog(
         title: 'کابر گرامی',
         middleText: ' لطفا تمامی فیلدها پر شوند',
