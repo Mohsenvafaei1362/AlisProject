@@ -603,14 +603,24 @@ class UserOpinion extends StatelessWidget {
     return Container(
       width: size.width,
       margin: const EdgeInsets.symmetric(vertical: 5),
-      padding: const EdgeInsets.all(32.0),
+      padding: const EdgeInsets.all(8.0),
       color: Colors.white,
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: const [
-              Text('دیدگاه کاربران'),
+              Padding(
+                padding: EdgeInsets.only(
+                  right: 10,
+                ),
+                child: Text(
+                  'دیدگاه کاربران',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ],
           ),
           const SizedBox(
@@ -618,9 +628,8 @@ class UserOpinion extends StatelessWidget {
           ),
           Container(
             width: size.width,
-            height: size.height * 0.12,
+            height: size.height * 0.2,
             // color: Colors.red,
-            color: Colors.white,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: comment.length,
@@ -628,49 +637,61 @@ class UserOpinion extends StatelessWidget {
                 final dataComment = comment[index];
                 return Column(
                   children: [
-                    Container(
-                      // width: size.width * 0.5,
-                      // height: size.height * 0.18,
-                      margin: const EdgeInsets.all(5),
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //     color: Color(0xffbdbdbd),
-                        //     spreadRadius: 1,
-                        //     blurRadius: 1,
-                        //     offset: Offset(0,
-                        //         1), // changes position of shadow
-                        //   ),
-                        // ],
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          color: Colors.grey.withOpacity(0.2),
-                          width: 1,
+                    SizedBox(
+                      width: size.width * 0.4,
+                      height: size.height * 0.18,
+                      child: InkWell(
+                        onTap: () {
+                          Get.defaultDialog(
+                            title: dataComment.title,
+                            backgroundColor: Colors.grey[50],
+                            content: Text(
+                              dataComment.description,
+                              textAlign: TextAlign.justify,
+                              textDirection: TextDirection.rtl,
+                              style: TextStyle(
+                                fontSize: 12,
+                                height: 2,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Card(
+                          elevation: 5,
+                          color: Colors.grey[50],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  dataComment.title,
+                                  textAlign: TextAlign.justify,
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  dataComment.description,
+                                  textAlign: TextAlign.justify,
+                                  maxLines: 4,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    height: 2.1,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            dataComment.title,
-                            textAlign: TextAlign.justify,
-                            style: const TextStyle(
-                              fontSize: 10,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            dataComment.description,
-                            textAlign: TextAlign.justify,
-                            style: const TextStyle(
-                              fontSize: 10,
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                   ],
