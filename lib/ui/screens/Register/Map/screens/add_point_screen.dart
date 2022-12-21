@@ -93,10 +93,10 @@ class _Ui_AddPointScreenState extends State<Ui_AddPointScreen> {
     // } else {
     //   print('No image selected.');
     // }
-    print(_selectedLocation!.lat.runtimeType);
-    print(_selectedLocation!.lon.runtimeType);
-    print(_titleController.text.runtimeType);
-    print(_image.runtimeType);
+    // print(_selectedLocation!.lat.runtimeType);
+    // print(_selectedLocation!.lon.runtimeType);
+    // print(_titleController.text.runtimeType);
+    // print(_image.runtimeType);
 
     //print(box.getAt(0));
 

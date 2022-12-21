@@ -113,23 +113,26 @@ class AllPepole3 {
   static List<Pepole3> get pepoles3 {
     return [
       Pepole3(
-          id: 1,
-          score: 45,
-          name: 'محسن وفائی',
-          image: 'assets/stories/story_5.jpg',
-          rank: 1),
+        id: 1,
+        score: 60,
+        name: 'احمد علوی',
+        image: 'assets/stories/story_5.jpg',
+        rank: 1,
+      ),
       Pepole3(
-          id: 1,
-          score: 50,
-          name: 'عباس صدیق رضوانی',
-          image: 'assets/stories/story_8.jpg',
-          rank: 2),
+        id: 1,
+        score: 57,
+        name: 'مهدی نجفی',
+        image: 'assets/stories/story_8.jpg',
+        rank: 2,
+      ),
       Pepole3(
-          id: 1,
-          score: 50,
-          name: 'شایان قدریان',
-          image: 'assets/stories/story_10.jpg',
-          rank: 2),
+        id: 1,
+        score: 55,
+        name: 'علی علوی',
+        image: 'assets/stories/story_10.jpg',
+        rank: 3,
+      ),
     ];
   }
 }

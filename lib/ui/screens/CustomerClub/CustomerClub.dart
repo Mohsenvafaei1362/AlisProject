@@ -5,6 +5,7 @@ import 'package:local_notification_flutter_project/ui/controller/controller.dart
 import 'package:local_notification_flutter_project/ui/data/repo/customer_club_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/topPepole_repository.dart';
 import 'package:local_notification_flutter_project/ui/models/Pepole/pepole.dart';
+import 'package:local_notification_flutter_project/ui/models/data_message_box.dart';
 import 'package:local_notification_flutter_project/ui/screens/CustomerClub/bloc/customer_club_bloc.dart';
 import 'package:local_notification_flutter_project/ui/screens/Ghole/introducing_ghole.dart';
 import 'package:local_notification_flutter_project/ui/screens/Home/home.dart';
@@ -36,6 +37,8 @@ class _CustomerClubState extends State<CustomerClub> {
 
   final UiDl _dl = Get.put(UiDl());
   final Club _club = Get.put(Club());
+
+  final pepole = AllPepole3.pepoles3;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -167,13 +170,14 @@ class _CustomerClubState extends State<CustomerClub> {
                         child: Container(
                           height: size.height / 5,
                           decoration: BoxDecoration(
+                            color: Colors.lightBlueAccent[700],
                             borderRadius: BorderRadius.circular(20),
-                            image: const DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage(
-                                'assets/images/7773.jpg',
-                              ),
-                            ),
+                            // image: const DecorationImage(
+                            //   fit: BoxFit.cover,
+                            //   image: AssetImage(
+                            //     'assets/images/7773.jpg',
+                            //   ),
+                            // ),
                           ),
                           child: Column(
                             children: [
@@ -228,7 +232,7 @@ class _CustomerClubState extends State<CustomerClub> {
                                 child: ListView.builder(
                                   itemCount: 3,
                                   itemBuilder: (context, index) {
-                                    // final data = state.topPepole[index];
+                                    final data = pepole[index];
                                     return Container(
                                       width: size.width,
                                       height: size.height * 0.037,
@@ -244,27 +248,34 @@ class _CustomerClubState extends State<CustomerClub> {
                                           //     width: 30,
                                           //   ),
                                           // ),
-                                          // SizedBox(
-                                          //   width: size.width * 0.27,
-                                          //   child: Text(
-                                          //     data.name,
-                                          //     style: const TextStyle(
-                                          //         color: Colors.white),
-                                          //   ),
-                                          // ),
-                                          // SizedBox(
-                                          //   width: size.width * 0.1,
-                                          //   child: Text(
-                                          //     '${data.rank}',
-                                          //     style: const TextStyle(
-                                          //         color: Colors.white),
-                                          //   ),
-                                          // ),
-                                          // Text(
-                                          //   '${data.score}',
-                                          //   style: const TextStyle(
-                                          //       color: Colors.white),
-                                          // ),
+                                          Icon(
+                                            Icons.person,
+                                            color: Colors.black38,
+                                          ),
+                                          SizedBox(
+                                            width: size.width * 0.27,
+                                            child: Text(
+                                              '${data.name}',
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: size.width * 0.1,
+                                            child: Text(
+                                              '${data.rank}',
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            '${data.score}',
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     );
@@ -298,17 +309,23 @@ class _CustomerClubState extends State<CustomerClub> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     const Text(
                                       'امتیاز',
-                                      style: TextStyle(color: Colors.white),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
                                     ),
                                     Text(
                                       _club.score.toString().toPersianDigit(),
                                       style: TextStyle(
                                         color: Colors.white,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ],
@@ -318,6 +335,7 @@ class _CustomerClubState extends State<CustomerClub> {
                                   height: 70,
                                 ),
                                 Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     ClipOval(
                                       child: Image.memory(
@@ -330,11 +348,13 @@ class _CustomerClubState extends State<CustomerClub> {
                                     //   height: 45,
                                     // ),
                                     const SizedBox(
-                                      height: 20,
+                                      height: 15,
                                     ),
                                     Text(
                                       _dl.Role.toString(),
-                                      style: TextStyle(color: Colors.white),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ],
                                 ),
