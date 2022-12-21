@@ -1,11 +1,17 @@
+import 'package:get/get.dart';
+import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/common/exception.dart';
 import 'package:local_notification_flutter_project/ui/data/httpClient/httpClient.dart';
 import 'package:dio/dio.dart';
+import 'package:local_notification_flutter_project/ui/screens/widgets/ValidationResponse.dart';
+
+final UiDl _dl = Get.put(UiDl());
+final UserInfo _userInfo = Get.put(UserInfo());
 
 abstract class IProductDataSource {
   Future<List<ProductEntity>> filtter(String sort);
-  Future<List<ProductEntity>> getAll();
+  Future<List<ProductEntity>> getAll(int categoryId);
   Future<List<ProductEntity>> detail(int data);
   Future<List<ProductEntity>> search(String searchTerm);
 }
@@ -15,12 +21,12 @@ class ProductRemoteDataSource implements IProductDataSource {
 
   ProductRemoteDataSource(this.httpClient);
   @override
-  // Future<List<UiProductEntity>> getAll(int sort) async {
-  Future<List<ProductEntity>> getAll() async {
-    // final response = await httpClient.get('http://185.135.229.96:806/products');
-    final response = await httpProduct.get(
-      'products',
-    );
+  Future<List<ProductEntity>> getAll(int categoryId) async {
+    final response = await httpProduct.get('products', queryParameters: {
+      "CategoryId": categoryId,
+      "UserId": _dl.UserId.value,
+      "SellCenter": _userInfo.sellsCenter.value,
+    });
     validateResponse(response);
     final products = <ProductEntity>[];
 
@@ -41,12 +47,6 @@ class ProductRemoteDataSource implements IProductDataSource {
       products.add(ProductEntity.fromJson(element));
     }
     return products;
-  }
-
-  validateResponse(Response response) {
-    if (response.statusCode != 200) {
-      throw AppException();
-    }
   }
 
   @override

@@ -47,7 +47,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (event is HomeStarted || event is HomeRefresh) {
         try {
           emit(HomeLoading());
-          final latestProducts = await productRepository.getAll();
+          final products = await productRepository.getAll(0);
           final banners = await bannerRepository.getAll();
           final messageCount = await messageCountRepository.messageCount();
           final clubinfo = await clubRepository.club();
@@ -55,7 +55,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           final sliderInfo = await sliderRepository.getImage('Main');
 
           // final userInfo = await userInfoRepository.userInfo();
-          product = latestProducts;
+          product = products;
           banner = banners;
           message = messageCount;
           club = clubinfo;
@@ -67,7 +67,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           // final popularProducts = await productRepository.getAll();
           emit(HomeSuccess(
             banners: banners,
-            products: latestProducts,
+            products: products,
             messageCount: message,
             club: clubinfo,
             ghole: gholeinfo,
@@ -86,7 +86,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (!isRefreshing) {
         emit(HomeLoading());
       }
-      final result = await productRepository.getAll();
+      final result = await productRepository.getAll(1);
       final banners = await bannerRepository.getAll();
       final messageCount = await messageCountRepository.messageCount();
       if (result.isEmpty || banners.isEmpty || messageCount.isEmpty) {

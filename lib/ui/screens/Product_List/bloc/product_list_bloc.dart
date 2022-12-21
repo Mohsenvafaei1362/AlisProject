@@ -14,8 +14,12 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       if (event is ProductListStarted) {
         try {
           emit(ProductListLoading());
-          final products = await productRepository.getAll();
-          emit(ProductListSuccess(products, event.sort, UiProductSort.names));
+          final products = await productRepository.getAll(event.categoryId);
+          emit(ProductListSuccess(
+            products,
+            event.categoryId,
+            UiProductSort.names,
+          ));
         } catch (e) {
           emit(ProductListError(AppException()));
         }

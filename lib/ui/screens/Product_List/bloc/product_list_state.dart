@@ -12,13 +12,17 @@ class ProductListLoading extends ProductListState {}
 
 class ProductListSuccess extends ProductListState {
   final List<ProductEntity> products;
-  final int sort;
+  final int categoryId;
   final List<String> sortNames;
 
-  const ProductListSuccess(this.products, this.sort, this.sortNames);
+  const ProductListSuccess(
+    this.products,
+    this.categoryId,
+    this.sortNames,
+  );
 
   @override
-  List<Object?> get props => [products, sort, sortNames];
+  List<Object?> get props => [products, categoryId, sortNames];
 }
 
 class ProductListError extends ProductListState {

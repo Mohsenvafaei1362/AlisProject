@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductListScreen extends StatefulWidget {
-  final int sort;
-  const ProductListScreen({key, required this.sort});
+  final int categoryId;
+  const ProductListScreen({key, required this.categoryId});
 
   @override
   State<ProductListScreen> createState() => _ProductListScreenState();
@@ -29,6 +29,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   int data1 = 0;
   int? _sort;
   int? count;
+  int? indexsort;
 
   @override
   void dispose() {
@@ -68,7 +69,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
         child: BlocProvider<ProductListBloc>(
           create: (context) {
             final bloc = ProductListBloc(productRepository)
-              ..add(ProductListStarted(widget.sort));
+              ..add(ProductListStarted(widget.categoryId));
             productListBloc = bloc;
             return bloc;
           },
@@ -130,11 +131,15 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                           itemBuilder:
                                                               (context, index) {
                                                             final selecktedSortIndex =
-                                                                state.sort;
+                                                                state
+                                                                    .categoryId;
+
                                                             return InkWell(
                                                               onTap: () {
                                                                 setState(() {
                                                                   _sort = index;
+                                                                  indexsort =
+                                                                      index;
                                                                 });
                                                                 productListBloc!
                                                                     .add(
@@ -194,11 +199,11 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Text('مرتب سازی'),
-                                      Text(
-                                        UiProductSort.names[state.sort],
-                                        style:
-                                            Theme.of(context).textTheme.caption,
-                                      ),
+                                      // Text(
+                                      //   UiProductSort.names[indexsort!],
+                                      //   style:
+                                      //       Theme.of(context).textTheme.caption,
+                                      // ),
                                     ],
                                   ),
                                 ],

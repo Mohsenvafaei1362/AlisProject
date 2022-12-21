@@ -157,6 +157,23 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
             _club.imageLevel = _avatarLevel;
             List<Uint8List> _avatarLevellst = [];
             List<String> _avatarLevellink = [];
+            List<Uint8List> _banners = [];
+            List<String> _bannersllink = [];
+
+            for (var element in state.banners) {
+              _banners.add(
+                base64.decode(
+                  element.img.toString(),
+                ),
+              );
+            }
+
+            for (var element in state.banners) {
+              _bannersllink.add(
+                element.link.toString(),
+              );
+            }
+
             for (var element in state.slider) {
               _avatarLevellst.add(
                 base64.decode(
@@ -496,7 +513,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                                       const Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: ProductListScreen(
-                                      sort: UiProductSort.latest,
+                                      categoryId: 1,
                                     ),
                                   ),
                                 ),
@@ -533,7 +550,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                                       const Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: ProductListScreen(
-                                      sort: UiProductSort.latest,
+                                      categoryId: 1,
                                     ),
                                   ),
                                 ),
@@ -556,15 +573,23 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             padding: const EdgeInsets.all(5.0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
-                              child: Advertise(
-                                size,
-                                'https://static.cdn.asset.aparat.com/avt/14831296-7391-b__8068.jpg',
-                                size.height * 0.2,
+                              child: Image.memory(
+                                _banners[0],
                               ),
+                              // child: Advertise(
+                              //   size,
+                              //   _imageAdvertise.first,
+                              //   size.height * 0.2,
+                              // ),
                             ),
                           );
                         case 6:
-                          return Advertise_1(size: size);
+                          return Advertise_1(
+                            size: size,
+                            image1: _banners[1],
+                            image2: _banners[2],
+                            image3: _banners[3],
+                          );
                         case 7:
                           return NewProduct(
                             size: size,
@@ -587,7 +612,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                                       const Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: ProductListScreen(
-                                      sort: UiProductSort.latest,
+                                      categoryId: 1,
                                     ),
                                   ),
                                 ),
@@ -605,11 +630,12 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             padding: const EdgeInsets.all(5.0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
-                              child: Advertise(
-                                size,
-                                'https://www.boursenews.ir/files/fa/news/1399/3/17/195744_674.jpg',
-                                size.height * 0.3,
-                              ),
+                              child: Image.memory(_banners[4]),
+                              // child: Advertise(
+                              //   size,
+                              //   'https://www.boursenews.ir/files/fa/news/1399/3/17/195744_674.jpg',
+                              //   size.height * 0.3,
+                              // ),
                             ),
                           );
                         case 12:
@@ -1379,9 +1405,15 @@ class Advertise_1 extends StatelessWidget {
   const Advertise_1({
     Key? key,
     required this.size,
+    required this.image1,
+    required this.image2,
+    required this.image3,
   }) : super(key: key);
 
   final Size size;
+  final Uint8List image1;
+  final Uint8List image2;
+  final Uint8List image3;
 
   @override
   Widget build(BuildContext context) {
@@ -1393,17 +1425,17 @@ class Advertise_1 extends StatelessWidget {
           CardItem(
             size: size,
             elevation: 2,
-            image: 'assets/images/36.jpg',
+            image: image1,
           ),
           CardItem(
             size: size,
             elevation: 15,
-            image: 'assets/images/82.jpg',
+            image: image2,
           ),
           CardItem(
             size: size,
             elevation: 2,
-            image: 'assets/images/41.jpg',
+            image: image3,
           ),
         ],
       ),
@@ -1420,7 +1452,7 @@ class CardItem extends StatelessWidget {
   }) : super(key: key);
 
   final Size size;
-  final String image;
+  final Uint8List image;
   final double elevation;
 
   @override
@@ -1436,7 +1468,7 @@ class CardItem extends StatelessWidget {
         height: size.height * 0.16,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15),
-          child: Image.asset(
+          child: Image.memory(
             image,
             fit: BoxFit.cover,
           ),

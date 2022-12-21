@@ -60,3 +60,38 @@ class ProductEntity extends HiveObject {
     return productItems;
   }
 }
+
+class Products {
+  final int id;
+  final String name;
+  final String image;
+  final int price;
+  final int rank;
+  final int score;
+  final int discount;
+  final int payablePrice;
+  final bool isfavorite;
+
+  Products(
+    this.id,
+    this.name,
+    this.image,
+    this.price,
+    this.rank,
+    this.score,
+    this.payablePrice,
+    this.isfavorite,
+    this.discount,
+  );
+
+  Products.fromJson(Map json)
+      : id = json['id'],
+        name = json['name'],
+        image = json['image'],
+        price = json['price'],
+        rank = json['rank'],
+        score = json['score'],
+        payablePrice = json['payable_price'],
+        discount = json['discount'],
+        isfavorite = json['is_favorite'];
+}

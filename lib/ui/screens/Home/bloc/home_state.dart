@@ -18,7 +18,7 @@ class HomeError extends HomeState {
 
 class HomeSuccess extends HomeState {
   final List<ProductEntity> products;
-  final List<UiBannerEntity> banners;
+  final List<SliderInfo> banners;
   final List<MessageCount> messageCount;
   final List<ClubInfo> club;
   final List<GholeInfo> ghole;

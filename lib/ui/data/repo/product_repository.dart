@@ -7,7 +7,7 @@ final productRepository =
 
 abstract class IProductRepository {
   Future<List<ProductEntity>> filtter(String sort);
-  Future<List<ProductEntity>> getAll();
+  Future<List<ProductEntity>> getAll(int categoryId);
   Future<List<ProductEntity>> detail(int data);
   Future<List<ProductEntity>> search(String searchTerm);
 }
@@ -19,7 +19,8 @@ class ProductRepository implements IProductRepository {
 
   @override
   // Future<List<UiProductEntity>> getAll(int sort) => dataSource.getAll(sort);
-  Future<List<ProductEntity>> getAll() => dataSource.getAll();
+  Future<List<ProductEntity>> getAll(int categoryId) =>
+      dataSource.getAll(categoryId);
 
   @override
   Future<List<ProductEntity>> search(String searchTerm) =>
