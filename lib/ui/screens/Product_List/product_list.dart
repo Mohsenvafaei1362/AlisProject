@@ -8,7 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductListScreen extends StatefulWidget {
   final int categoryId;
-  const ProductListScreen({key, required this.categoryId});
+  ProductListScreen({
+    key,
+    required this.categoryId,
+  });
 
   @override
   State<ProductListScreen> createState() => _ProductListScreenState();

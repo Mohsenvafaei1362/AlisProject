@@ -62,7 +62,7 @@ class _CategoryListState extends State<CategoryList> {
                               builder: (BuildContext context) => Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
-                                  categoryId: 1,
+                                  categoryId: 3,
                                 ),
                               ),
                             ),
@@ -75,7 +75,7 @@ class _CategoryListState extends State<CategoryList> {
                               builder: (BuildContext context) => Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
-                                  categoryId: 2,
+                                  categoryId: 4,
                                 ),
                               ),
                             ),
@@ -88,7 +88,7 @@ class _CategoryListState extends State<CategoryList> {
                               builder: (BuildContext context) => Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
-                                  categoryId: 3,
+                                  categoryId: 5,
                                 ),
                               ),
                             ),
@@ -101,7 +101,7 @@ class _CategoryListState extends State<CategoryList> {
                               builder: (BuildContext context) => Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
-                                  categoryId: 4,
+                                  categoryId: 6,
                                 ),
                               ),
                             ),
@@ -114,7 +114,7 @@ class _CategoryListState extends State<CategoryList> {
                               builder: (BuildContext context) => Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
-                                  categoryId: 5,
+                                  categoryId: 7,
                                 ),
                               ),
                             ),
@@ -127,7 +127,7 @@ class _CategoryListState extends State<CategoryList> {
                               builder: (BuildContext context) => Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
-                                  categoryId: 6,
+                                  categoryId: 8,
                                 ),
                               ),
                             ),
@@ -140,7 +140,7 @@ class _CategoryListState extends State<CategoryList> {
                               builder: (BuildContext context) => Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
-                                  categoryId: 7,
+                                  categoryId: 9,
                                 ),
                               ),
                             ),
@@ -153,7 +153,7 @@ class _CategoryListState extends State<CategoryList> {
                               builder: (BuildContext context) => Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
-                                  categoryId: 8,
+                                  categoryId: 10,
                                 ),
                               ),
                             ),
@@ -166,7 +166,7 @@ class _CategoryListState extends State<CategoryList> {
                               builder: (BuildContext context) => Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
-                                  categoryId: 9,
+                                  categoryId: 11,
                                 ),
                               ),
                             ),

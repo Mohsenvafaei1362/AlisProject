@@ -22,6 +22,7 @@ class ProductRemoteDataSource implements IProductDataSource {
   ProductRemoteDataSource(this.httpClient);
   @override
   Future<List<ProductEntity>> getAll(int categoryId) async {
+    print('categoryId : $categoryId');
     final response = await httpProduct.get('products', queryParameters: {
       "CategoryId": categoryId,
       "UserId": _dl.UserId.value,

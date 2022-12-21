@@ -510,7 +510,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                                   // settings: RouteSettings(name: ),
                                   fullscreenDialog: true,
                                   builder: (BuildContext context) =>
-                                      const Directionality(
+                                      Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: ProductListScreen(
                                       categoryId: 1,
@@ -529,7 +529,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                         case 3:
                           return NewProduct(
                             size: size,
-                            state: state,
+                            state: state.products,
                             // title: '',
                             // show: '',
                             showindex: 'مشاهده همه  >',
@@ -547,7 +547,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                                   // settings: RouteSettings(name: ),
                                   fullscreenDialog: true,
                                   builder: (BuildContext context) =>
-                                      const Directionality(
+                                      Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: ProductListScreen(
                                       categoryId: 1,
@@ -593,7 +593,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                         case 7:
                           return NewProduct(
                             size: size,
-                            state: state,
+                            state: state.products,
                             // title: 'محصولات',
                             // show: 'مشاهده همه  >',
                             // titr: 'پیشنهاد\nشگفت\nانگیز',
@@ -609,10 +609,10 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                                   // settings: RouteSettings(name: ),
                                   fullscreenDialog: true,
                                   builder: (BuildContext context) =>
-                                      const Directionality(
+                                      Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: ProductListScreen(
-                                      categoryId: 1,
+                                      categoryId: 2,
                                     ),
                                   ),
                                 ),
@@ -1282,7 +1282,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
     required int itemCount,
     required int indexcount,
     required bool reverse,
-    required HomeSuccess state,
+    required List<ProductEntity> state,
     // String? title,
     // String? show,
     String? showindex,
@@ -1333,7 +1333,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
             itemBuilder: (context, index) {
               // int revercedIndex = state.products.length - 1 - index;
               if (index == indexcount) {
-                final data = state.products[0];
+                final data = state[0];
 
                 return Container(
                   width: size.width * 0.9,
@@ -1384,8 +1384,8 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                     ],
                   ),
                 );
-              } else if (index < state.products.length) {
-                final data = state.products[index];
+              } else if (index < state.length) {
+                final data = state[index];
                 return ProductItem(
                   product: data,
                   borderRadius: BorderRadius.circular(10),

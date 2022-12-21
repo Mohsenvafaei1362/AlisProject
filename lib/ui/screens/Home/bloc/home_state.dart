@@ -18,6 +18,8 @@ class HomeError extends HomeState {
 
 class HomeSuccess extends HomeState {
   final List<ProductEntity> products;
+  final List<ProductEntity> proposal;
+  final List<ProductEntity> bestselling;
   final List<SliderInfo> banners;
   final List<MessageCount> messageCount;
   final List<ClubInfo> club;
@@ -30,5 +32,7 @@ class HomeSuccess extends HomeState {
     required this.club,
     required this.ghole,
     required this.slider,
+    required this.proposal,
+    required this.bestselling,
   });
 }

@@ -25,6 +25,8 @@ var message;
 var club;
 var ghole;
 var slider;
+var proposals;
+var bestsellings;
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final IBannerRepository bannerRepository;
@@ -47,7 +49,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (event is HomeStarted || event is HomeRefresh) {
         try {
           emit(HomeLoading());
-          final products = await productRepository.getAll(0);
+          final products = await productRepository.getAll(0); // همه محصولات
+          final proposal = await productRepository.getAll(1); //پیشنهاد ویژه
+          final bestselling = await productRepository.getAll(2); // پر فروش ترین
           final banners = await bannerRepository.getAll();
           final messageCount = await messageCountRepository.messageCount();
           final clubinfo = await clubRepository.club();
@@ -61,6 +65,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           club = clubinfo;
           ghole = gholeinfo;
           slider = sliderInfo;
+          proposals = proposal;
+          bestsellings = bestselling;
 
           // user = userInfo;
           // await loadCartItems(emit, false);
@@ -72,6 +78,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             club: clubinfo,
             ghole: gholeinfo,
             slider: sliderInfo,
+            bestselling: bestselling,
+            proposal: proposal,
             // userInfo: user,
             // popularProducts: popularProducts
           ));
@@ -99,6 +107,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           club: club,
           ghole: ghole,
           slider: slider,
+          bestselling: bestsellings,
+          proposal: proposals,
         ));
       }
     } catch (e) {
