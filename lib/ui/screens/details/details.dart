@@ -644,6 +644,10 @@ class UserOpinion extends StatelessWidget {
                         onTap: () {
                           Get.defaultDialog(
                             title: dataComment.title,
+                            titleStyle: TextStyle(
+                              color: Colors.black54,
+                              fontWeight: FontWeight.bold,
+                            ),
                             backgroundColor: Colors.grey[50],
                             content: Text(
                               dataComment.description,
@@ -663,7 +667,7 @@ class UserOpinion extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
