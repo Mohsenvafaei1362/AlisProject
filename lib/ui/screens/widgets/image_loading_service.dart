@@ -6,13 +6,15 @@ class ImageLoadingService extends StatelessWidget {
   final BorderRadius? borderRadius;
   final double? width;
   final double? height;
-  const ImageLoadingService(
-      {Key? key,
-      required this.imageUrl,
-      this.borderRadius,
-      this.height,
-      this.width})
-      : super(key: key);
+  final BoxFit? boxfit;
+  const ImageLoadingService({
+    Key? key,
+    required this.imageUrl,
+    this.borderRadius,
+    this.height,
+    this.width,
+    this.boxfit = BoxFit.cover,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class ImageLoadingService extends StatelessWidget {
         ],
       ),
       imageUrl: imageUrl,
-      fit: BoxFit.cover,
+      fit: boxfit,
       width: width,
       height: height,
     );

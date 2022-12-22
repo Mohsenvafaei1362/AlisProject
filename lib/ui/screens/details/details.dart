@@ -38,8 +38,8 @@ class _DetailScreenState extends State<DetailScreen> {
     super.dispose();
   }
 
+  String _imageUrl = '';
   bool isFavorite = true;
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -191,10 +191,12 @@ class _DetailScreenState extends State<DetailScreen> {
                           bottomRight: Radius.circular(2),
                         ),
                       ),
-                      expandedHeight: MediaQuery.of(context).size.width,
+                      expandedHeight: MediaQuery.of(context).size.height * 0.4,
                       flexibleSpace: ImageLoadingService(
-                        imageUrl: widget.product.imageUrl,
-                        width: size.width,
+                        imageUrl: _imageUrl.length != 0
+                            ? _imageUrl
+                            : widget.product.imageUrl,
+                        boxfit: BoxFit.none,
                       ),
                       foregroundColor: LightThemeColors.primaryTextColors,
                       backgroundColor: Colors.white,
@@ -265,6 +267,61 @@ class _DetailScreenState extends State<DetailScreen> {
                           children: [
                             Column(
                               children: [
+                                Container(
+                                  width: size.width * 0.95,
+                                  height: size.height * 0.12,
+                                  // color: Colors.amber,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: 5,
+                                    itemBuilder: (context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            if (index == 0) {
+                                              _imageUrl =
+                                                  widget.product.imageUrl;
+                                            } else {
+                                              _imageUrl =
+                                                  'https://api.snapp.market/media/cache/product-variation_image_thumbnail/uploads/images/vendors/users/app/5dc81bbfc998d.jpg';
+                                            }
+                                          });
+                                        },
+                                        child: index == 0
+                                            ? Container(
+                                                width: size.width * 0.25,
+                                                height: size.height,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                margin: EdgeInsets.all(2),
+                                                padding: EdgeInsets.all(2),
+                                                child: Center(
+                                                  child: ImageLoadingService(
+                                                    imageUrl:
+                                                        widget.product.imageUrl,
+                                                  ),
+                                                ),
+                                              )
+                                            : Container(
+                                                width: size.width * 0.25,
+                                                height: size.height,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                margin: EdgeInsets.all(2),
+                                                padding: EdgeInsets.all(2),
+                                                child: Center(
+                                                    child: Text('data $index')),
+                                              ),
+                                      );
+                                    },
+                                  ),
+                                ),
                                 Container(
                                   width: size.width,
                                   margin: const EdgeInsets.symmetric(
