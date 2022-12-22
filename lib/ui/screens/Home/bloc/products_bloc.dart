@@ -38,6 +38,14 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
             // await Future.delayed(Duration(seconds: 5));
             final result = await productRepository.filtter(event.sort);
             emit(ProductFiltterSuccess(result));
+          } else if (event is ProductSendLog) {
+            emit(ProductSendLogLoading());
+            final response = await productRepository.sendLog(
+              event.productId,
+              event.message,
+              event.title,
+            );
+            emit(ProductSendLogSuccess());
           }
         } catch (e) {
           emit(

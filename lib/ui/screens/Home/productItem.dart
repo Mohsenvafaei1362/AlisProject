@@ -34,10 +34,18 @@ class ProductItem extends StatefulWidget {
 class _ProductItemState extends State<ProductItem> {
   StreamSubscription<ProductsState>? streamSubscription;
   bool isFavorite = true;
+  ProductsBloc? productsBloc;
   @override
   void dispose() {
     super.dispose();
     streamSubscription?.cancel();
+    productsBloc?.close();
+  }
+
+  send() {
+    productsBloc?.add(
+      ProductSendLog(widget.product.id, 'detaile', 'showdetaile'),
+    );
   }
 
   @override
@@ -46,50 +54,57 @@ class _ProductItemState extends State<ProductItem> {
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-      child: InkWell(
-        borderRadius: widget.borderRadius,
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => Directionality(
-                textDirection: TextDirection.rtl,
-                child: DetailScreen(
-                  product: widget.product,
-                  data: 1,
-                ),
-              ),
-            ),
+      child: BlocProvider<ProductsBloc>(
+        create: (context) {
+          final bloc = ProductsBloc(
+            cartRepository: cartRepository,
+            productRepository: productRepository,
           );
+          productsBloc = bloc;
+          bloc.add(const ProductStarted(''));
+          streamSubscription = bloc.stream.listen((state) {
+            if (state is ProductAddToCartSuccess) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  duration: Duration(seconds: 2),
+                  content: Text('محصول با موفقیت اضافه شد'),
+                ),
+              );
+            } else if (state is ProductAddToCartError) {
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //   SnackBar(
+              //     duration: const Duration(seconds: 1),
+              //     content: Text(state.exception.message),
+              //   ),
+              // );
+            }
+          });
+          return bloc;
         },
-        child: BlocProvider<ProductsBloc>(
-          create: (context) {
-            final bloc = ProductsBloc(
-                cartRepository: cartRepository,
-                productRepository: productRepository);
-            bloc.add(const ProductStarted(''));
-            streamSubscription = bloc.stream.listen((state) {
-              if (state is ProductAddToCartSuccess) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    duration: Duration(seconds: 2),
-                    content: Text('محصول با موفقیت اضافه شد'),
-                  ),
-                );
-              } else if (state is ProductAddToCartError) {
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   SnackBar(
-                //     duration: const Duration(seconds: 1),
-                //     content: Text(state.exception.message),
-                //   ),
-                // );
-              }
-            });
-            return bloc;
-          },
-          child: BlocBuilder<ProductsBloc, ProductsState>(
-            builder: (context, state) {
-              return SizedBox(
-                width: size.width * 0.45,
+        child: BlocBuilder<ProductsBloc, ProductsState>(
+          builder: (context, state) {
+            return SizedBox(
+              width: size.width * 0.45,
+              child: InkWell(
+                onTap: () async {
+                  // BlocProvider.of<ProductsBloc>(context).add(
+                  //   ProductSendLog(widget.product.id, 'detaile', 'showdetaile'),
+                  // );
+                  await send();
+                  // if (state is ProductSendLogSuccess) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: DetailScreen(
+                          product: widget.product,
+                          data: 1,
+                        ),
+                      ),
+                    ),
+                  );
+                  // }
+                },
                 child: Card(
                   shape: RoundedRectangleBorder(
                     side: BorderSide(color: Colors.white70, width: 1),
@@ -260,9 +275,9 @@ class _ProductItemState extends State<ProductItem> {
                     ],
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

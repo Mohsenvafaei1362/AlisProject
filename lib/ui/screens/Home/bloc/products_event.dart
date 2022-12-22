@@ -29,3 +29,15 @@ class ProductFiltterBttonClicked extends ProductsEvent {
 
   const ProductFiltterBttonClicked(this.sort);
 }
+
+class ProductSendLog extends ProductsEvent {
+  final int productId;
+  final String title;
+  final String message;
+
+  const ProductSendLog(
+    this.productId,
+    this.title,
+    this.message,
+  );
+}

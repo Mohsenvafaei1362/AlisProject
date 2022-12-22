@@ -11,9 +11,10 @@ final UserInfo _userInfo = Get.put(UserInfo());
 
 abstract class IProductDataSource {
   Future<List<ProductEntity>> filtter(String sort);
-  Future<List<ProductEntity>> getAll(int categoryId);
+  Future<List<ProductEntity>> getAll(int categoryId, int modelId, String model);
   Future<List<ProductEntity>> detail(int data);
   Future<List<ProductEntity>> search(String searchTerm);
+  Future<List<ProductEntity>> sendLog(int id, String title, String message);
 }
 
 class ProductRemoteDataSource implements IProductDataSource {
@@ -21,12 +22,14 @@ class ProductRemoteDataSource implements IProductDataSource {
 
   ProductRemoteDataSource(this.httpClient);
   @override
-  Future<List<ProductEntity>> getAll(int categoryId) async {
-    print('categoryId : $categoryId');
+  Future<List<ProductEntity>> getAll(
+      int categoryId, int modelId, String model) async {
     final response = await httpProduct.get('products', queryParameters: {
       "CategoryId": categoryId,
       "UserId": _dl.UserId.value,
       "SellCenter": _userInfo.sellsCenter.value,
+      "ModelId": modelId,
+      "Model": model,
     });
     validateResponse(response);
     final products = <ProductEntity>[];
@@ -78,6 +81,25 @@ class ProductRemoteDataSource implements IProductDataSource {
     for (var element in (response.data as List)) {
       products.add(ProductEntity.fromJson(element));
     }
+    return products;
+  }
+
+  @override
+  Future<List<ProductEntity>> sendLog(
+      int id, String title, String message) async {
+    // final response = await httpClient.post('path', data: {
+    //   "id": id,
+    //   "title": title,
+    //   "message": message,
+    //   "UserId": _dl.UserId.value,
+    //   "SellCenter": _userInfo.sellsCenter.value,
+    // });
+    // validateResponse(response);
+    final products = <ProductEntity>[];
+
+    // for (var element in (response.data as List)) {
+    //   products.add(ProductEntity.fromJson(element));
+    // }
     return products;
   }
 }

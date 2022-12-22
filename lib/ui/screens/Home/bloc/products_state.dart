@@ -25,6 +25,10 @@ class ProductFiltterSuccess extends ProductsState {
 
 class ProductFiltterLoading extends ProductsState {}
 
+class ProductSendLogLoading extends ProductsState {}
+
+class ProductSendLogSuccess extends ProductsState {}
+
 class ProductFiltterError extends ProductsState {
   final AppException exception;
 

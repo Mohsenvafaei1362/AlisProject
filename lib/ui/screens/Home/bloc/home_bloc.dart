@@ -49,14 +49,27 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (event is HomeStarted || event is HomeRefresh) {
         try {
           emit(HomeLoading());
-          final products = await productRepository.getAll(0); // همه محصولات
-          final proposal = await productRepository.getAll(1); //پیشنهاد ویژه
-          final bestselling = await productRepository.getAll(2); // پر فروش ترین
-          final banners = await bannerRepository.getAll();
-          final messageCount = await messageCountRepository.messageCount();
-          final clubinfo = await clubRepository.club();
-          final gholeinfo = await gholeRepository.ghole();
-          final sliderInfo = await sliderRepository.getImage('Main');
+          final products = await productRepository.getAll(
+            0,
+            0,
+            'allProduct',
+          ); // همه محصولات
+          final proposal = await productRepository.getAll(
+            1,
+            1,
+            'proposal',
+          ); //پیشنهاد ویژه
+          final bestselling = await productRepository.getAll(
+            2,
+            2,
+            'bestselling',
+          ); // پر فروش ترین
+          final banners = await bannerRepository.getAll(); //تبلیغات
+          final messageCount =
+              await messageCountRepository.messageCount(); //پیام
+          final clubinfo = await clubRepository.club(); //باشگاه
+          final gholeinfo = await gholeRepository.ghole(); //قله
+          final sliderInfo = await sliderRepository.getImage('Main'); //اسلایدر
 
           // final userInfo = await userInfoRepository.userInfo();
           product = products;
@@ -94,7 +107,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (!isRefreshing) {
         emit(HomeLoading());
       }
-      final result = await productRepository.getAll(1);
+      final result = await productRepository.getAll(1, 1, '');
       final banners = await bannerRepository.getAll();
       final messageCount = await messageCountRepository.messageCount();
       if (result.isEmpty || banners.isEmpty || messageCount.isEmpty) {

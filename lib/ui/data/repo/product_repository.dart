@@ -7,9 +7,10 @@ final productRepository =
 
 abstract class IProductRepository {
   Future<List<ProductEntity>> filtter(String sort);
-  Future<List<ProductEntity>> getAll(int categoryId);
+  Future<List<ProductEntity>> getAll(int categoryId, int modelId, String model);
   Future<List<ProductEntity>> detail(int data);
   Future<List<ProductEntity>> search(String searchTerm);
+  Future<List<ProductEntity>> sendLog(int id, String title, String message);
 }
 
 class ProductRepository implements IProductRepository {
@@ -19,8 +20,13 @@ class ProductRepository implements IProductRepository {
 
   @override
   // Future<List<UiProductEntity>> getAll(int sort) => dataSource.getAll(sort);
-  Future<List<ProductEntity>> getAll(int categoryId) =>
-      dataSource.getAll(categoryId);
+  Future<List<ProductEntity>> getAll(
+          int categoryId, int modelId, String model) =>
+      dataSource.getAll(
+        categoryId,
+        modelId,
+        model,
+      );
 
   @override
   Future<List<ProductEntity>> search(String searchTerm) =>
@@ -31,4 +37,9 @@ class ProductRepository implements IProductRepository {
 
   @override
   Future<List<ProductEntity>> detail(int data) => dataSource.detail(data);
+
+  @override
+  Future<List<ProductEntity>> sendLog(int id, String title, String message) {
+    return dataSource.sendLog(id, title, message);
+  }
 }
