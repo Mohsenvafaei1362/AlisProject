@@ -50,19 +50,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         try {
           emit(HomeLoading());
           final products = await productRepository.getAll(
-            0,
-            0,
-            'allProduct',
+            categoryId: 0,
+            modelId: 0,
+            model: 'allProduct',
           ); // همه محصولات
           final proposal = await productRepository.getAll(
-            1,
-            1,
-            'proposal',
+            categoryId: 0,
+            modelId: 0,
+            model: 'proposal',
           ); //پیشنهاد ویژه
           final bestselling = await productRepository.getAll(
-            2,
-            2,
-            'bestselling',
+            categoryId: 0,
+            modelId: 0,
+            model: 'bestselling',
           ); // پر فروش ترین
           final banners = await bannerRepository.getAll(); //تبلیغات
           final messageCount =
@@ -107,7 +107,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (!isRefreshing) {
         emit(HomeLoading());
       }
-      final result = await productRepository.getAll(1, 1, '');
+      final result = await productRepository.getAll(
+        categoryId: 1,
+        modelId: 1,
+        model: '',
+      );
       final banners = await bannerRepository.getAll();
       final messageCount = await messageCountRepository.messageCount();
       if (result.isEmpty || banners.isEmpty || messageCount.isEmpty) {
