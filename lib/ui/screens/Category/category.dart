@@ -2,6 +2,7 @@ import 'package:local_notification_flutter_project/ui/controller/controller.dart
 import 'package:local_notification_flutter_project/ui/data/repo/category_repository.dart';
 import 'package:local_notification_flutter_project/ui/screens/Category/CategorySelected/CategorySelected.dart';
 import 'package:local_notification_flutter_project/ui/screens/Category/bloc/category_bloc.dart';
+import 'package:local_notification_flutter_project/ui/screens/Product_List/product_list.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/image_loading_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -117,51 +118,154 @@ class _CategoryState extends State<Category> {
                                   borderRadius: BorderRadius.circular(15),
                                   onTap: () {
                                     switch (index) {
+                                      // case 0:
+                                      //   Get.to(() => const CategorySelected(
+                                      //         name: 'آب معدنی',
+                                      //       ));
+                                      //   break;
                                       case 0:
-                                        Get.to(() => const CategorySelected(
-                                              name: 'آب معدنی',
-                                            ));
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .push(
+                                          CupertinoPageRoute<bool>(
+                                            fullscreenDialog: true,
+                                            builder: (BuildContext context) =>
+                                                Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: ProductListScreen(
+                                                categoryId: 3,
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                         break;
                                       case 1:
-                                        Get.to(() => const CategorySelected(
-                                              name: 'دوغ',
-                                            ));
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .push(
+                                          CupertinoPageRoute<bool>(
+                                            fullscreenDialog: true,
+                                            builder: (BuildContext context) =>
+                                                Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: ProductListScreen(
+                                                categoryId: 4,
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                         break;
                                       case 2:
-                                        Get.to(() => const CategorySelected(
-                                              name: 'آبمیوه گازدار',
-                                            ));
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .push(
+                                          CupertinoPageRoute<bool>(
+                                            fullscreenDialog: true,
+                                            builder: (BuildContext context) =>
+                                                Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: ProductListScreen(
+                                                categoryId: 5,
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                         break;
                                       case 3:
-                                        Get.to(() => const CategorySelected(
-                                              name: 'آبمیوه گازدار تشریفاتی',
-                                            ));
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .push(
+                                          CupertinoPageRoute<bool>(
+                                            fullscreenDialog: true,
+                                            builder: (BuildContext context) =>
+                                                Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: ProductListScreen(
+                                                categoryId: 6,
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                         break;
                                       case 4:
-                                        Get.to(() => const CategorySelected(
-                                              name: 'شیر',
-                                              // name: 'شیر طعم دار',
-                                            ));
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .push(
+                                          CupertinoPageRoute<bool>(
+                                            fullscreenDialog: true,
+                                            builder: (BuildContext context) =>
+                                                Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: ProductListScreen(
+                                                categoryId: 7,
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                         break;
                                       case 5:
-                                        Get.to(() => const CategorySelected(
-                                              name: 'نوشابه',
-                                            ));
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .push(
+                                          CupertinoPageRoute<bool>(
+                                            fullscreenDialog: true,
+                                            builder: (BuildContext context) =>
+                                                Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: ProductListScreen(
+                                                categoryId: 8,
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                         break;
                                       case 6:
-                                        Get.to(() => const CategorySelected(
-                                              name: 'شیر ساده',
-                                            ));
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .push(
+                                          CupertinoPageRoute<bool>(
+                                            fullscreenDialog: true,
+                                            builder: (BuildContext context) =>
+                                                Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: ProductListScreen(
+                                                categoryId: 9,
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                         break;
                                       case 7:
-                                        Get.to(() => const CategorySelected(
-                                              name: 'ماءالشعیر',
-                                            ));
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .push(
+                                          CupertinoPageRoute<bool>(
+                                            fullscreenDialog: true,
+                                            builder: (BuildContext context) =>
+                                                Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: ProductListScreen(
+                                                categoryId: 10,
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                         break;
                                       case 8:
-                                        Get.to(() => const CategorySelected(
-                                              name: 'نکتار',
-                                            ));
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .push(
+                                          CupertinoPageRoute<bool>(
+                                            fullscreenDialog: true,
+                                            builder: (BuildContext context) =>
+                                                Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: ProductListScreen(
+                                                categoryId: 11,
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                         break;
                                       default:
                                     }
