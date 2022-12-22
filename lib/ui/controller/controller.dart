@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:local_notification_flutter_project/ui/data/ClassInfo/sliderInfo.dart';
 import 'package:local_notification_flutter_project/ui/screens/Register/GetSmsCode/get_sms_code.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -523,6 +524,10 @@ class UserInfo extends GetxController {
 
 class TestApi extends GetxController {
   var token = ''.obs;
+}
+
+class ImageDetaile extends GetxController {
+  List<SliderInfo> imagedetaile = [];
 }
 
 class UiAddressIp {

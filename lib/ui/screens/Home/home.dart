@@ -58,6 +58,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
   final UiShowInfo showInfo = Get.put(UiShowInfo());
   final UiDl _dl = Get.put(UiDl());
   final Club _club = Get.put(Club());
+  final ImageDetaile _imagedetaile = Get.put(ImageDetaile());
   HomeBloc? bloc;
   StreamSubscription<HomeState>? streamSubscription;
   // int _page = 1;
@@ -168,6 +169,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                 ),
               );
             }
+            _imagedetaile.imagedetaile = state.slider;
 
             for (var element in state.banners) {
               _bannersllink.add(

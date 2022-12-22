@@ -1,7 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:flutter/services.dart';
+import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_manager.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
+import 'package:local_notification_flutter_project/ui/data/ClassInfo/sliderInfo.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/product_repository.dart';
 import 'package:local_notification_flutter_project/ui/models/Comment/comment.dart';
 import 'package:local_notification_flutter_project/ui/screens/Comment_Product/comment_product.dart';
@@ -22,7 +26,9 @@ import 'package:persian_number_utility/persian_number_utility.dart';
 class DetailScreen extends StatefulWidget {
   final ProductEntity product;
   final int data;
-  const DetailScreen({key, required this.product, required this.data});
+  final List<SliderInfo>? images;
+  const DetailScreen(
+      {key, required this.product, required this.data, this.images});
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -31,6 +37,8 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   StreamSubscription<ProductsState>? stateSubscription;
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey();
+
+  final ImageDetaile _imagedetaile = Get.put(ImageDetaile());
   @override
   void dispose() {
     stateSubscription?.cancel();
@@ -273,8 +281,20 @@ class _DetailScreenState extends State<DetailScreen> {
                                   // color: Colors.amber,
                                   child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: 5,
+                                    itemCount:
+                                        _imagedetaile.imagedetaile.length,
                                     itemBuilder: (context, index) {
+                                      List<Uint8List> _banners = [];
+                                      for (var element
+                                          in _imagedetaile.imagedetaile) {
+                                        _banners.add(
+                                          base64.decode(
+                                            element.img.toString(),
+                                          ),
+                                        );
+                                      }
+                                      final data =
+                                          _imagedetaile.imagedetaile[index];
                                       return InkWell(
                                         onTap: () {
                                           setState(() {
@@ -282,8 +302,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                               _imageUrl =
                                                   widget.product.imageUrl;
                                             } else {
-                                              _imageUrl =
-                                                  'https://api.snapp.market/media/cache/product-variation_image_thumbnail/uploads/images/vendors/users/app/5dc81bbfc998d.jpg';
+                                              _imageUrl = data.img;
                                             }
                                           });
                                         },
@@ -315,8 +334,16 @@ class _DetailScreenState extends State<DetailScreen> {
                                                 ),
                                                 margin: EdgeInsets.all(2),
                                                 padding: EdgeInsets.all(2),
-                                                child: Center(
-                                                    child: Text('data $index')),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  child: Image.memory(
+                                                    _banners[index],
+                                                    fit: BoxFit.cover,
+                                                    width: size.width,
+                                                    height: size.height,
+                                                  ),
+                                                ),
                                               ),
                                       );
                                     },
