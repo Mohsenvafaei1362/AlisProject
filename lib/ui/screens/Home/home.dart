@@ -35,6 +35,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class HomeScreen_Ui extends StatefulWidget {
   HomeScreen_Ui({
@@ -1257,6 +1258,9 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
       itemBuilder: (context, index, realIndex) {
         return InkWell(
             onTap: () {
+              // WebView(
+              //   initialUrl: 'https://www.google.com/',
+              // );
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => SliderDetails(

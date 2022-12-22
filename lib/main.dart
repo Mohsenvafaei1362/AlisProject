@@ -125,7 +125,7 @@ class MyApp extends StatelessWidget {
               // DetailOnline(),
               // Buy(),
               // LoginFour_1(),
-              // Test(),
+              // Test1(),
               // MySample()
               // Festival(),
               // NazarSanje(),
