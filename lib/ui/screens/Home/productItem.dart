@@ -77,6 +77,18 @@ class _ProductItemState extends State<ProductItem> {
               //     content: Text(state.exception.message),
               //   ),
               // );
+            } else if (state is ProductSendLogSuccess) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: DetailScreen(
+                      product: widget.product,
+                      data: 1,
+                    ),
+                  ),
+                ),
+              );
             }
           });
           return bloc;
@@ -92,17 +104,17 @@ class _ProductItemState extends State<ProductItem> {
                   // );
                   await send();
                   // if (state is ProductSendLogSuccess) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: DetailScreen(
-                          product: widget.product,
-                          data: 1,
-                        ),
-                      ),
-                    ),
-                  );
+                  //   Navigator.of(context).push(
+                  //     MaterialPageRoute(
+                  //       builder: (context) => Directionality(
+                  //         textDirection: TextDirection.rtl,
+                  //         child: DetailScreen(
+                  //           product: widget.product,
+                  //           data: 1,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   );
                   // }
                 },
                 child: Card(
