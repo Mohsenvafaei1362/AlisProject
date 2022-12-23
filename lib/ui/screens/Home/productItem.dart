@@ -4,6 +4,7 @@ import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_man
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/cart_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/product_repository.dart';
+import 'package:local_notification_flutter_project/ui/models/Comment/comment.dart';
 import 'package:local_notification_flutter_project/ui/screens/Home/bloc/products_bloc.dart';
 import 'package:local_notification_flutter_project/ui/screens/details/details.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/image_loading_service.dart';
@@ -78,6 +79,9 @@ class _ProductItemState extends State<ProductItem> {
               //   ),
               // );
             } else if (state is ProductSendLogSuccess) {
+              // if (widget.product.title.contains('آب معدنی')) {
+              //  Comment comment = Comment.comments_ab as Comment;
+              // }
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => Directionality(

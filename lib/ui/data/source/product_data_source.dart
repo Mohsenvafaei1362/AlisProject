@@ -15,6 +15,8 @@ abstract class IProductDataSource {
   Future<List<ProductEntity>> detail(int data);
   Future<List<ProductEntity>> search(String searchTerm);
   Future<List<ProductEntity>> sendLog(int id, String title, String message);
+  Future<List<ProductEntity>> similar(
+      int categoryId, int modelId, String model);
 }
 
 class ProductRemoteDataSource implements IProductDataSource {
@@ -101,5 +103,20 @@ class ProductRemoteDataSource implements IProductDataSource {
     //   products.add(ProductEntity.fromJson(element));
     // }
     return products;
+  }
+
+  @override
+  Future<List<ProductEntity>> similar(
+      int categoryId, int modelId, String model) async {
+    final response = await httpClient.get('path',queryParameters: {
+      "categoryId": categoryId,
+      "modelId": modelId,
+      "model": model,
+    });
+    final List<ProductEntity> similar = [];
+    (response.data as List).forEach((element) {
+      similar.add(ProductEntity.fromJson(element));
+    });
+    return similar;
   }
 }

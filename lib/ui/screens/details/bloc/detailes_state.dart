@@ -10,8 +10,9 @@ class DetailesInitial extends DetailesState {}
 
 class DetailesSuccess extends DetailesState {
   final List<ProductEntity> detail;
+  final List<ProductEntity> similar;
 
-  const DetailesSuccess(this.detail);
+  const DetailesSuccess(this.detail, this.similar);
 }
 
 class DetailesLoading extends DetailesState {}

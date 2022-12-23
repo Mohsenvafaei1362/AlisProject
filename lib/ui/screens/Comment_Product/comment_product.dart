@@ -125,13 +125,20 @@ class _Comment_ProductState extends State<Comment_Product> {
                                   question_2.text.length > 0 &&
                                   question_3.text.length > 0 &&
                                   question_4.text.length > 0) {
-                                BlocProvider.of<CommentProductBloc>(context)
-                                    .add(
-                                  CommentProductClickdButton(
-                                    question_1.text,
-                                    question_2.text,
-                                    question_3.text,
-                                    question_4.text,
+                                // BlocProvider.of<CommentProductBloc>(context)
+                                //     .add(
+                                //   CommentProductClickdButton(
+                                //     question_1.text,
+                                //     question_2.text,
+                                //     question_3.text,
+                                //     question_4.text,
+                                //   ),
+                                // );
+                                Navigator.of(context).pop();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content:
+                                        Text('پیام شما با موفقیت ارسال شد'),
                                   ),
                                 );
                               } else {

@@ -15,6 +15,8 @@ abstract class IProductRepository {
   Future<List<ProductEntity>> detail(int data);
   Future<List<ProductEntity>> search(String searchTerm);
   Future<List<ProductEntity>> sendLog(int id, String title, String message);
+  Future<List<ProductEntity>> similar(
+      int categoryId, int modelId, String model);
 }
 
 class ProductRepository implements IProductRepository {
@@ -48,5 +50,11 @@ class ProductRepository implements IProductRepository {
   @override
   Future<List<ProductEntity>> sendLog(int id, String title, String message) {
     return dataSource.sendLog(id, title, message);
+  }
+
+  @override
+  Future<List<ProductEntity>> similar(
+      int categoryId, int modelId, String model) {
+    return dataSource.similar(categoryId, modelId, model);
   }
 }

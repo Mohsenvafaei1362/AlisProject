@@ -181,6 +181,7 @@ class _CategorySelectedState extends State<CategorySelected> {
                                           textDirection: TextDirection.rtl,
                                           child: DetailScreen(
                                             product: data,
+                                            
                                             data: 1,
                                           ),
                                         ),

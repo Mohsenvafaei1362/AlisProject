@@ -10,13 +10,15 @@ part 'detailes_state.dart';
 
 class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
   final IProductRepository productRepository;
-  DetailesBloc({required this.productRepository}) : super(DetailesInitial()) {
+  DetailesBloc({required this.productRepository}) : super(DetailesLoading()) {
     on<DetailesEvent>((event, emit) async {
       try {
         if (event is DetailesStarted) {
           emit(DetailesLoading());
           final response = await productRepository.detail(event.data);
-          emit(DetailesSuccess(response));
+          final similar = await productRepository.getAll(
+              categoryId: event.categoryId, modelId: 1, model: '');
+          emit(DetailesSuccess(response, similar));
         }
       } catch (e) {
         emit(DetailesError(AppException()));
