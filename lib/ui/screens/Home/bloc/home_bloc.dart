@@ -4,6 +4,7 @@ import 'package:local_notification_flutter_project/ui/data/ClassInfo/banner.dart
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/message_box_info.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/sliderInfo.dart';
+import 'package:local_notification_flutter_project/ui/data/ClassInfo/topPepole.dart';
 import 'package:local_notification_flutter_project/ui/data/common/exception.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/Club_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/Ghole_repository.dart';
@@ -11,6 +12,7 @@ import 'package:local_notification_flutter_project/ui/data/repo/bannerRepository
 import 'package:local_notification_flutter_project/ui/data/repo/message_box_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/product_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/slider_repository.dart';
+import 'package:local_notification_flutter_project/ui/data/repo/topPepole_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/user_info_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -27,6 +29,7 @@ var ghole;
 var slider;
 var proposals;
 var bestsellings;
+var topPepole;
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final IBannerRepository bannerRepository;
@@ -36,6 +39,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final IClubRepository clubRepository;
   final IGholeRepository gholeRepository;
   final ISliderRepository sliderRepository;
+  final ITopPepoleRepository topPepoleRepository;
   HomeBloc({
     required this.bannerRepository,
     required this.productRepository,
@@ -44,6 +48,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     required this.clubRepository,
     required this.gholeRepository,
     required this.sliderRepository,
+    required this.topPepoleRepository,
   }) : super(HomeLoading()) {
     on<HomeEvent>((event, emit) async {
       if (event is HomeStarted || event is HomeRefresh) {
@@ -70,6 +75,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           final clubinfo = await clubRepository.club(); //باشگاه
           final gholeinfo = await gholeRepository.ghole(); //قله
           final sliderInfo = await sliderRepository.getImage('Main'); //اسلایدر
+          final topPepoles =
+              await topPepoleRepository.topPepole(); //سه نفر برتر
 
           // final userInfo = await userInfoRepository.userInfo();
           product = products;
@@ -80,6 +87,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           slider = sliderInfo;
           proposals = proposal;
           bestsellings = bestselling;
+          topPepole = topPepoles;
 
           // user = userInfo;
           // await loadCartItems(emit, false);
@@ -93,6 +101,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             slider: sliderInfo,
             bestselling: bestselling,
             proposal: proposal,
+            topPepole: topPepoles,
             // userInfo: user,
             // popularProducts: popularProducts
           ));
@@ -126,6 +135,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           slider: slider,
           bestselling: bestsellings,
           proposal: proposals,
+          topPepole: topPepole,
         ));
       }
     } catch (e) {

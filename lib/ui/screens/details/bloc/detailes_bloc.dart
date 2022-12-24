@@ -1,3 +1,4 @@
+import 'package:local_notification_flutter_project/ui/data/ClassInfo/CommentProduct.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/common/exception.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/cart_repository.dart';
@@ -17,8 +18,14 @@ class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
           emit(DetailesLoading());
           final response = await productRepository.detail(event.data);
           final similar = await productRepository.getAll(
-              categoryId: event.categoryId, modelId: 1, model: '');
-          emit(DetailesSuccess(response, similar));
+            categoryId: event.categoryId,
+            modelId: 1,
+            model: '',
+          ); //محصولات مشابه
+          final comment = await productRepository.commentProduct(
+            event.categoryId,
+          ); //کامنت ها
+          emit(DetailesSuccess(response, similar, comment));
         }
       } catch (e) {
         emit(DetailesError(AppException()));

@@ -1,3 +1,4 @@
+import 'package:local_notification_flutter_project/ui/data/ClassInfo/CommentProduct.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/httpClient/httpClient.dart';
 import 'package:local_notification_flutter_project/ui/data/source/product_data_source.dart';
@@ -17,6 +18,7 @@ abstract class IProductRepository {
   Future<List<ProductEntity>> sendLog(int id, String title, String message);
   Future<List<ProductEntity>> similar(
       int categoryId, int modelId, String model);
+  Future<List<CommentProduct>> commentProduct(int productId);
 }
 
 class ProductRepository implements IProductRepository {
@@ -57,4 +59,8 @@ class ProductRepository implements IProductRepository {
       int categoryId, int modelId, String model) {
     return dataSource.similar(categoryId, modelId, model);
   }
+
+  @override
+  Future<List<CommentProduct>> commentProduct(int productId) =>
+      dataSource.commentProduct(productId);
 }

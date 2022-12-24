@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
+import 'package:local_notification_flutter_project/ui/data/ClassInfo/CommentProduct.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/common/exception.dart';
 import 'package:local_notification_flutter_project/ui/data/httpClient/httpClient.dart';
@@ -17,6 +18,7 @@ abstract class IProductDataSource {
   Future<List<ProductEntity>> sendLog(int id, String title, String message);
   Future<List<ProductEntity>> similar(
       int categoryId, int modelId, String model);
+  Future<List<CommentProduct>> commentProduct(int productId);
 }
 
 class ProductRemoteDataSource implements IProductDataSource {
@@ -108,7 +110,7 @@ class ProductRemoteDataSource implements IProductDataSource {
   @override
   Future<List<ProductEntity>> similar(
       int categoryId, int modelId, String model) async {
-    final response = await httpClient.get('path',queryParameters: {
+    final response = await httpClient.get('path', queryParameters: {
       "categoryId": categoryId,
       "modelId": modelId,
       "model": model,
@@ -118,5 +120,18 @@ class ProductRemoteDataSource implements IProductDataSource {
       similar.add(ProductEntity.fromJson(element));
     });
     return similar;
+  }
+
+  @override
+  Future<List<CommentProduct>> commentProduct(int productId) async {
+    final response = await httpClient.get('path', queryParameters: {
+      "productId": productId,
+    });
+
+    final List<CommentProduct> comment = [];
+    (response.data as List).forEach((element) {
+      comment.add(CommentProduct.fromJson(element));
+    });
+    return comment;
   }
 }

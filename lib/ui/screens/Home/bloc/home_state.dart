@@ -25,6 +25,7 @@ class HomeSuccess extends HomeState {
   final List<ClubInfo> club;
   final List<GholeInfo> ghole;
   final List<SliderInfo> slider;
+  final List<TopPepoleInfo> topPepole;
   const HomeSuccess({
     required this.products,
     required this.banners,
@@ -34,5 +35,6 @@ class HomeSuccess extends HomeState {
     required this.slider,
     required this.proposal,
     required this.bestselling,
+    required this.topPepole,
   });
 }
