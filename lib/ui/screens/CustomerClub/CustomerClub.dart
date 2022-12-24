@@ -6,6 +6,7 @@ import 'package:local_notification_flutter_project/ui/data/repo/customer_club_re
 import 'package:local_notification_flutter_project/ui/data/repo/topPepole_repository.dart';
 import 'package:local_notification_flutter_project/ui/models/Pepole/pepole.dart';
 import 'package:local_notification_flutter_project/ui/models/data_message_box.dart';
+import 'package:local_notification_flutter_project/ui/screens/CustomerClub/LuckWheel.dart';
 import 'package:local_notification_flutter_project/ui/screens/CustomerClub/bloc/customer_club_bloc.dart';
 import 'package:local_notification_flutter_project/ui/screens/Ghole/introducing_ghole.dart';
 import 'package:local_notification_flutter_project/ui/screens/Home/home.dart';
@@ -119,36 +120,6 @@ class _CustomerClubState extends State<CustomerClub> {
                                 color: Colors.black54,
                               ),
                             ),
-                            // RichText(
-                            //   text: TextSpan(
-                            //       text: _club.score.toString().toPersianDigit(),
-                            //       style: const TextStyle(
-                            //         fontWeight: FontWeight.bold,
-                            //         color: Colors.black54,
-                            //         fontSize: 16,
-                            //       ),
-                            //       children: const [
-                            //         TextSpan(
-                            //           text: ' تومان',
-                            //           style: TextStyle(
-                            //             fontWeight: FontWeight.normal,
-                            //             fontSize: 10,
-                            //             color: Colors.black54,
-                            //           ),
-                            //         ),
-                            //       ]),
-                            // ),
-                            // const SizedBox(
-                            //   width: 15,
-                            // ),
-                            // const Text('امتیاز'),
-                            // const SizedBox(
-                            //   width: 5,
-                            // ),
-                            // Text(
-                            //   _club.score.toString().toPersianDigit(),
-                            //   style: const TextStyle(color: Colors.green),
-                            // ),
                           ],
                         ),
                       ),
@@ -264,14 +235,14 @@ class _CustomerClubState extends State<CustomerClub> {
                                           SizedBox(
                                             width: size.width * 0.1,
                                             child: Text(
-                                              '${data.rank}',
+                                              '${data.rank}'.toPersianDigit(),
                                               style: const TextStyle(
                                                 color: Colors.white,
                                               ),
                                             ),
                                           ),
                                           Text(
-                                            '${data.score}',
+                                            '${data.score}'.toPersianDigit(),
                                             style: const TextStyle(
                                               color: Colors.white,
                                             ),
@@ -439,136 +410,73 @@ class _CustomerClubState extends State<CustomerClub> {
                           ],
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: size.width / 2.5,
-                              height: size.height * 0.05,
-                              decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'وام های قرض الحسنه',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: size.width / 2.5,
-                              height: size.height * 0.05,
-                              decoration: BoxDecoration(
-                                color: Colors.lightBlue,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'بسته های اعتباری',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                      ButtonBox(
+                        size: size,
+                        title1: 'وام های قرض الحسنه',
+                        backgroundcolor1: Colors.white,
+                        textcolor1: Colors.blue,
+                        bordercolor1: Colors.blue,
+                        press1: () {},
+                        title2: 'بسته های اعتباری',
+                        backgroundcolor2: Colors.white,
+                        textcolor2: Colors.red,
+                        bordercolor2: Colors.red,
+                        press2: () {},
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                // Get.to(
-                                //   Directionality(
-                                //     textDirection: TextDirection.rtl,
-                                //     child: Introducing_Club(),
-                                //   ),
-                                // );
-                              },
-                              child: Container(
-                                width: size.width / 2.5,
-                                height: size.height * 0.05,
-                                decoration: BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'آموزش',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 12),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: size.width / 2.5,
-                              height: size.height * 0.05,
-                              decoration: BoxDecoration(
-                                color: Colors.pink,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'مسابقات',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                      ButtonBox(
+                        size: size,
+                        title1: 'آموزش',
+                        backgroundcolor1: Colors.white,
+                        textcolor1: Colors.orange,
+                        bordercolor1: Colors.orange,
+                        press1: () {},
+                        title2: 'مسابقات',
+                        backgroundcolor2: Colors.white,
+                        textcolor2: Colors.green,
+                        bordercolor2: Colors.green,
+                        press2: () {},
                       ),
                       const SizedBox(
                         height: 15,
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const Directionality(
-                                            textDirection: TextDirection.rtl,
-                                            child: Introducing_Ghole(),
-                                          )),
-                                );
-                              },
-                              child: Container(
-                                width: size.width * 0.8,
-                                height: size.height * 0.05,
-                                decoration: BoxDecoration(
-                                  color: Colors.cyan,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'مسیر پیشرفت',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 12),
-                                  ),
-                                ),
+                      ButtonBox(
+                        size: size,
+                        title1: 'گردونه شانس',
+                        backgroundcolor1: Colors.white,
+                        textcolor1: Colors.cyan,
+                        bordercolor1: Colors.cyan,
+                        press1: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: LuckWheel(),
                               ),
                             ),
-                          ],
-                        ),
+                          );
+                        },
+                        title2: 'مسیر پیشرفت',
+                        backgroundcolor2: Colors.white,
+                        textcolor2: Colors.amber,
+                        bordercolor2: Colors.amber,
+                        press2: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: Introducing_Ghole(),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                       SizedBox(
-                        height: size.height * 0.1,
+                        height: size.height * 0.05,
                       ),
                       SizedBox(
                         width: size.width * 0.9,
@@ -580,6 +488,9 @@ class _CustomerClubState extends State<CustomerClub> {
                             style: TextStyle(fontFamily: 'IransansDn'),
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.03,
                       ),
                     ],
                   );
@@ -599,6 +510,91 @@ class _CustomerClubState extends State<CustomerClub> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ButtonBox extends StatelessWidget {
+  const ButtonBox({
+    Key? key,
+    required this.size,
+    required this.title1,
+    required this.title2,
+    required this.backgroundcolor1,
+    required this.backgroundcolor2,
+    required this.textcolor1,
+    required this.textcolor2,
+    required this.bordercolor1,
+    required this.bordercolor2,
+    required this.press1,
+    required this.press2,
+  }) : super(key: key);
+
+  final Size size;
+  final String title1, title2;
+  final Color backgroundcolor1, backgroundcolor2;
+  final Color textcolor1, textcolor2;
+  final Color bordercolor1, bordercolor2;
+  final GestureTapCallback press1, press2;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ButtonItem(
+              size: size,
+              backgroundcolor: backgroundcolor1,
+              textcolor: textcolor1,
+              bordercolor: bordercolor1,
+              press: press1,
+              title: title1),
+          ButtonItem(
+              size: size,
+              backgroundcolor: backgroundcolor2,
+              textcolor: textcolor2,
+              bordercolor: bordercolor2,
+              press: press2,
+              title: title2)
+        ],
+      ),
+    );
+  }
+}
+
+class ButtonItem extends StatelessWidget {
+  const ButtonItem({
+    Key? key,
+    required this.size,
+    required this.backgroundcolor,
+    required this.textcolor,
+    required this.bordercolor,
+    required this.press,
+    required this.title,
+  }) : super(key: key);
+
+  final Size size;
+  final Color backgroundcolor;
+  final Color textcolor;
+  final Color bordercolor;
+  final GestureTapCallback press;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size.width * 0.4,
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          backgroundColor: backgroundcolor,
+          foregroundColor: textcolor,
+          side: BorderSide(width: 1, color: bordercolor),
+        ),
+        onPressed: press,
+        child: Text(title),
       ),
     );
   }

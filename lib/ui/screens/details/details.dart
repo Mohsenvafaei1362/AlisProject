@@ -22,6 +22,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:local_notification_flutter_project/ui/theme/theme.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class DetailScreen extends StatefulWidget {
   final ProductEntity product;
@@ -50,6 +51,7 @@ class _DetailScreenState extends State<DetailScreen> {
   bool isFavorite = true;
   var comment;
   var property;
+  final PageController _controller = PageController();
 
   Future<bool> _onWillPop() async {
     return (await showDialog(
@@ -72,53 +74,89 @@ class _DetailScreenState extends State<DetailScreen> {
         false;
   }
 
+  String productsimilar = '';
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    // if (widget.product.id == 1) {
-    //   comment = Comment.comments_milkt;
-    // }
     switch (widget.product.id) {
       case 1:
         comment = Comment.comments_milkt;
-
+        setState(() {
+          productsimilar = 'شیر';
+        });
         break;
       case 2:
         comment = Comment.comments_milk;
+        setState(() {
+          productsimilar = 'شیر';
+        });
         break;
       case 3:
         comment = Comment.comments_milkt;
+        setState(() {
+          productsimilar = 'شیر';
+        });
         break;
       case 4:
         comment = Comment.comments_dogh;
+        setState(() {
+          productsimilar = 'دوغ';
+        });
         break;
       case 5:
         comment = Comment.comments_dogh;
+        setState(() {
+          productsimilar = 'دوغ';
+        });
         break;
       case 6:
         comment = Comment.comments_dogh;
+        setState(() {
+          productsimilar = 'دوغ';
+        });
         break;
       case 7:
         comment = Comment.comments_dogh;
+        setState(() {
+          productsimilar = 'دوغ';
+        });
         break;
       case 8:
         comment = Comment.comments_abmive;
+        setState(() {
+          productsimilar = 'آب میوه';
+        });
         break;
       case 9:
         comment = Comment.comments_abmive;
+        setState(() {
+          productsimilar = 'آب میوه';
+        });
         break;
       case 10:
         comment = Comment.comments_ab;
+        setState(() {
+          productsimilar = 'آب معدنی';
+        });
         break;
       case 11:
         comment = Comment.comments_delester;
+        setState(() {
+          productsimilar = 'ماءالشعیر';
+        });
         break;
       case 12:
         comment = Comment.comments_noshabe;
+        setState(() {
+          productsimilar = 'نوشابه';
+        });
         break;
       case 13:
         comment = Comment.comments_abghazt;
+        setState(() {
+          productsimilar = "آبمیوه گازدار تشریفاتی";
+        });
         break;
       default:
     }
@@ -138,6 +176,10 @@ class _DetailScreenState extends State<DetailScreen> {
         child: BlocBuilder<DetailesBloc, DetailesState>(
           builder: (context, state) {
             if (state is DetailesSuccess) {
+              final d = state.similar
+                  .where((element) => element.title.contains(productsimilar));
+              final f = d.map((e) => e).toList();
+              print(f);
               return Scaffold(
                 backgroundColor: Colors.grey[200],
                 floatingActionButtonLocation:
@@ -276,12 +318,79 @@ class _DetailScreenState extends State<DetailScreen> {
                         ),
                         expandedHeight:
                             MediaQuery.of(context).size.height * 0.4,
-                        flexibleSpace: ImageLoadingService(
-                          imageUrl: _imageUrl.length != 0
-                              ? _imageUrl
-                              : widget.product.imageUrl,
-                          boxfit: BoxFit.none,
+                        flexibleSpace: Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AspectRatio(
+                                aspectRatio: 1,
+                                child: PageView.builder(
+                                    controller: _controller,
+                                    itemCount: f.length,
+                                    itemBuilder: (context, index) {
+                                      // final d = state.similar.where((element) =>
+                                      //     element.title
+                                      //         .contains(widget.product.title));
+                                      // final f = d.map((e) => e).toList();
+                                      // print(f);
+                                      // final data = state.similar[index];
+                                      final data = f[index];
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: index == 0
+                                            ? Container(
+                                                width: size.width,
+                                                // color: Colors.amber,
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0, 0, 50, 0),
+                                                child: ImageLoadingService(
+                                                  imageUrl:
+                                                      widget.product.imageUrl,
+                                                ),
+                                              )
+                                            : Container(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0, 0, 50, 0),
+                                                child: ImageLoadingService(
+                                                  imageUrl: data.imageUrl,
+                                                ),
+                                              ),
+                                        // Image.asset(
+                                        //     'assets/images/$index.jpg',
+                                        //     fit: BoxFit.cover),
+                                      );
+                                    }),
+                              ),
+                            ),
+                            Positioned(
+                              right: 0,
+                              left: 50,
+                              bottom: 8,
+                              child: Center(
+                                child: SmoothPageIndicator(
+                                  controller: _controller,
+                                  count: f.length,
+                                  axisDirection: Axis.horizontal,
+                                  effect: const SlideEffect(
+                                      spacing: 8.0,
+                                      radius: 4.0,
+                                      dotWidth: 20.0,
+                                      dotHeight: 2.0,
+                                      paintStyle: PaintingStyle.stroke,
+                                      strokeWidth: 1.5,
+                                      dotColor: Colors.grey,
+                                      activeDotColor: Colors.indigo),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
+                        // ImageLoadingService(
+                        //   imageUrl: _imageUrl.length != 0
+                        //       ? _imageUrl
+                        //       : widget.product.imageUrl,
+                        //   boxfit: BoxFit.none,
+                        // ),
                         foregroundColor: LightThemeColors.primaryTextColors,
                         backgroundColor: Colors.white,
                         actions: [
@@ -657,23 +766,10 @@ class _DetailScreenState extends State<DetailScreen> {
                                           height: size.height * 0.25,
                                           // color: Colors.grey[200],
                                           child: ListView.builder(
-                                            itemCount: state.similar.length,
-                                            //  state.similar
-                                            //     .where((e) => e.title.contains(
-                                            //         widget.product.title))
-                                            //     .map((e) => e)
-                                            //     .toList()
-                                            //     .length,
+                                            itemCount: f.length,
                                             scrollDirection: Axis.horizontal,
                                             itemBuilder: (context, index) {
-                                              // final d = state.similar
-                                              //     .where((e) => e.title
-                                              //         .contains(
-                                              //             widget.product.title))
-                                              //     .map((e) => e)
-                                              //     .toList();
-                                              // final data1 = d[index];
-                                              final data = state.similar[index];
+                                              final data = f[index];
 
                                               return InkWell(
                                                 onTap: () {
@@ -888,8 +984,8 @@ class UserOpinion extends StatelessWidget {
                 return Column(
                   children: [
                     SizedBox(
-                      width: size.width * 0.4,
-                      height: size.height * 0.18,
+                      width: size.width * 0.5,
+                      height: size.height * 0.2,
                       child: InkWell(
                         onTap: () {
                           // Get.defaultDialog(
@@ -914,6 +1010,10 @@ class UserOpinion extends StatelessWidget {
                           elevation: 3,
                           color: Colors.white.withOpacity(0.95),
                           shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: Colors.black26,
+                              width: 1,
+                            ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Padding(

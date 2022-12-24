@@ -15,8 +15,10 @@ class _SliderDetailsState extends State<SliderDetails> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return WebView(
-      initialUrl: 'https://www.google.com/',
+    return SafeArea(
+      child: WebView(
+        initialUrl: 'https://www.google.com/',
+      ),
     );
     // Scaffold(
     //   body: SafeArea(

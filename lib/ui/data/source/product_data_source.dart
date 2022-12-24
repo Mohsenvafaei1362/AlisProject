@@ -124,14 +124,14 @@ class ProductRemoteDataSource implements IProductDataSource {
 
   @override
   Future<List<CommentProduct>> commentProduct(int productId) async {
-    final response = await httpClient.get('path', queryParameters: {
-      "productId": productId,
-    });
+    // final response = await httpClient.get('path', queryParameters: {
+    //   "productId": productId,
+    // });
 
     final List<CommentProduct> comment = [];
-    (response.data as List).forEach((element) {
-      comment.add(CommentProduct.fromJson(element));
-    });
+    // (response.data as List).forEach((element) {
+    //   comment.add(CommentProduct.fromJson(element));
+    // });
     return comment;
   }
 }

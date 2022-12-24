@@ -10,11 +10,11 @@ class TopPepoleRemoteDataSource implements ITopPepoleDataSource {
   TopPepoleRemoteDataSource(this.httpClient);
   @override
   Future<List<TopPepoleInfo>> topPepoleInfo() async {
-    final response = await httpClient.get('path');
+    // final response = await httpClient.get('path');
     final List<TopPepoleInfo> topPepole = [];
-    (response.data as List).forEach((element) {
-      topPepole.add(TopPepoleInfo.fromJson(element));
-    });
+    // (response.data as List).forEach((element) {
+    //   topPepole.add(TopPepoleInfo.fromJson(element));
+    // });
     return topPepole;
   }
 }

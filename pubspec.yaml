@@ -72,6 +72,7 @@ dependencies:
   flutter_add_to_cart_button: ^1.1.0
   flutter_background_service: ^2.4.6
   file_picker: ^5.2.4
+  flutter_fortune_wheel: ^1.2.0
 
 dev_dependencies:
   flutter_test:
