@@ -79,9 +79,6 @@ class _ProductItemState extends State<ProductItem> {
               //   ),
               // );
             } else if (state is ProductSendLogSuccess) {
-              // if (widget.product.title.contains('آب معدنی')) {
-              //  Comment comment = Comment.comments_ab as Comment;
-              // }
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => Directionality(

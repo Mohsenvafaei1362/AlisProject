@@ -125,13 +125,13 @@ class _DetailScreenState extends State<DetailScreen> {
       case 8:
         comment = Comment.comments_abmive;
         setState(() {
-          productsimilar = 'آب میوه';
+          productsimilar = 'نکتار';
         });
         break;
       case 9:
         comment = Comment.comments_abmive;
         setState(() {
-          productsimilar = 'آب میوه';
+          productsimilar = 'نکتار';
         });
         break;
       case 10:
@@ -653,7 +653,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                   Container(
                                     // margin:
                                     //     const EdgeInsets.only(bottom: 5, top: 5),
-                                    padding: const EdgeInsets.all(32),
+                                    padding: const EdgeInsets.all(16),
                                     width: size.width,
                                     decoration: BoxDecoration(
                                       // color: Colors.yellow,

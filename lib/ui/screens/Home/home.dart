@@ -579,7 +579,9 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
                               child: Image.memory(
-                                _banners[0],
+                                _banners[4],
+                                height: size.height * 0.2,
+                                fit: BoxFit.cover,
                               ),
                               // child: Advertise(
                               //   size,
@@ -635,7 +637,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             padding: const EdgeInsets.all(5.0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
-                              child: Image.memory(_banners[4]),
+                              child: Image.memory(_banners[3]),
                               // child: Advertise(
                               //   size,
                               //   'https://www.boursenews.ir/files/fa/news/1399/3/17/195744_674.jpg',
