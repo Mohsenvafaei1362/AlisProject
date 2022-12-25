@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:local_notification_flutter_project/test/test.dart';
+import 'package:local_notification_flutter_project/ui/data/repo/festival_Repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/topPepole_repository.dart';
 import 'package:local_notification_flutter_project/ui/screens/Notification/services/notification_service.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
@@ -132,6 +133,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
           gholeRepository: gholeRepository,
           sliderRepository: sliderRepository,
           topPepoleRepository: topPepoleRepository,
+          festivalRepository: festivalRepository,
         );
         bloc = homeBloc;
         streamSubscription = homeBloc.stream.listen((state) {
