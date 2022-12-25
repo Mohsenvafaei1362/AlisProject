@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:local_notification_flutter_project/test/test.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/festival_Repository.dart';
+import 'package:local_notification_flutter_project/ui/data/repo/race_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/topPepole_repository.dart';
 import 'package:local_notification_flutter_project/ui/screens/Notification/services/notification_service.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
@@ -134,6 +135,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
           sliderRepository: sliderRepository,
           topPepoleRepository: topPepoleRepository,
           festivalRepository: festivalRepository,
+          raceRepository: raceRepository,
         );
         bloc = homeBloc;
         streamSubscription = homeBloc.stream.listen((state) {
@@ -639,7 +641,10 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                         case 9:
                           return TopPepole(size, rankPepole, size.width, 120);
                         case 10:
-                          return Race();
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Race(), //مسابقات
+                          );
                         case 11:
                           return Padding(
                             padding: const EdgeInsets.all(5.0),
@@ -654,7 +659,10 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             ),
                           );
                         case 12:
-                          return Survey();
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Survey(), //نظر سنجی
+                          );
                         case 13:
                           return Padding(
                             padding: const EdgeInsets.all(8.0),

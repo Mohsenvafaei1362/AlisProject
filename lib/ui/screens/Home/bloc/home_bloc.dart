@@ -4,6 +4,7 @@ import 'package:local_notification_flutter_project/ui/data/ClassInfo/banner.dart
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/festival.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/message_box_info.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
+import 'package:local_notification_flutter_project/ui/data/ClassInfo/race_info.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/sliderInfo.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/topPepole.dart';
 import 'package:local_notification_flutter_project/ui/data/common/exception.dart';
@@ -13,6 +14,7 @@ import 'package:local_notification_flutter_project/ui/data/repo/bannerRepository
 import 'package:local_notification_flutter_project/ui/data/repo/festival_Repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/message_box_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/product_repository.dart';
+import 'package:local_notification_flutter_project/ui/data/repo/race_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/slider_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/topPepole_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/user_info_repository.dart';
@@ -33,6 +35,7 @@ var proposals;
 var bestsellings;
 var topPepole;
 var festival;
+var race;
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final IBannerRepository bannerRepository;
@@ -44,6 +47,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ISliderRepository sliderRepository;
   final ITopPepoleRepository topPepoleRepository;
   final IFestivalRepository festivalRepository;
+  final IRaceRepository raceRepository;
   HomeBloc({
     required this.bannerRepository,
     required this.productRepository,
@@ -54,6 +58,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     required this.sliderRepository,
     required this.topPepoleRepository,
     required this.festivalRepository,
+    required this.raceRepository,
   }) : super(HomeLoading()) {
     on<HomeEvent>((event, emit) async {
       if (event is HomeStarted || event is HomeRefresh) {
@@ -83,6 +88,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           final topPepoles =
               await topPepoleRepository.topPepole(); //سه نفر برتر
           final festivals = await festivalRepository.festival(); //جشنواره
+          final races = await raceRepository.race(); //مسابقات
 
           // final userInfo = await userInfoRepository.userInfo();
           product = products;
@@ -95,6 +101,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           bestsellings = bestselling;
           topPepole = topPepoles;
           festival = festivals;
+          race = races;
 
           // user = userInfo;
           // await loadCartItems(emit, false);
@@ -110,6 +117,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             proposal: proposal,
             topPepole: topPepoles,
             festival: festivals,
+            race: races,
             // userInfo: user,
             // popularProducts: popularProducts
           ));
@@ -145,6 +153,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           proposal: proposals,
           topPepole: topPepole,
           festival: festival,
+          race: race,
         ));
       }
     } catch (e) {
