@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/race_info.dart';
 
-abstract class IRaceRemoteDataSource {
+abstract class IRaceDataSource {
   Future<List<RaceInfo>> race();
 }
 
-class RaceRemoteDataSource implements IRaceRemoteDataSource {
+class RaceRemoteDataSource implements IRaceDataSource {
   final Dio httpClient;
 
   RaceRemoteDataSource(this.httpClient);
