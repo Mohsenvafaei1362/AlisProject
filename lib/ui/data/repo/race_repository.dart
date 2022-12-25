@@ -9,7 +9,7 @@ abstract class IRaceRepository {
 }
 
 class RaceRepository implements IRaceRepository {
-  final IRaceRemoteDataSource dataSource;
+  final IRaceDataSource dataSource;
 
   RaceRepository(this.dataSource);
   @override

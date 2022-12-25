@@ -28,6 +28,7 @@ class HomeSuccess extends HomeState {
   final List<TopPepoleInfo> topPepole;
   final List<FestivalInfo> festival;
   final List<RaceInfo> race;
+  final List<SurveyInfo> survey;
   const HomeSuccess({
     required this.products,
     required this.banners,
@@ -40,5 +41,6 @@ class HomeSuccess extends HomeState {
     required this.topPepole,
     required this.festival,
     required this.race,
+    required this.survey,
   });
 }

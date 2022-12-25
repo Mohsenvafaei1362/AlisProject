@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:local_notification_flutter_project/test/test.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/festival_Repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/race_repository.dart';
+import 'package:local_notification_flutter_project/ui/data/repo/survey_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/topPepole_repository.dart';
 import 'package:local_notification_flutter_project/ui/screens/Notification/services/notification_service.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
@@ -136,6 +137,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
           topPepoleRepository: topPepoleRepository,
           festivalRepository: festivalRepository,
           raceRepository: raceRepository,
+          surveyRepository: surveyRepository,
         );
         bloc = homeBloc;
         streamSubscription = homeBloc.stream.listen((state) {

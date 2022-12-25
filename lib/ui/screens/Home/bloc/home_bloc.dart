@@ -6,6 +6,7 @@ import 'package:local_notification_flutter_project/ui/data/ClassInfo/message_box
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/race_info.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/sliderInfo.dart';
+import 'package:local_notification_flutter_project/ui/data/ClassInfo/survey.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/topPepole.dart';
 import 'package:local_notification_flutter_project/ui/data/common/exception.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/Club_repository.dart';
@@ -16,6 +17,7 @@ import 'package:local_notification_flutter_project/ui/data/repo/message_box_repo
 import 'package:local_notification_flutter_project/ui/data/repo/product_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/race_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/slider_repository.dart';
+import 'package:local_notification_flutter_project/ui/data/repo/survey_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/topPepole_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/user_info_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -36,6 +38,7 @@ var bestsellings;
 var topPepole;
 var festival;
 var race;
+var survey;
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final IBannerRepository bannerRepository;
@@ -48,6 +51,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ITopPepoleRepository topPepoleRepository;
   final IFestivalRepository festivalRepository;
   final IRaceRepository raceRepository;
+  final ISurveyRepository surveyRepository;
   HomeBloc({
     required this.bannerRepository,
     required this.productRepository,
@@ -59,6 +63,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     required this.topPepoleRepository,
     required this.festivalRepository,
     required this.raceRepository,
+    required this.surveyRepository,
   }) : super(HomeLoading()) {
     on<HomeEvent>((event, emit) async {
       if (event is HomeStarted || event is HomeRefresh) {
@@ -89,6 +94,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               await topPepoleRepository.topPepole(); //سه نفر برتر
           final festivals = await festivalRepository.festival(); //جشنواره
           final races = await raceRepository.race(); //مسابقات
+          final surveys = await surveyRepository.surveyList(); //نظر سنجی
 
           // final userInfo = await userInfoRepository.userInfo();
           product = products;
@@ -102,6 +108,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           topPepole = topPepoles;
           festival = festivals;
           race = races;
+          survey = surveys;
 
           // user = userInfo;
           // await loadCartItems(emit, false);
@@ -118,6 +125,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             topPepole: topPepoles,
             festival: festivals,
             race: races,
+            survey: surveys,
             // userInfo: user,
             // popularProducts: popularProducts
           ));
@@ -154,6 +162,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           topPepole: topPepole,
           festival: festival,
           race: race,
+          survey: survey,
         ));
       }
     } catch (e) {
