@@ -1,9 +1,13 @@
+import 'package:get/get.dart';
+import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/add_to_cart_response.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/cart_response.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorite_info.dart';
 import 'package:local_notification_flutter_project/ui/data/httpClient/httpClient.dart';
 import 'package:dio/dio.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/ValidationResponse.dart';
+
+final UiDl _dl = Get.put(UiDl());
 
 abstract class ICartDataSource {
   Future<AddToCartResponse> add(int productId);
@@ -52,7 +56,9 @@ class CartRemoteDataSource implements ICartDataSource {
 
   @override
   Future<List<CartResponseFake>> getAll() async {
-    final response = await httpProduct.get('products');
+    final response = await httpProduct.get('products', queryParameters: {
+      "user_id": _dl.UserId.value,
+    });
     final List<CartResponseFake> cart = [];
     // validateResponse(response);
     (response.data as List).forEach((element) {
