@@ -9,7 +9,13 @@ abstract class ProductListEvent extends Equatable {
 
 class ProductListStarted extends ProductListEvent {
   final int categoryId;
-  const ProductListStarted(this.categoryId);
+  final int modelId;
+  final String modelName;
+  const ProductListStarted({
+    required this.categoryId,
+    required this.modelId,
+    required this.modelName,
+  });
 
   @override
   List<Object?> get props => [categoryId];

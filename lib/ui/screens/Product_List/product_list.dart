@@ -8,9 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductListScreen extends StatefulWidget {
   final int categoryId;
+  final int modelId;
+  final String model;
   ProductListScreen({
     key,
     required this.categoryId,
+    required this.modelId,
+    required this.model,
   });
 
   @override
@@ -72,7 +76,11 @@ class _ProductListScreenState extends State<ProductListScreen> {
         child: BlocProvider<ProductListBloc>(
           create: (context) {
             final bloc = ProductListBloc(productRepository)
-              ..add(ProductListStarted(widget.categoryId));
+              ..add(ProductListStarted(
+                categoryId: widget.categoryId,
+                modelId: widget.modelId,
+                modelName: widget.model,
+              ));
             productListBloc = bloc;
             return bloc;
           },
@@ -147,7 +155,14 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                                 productListBloc!
                                                                     .add(
                                                                   ProductListStarted(
-                                                                      index),
+                                                                      categoryId:
+                                                                          index,
+                                                                      modelId:
+                                                                          widget
+                                                                              .modelId,
+                                                                      modelName:
+                                                                          widget
+                                                                              .model),
                                                                 );
                                                                 Navigator.pop(
                                                                     context);

@@ -519,6 +519,8 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                                     textDirection: TextDirection.rtl,
                                     child: ProductListScreen(
                                       categoryId: 1,
+                                      modelId: 1,
+                                      model: '',
                                     ),
                                   ),
                                 ),
@@ -556,6 +558,8 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                                     textDirection: TextDirection.rtl,
                                     child: ProductListScreen(
                                       categoryId: 1,
+                                      modelId: 1,
+                                      model: '',
                                     ),
                                   ),
                                 ),
@@ -620,6 +624,8 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                                     textDirection: TextDirection.rtl,
                                     child: ProductListScreen(
                                       categoryId: 2,
+                                      modelId: 2,
+                                      model: '',
                                     ),
                                   ),
                                 ),

@@ -63,6 +63,8 @@ class _CategoryListState extends State<CategoryList> {
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
                                   categoryId: 3,
+                                  modelId: 1,
+                                  model: '',
                                 ),
                               ),
                             ),
@@ -76,6 +78,8 @@ class _CategoryListState extends State<CategoryList> {
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
                                   categoryId: 4,
+                                  modelId: 1,
+                                  model: '',
                                 ),
                               ),
                             ),
@@ -89,6 +93,8 @@ class _CategoryListState extends State<CategoryList> {
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
                                   categoryId: 5,
+                                  modelId: 1,
+                                  model: '',
                                 ),
                               ),
                             ),
@@ -102,6 +108,8 @@ class _CategoryListState extends State<CategoryList> {
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
                                   categoryId: 6,
+                                  modelId: 1,
+                                  model: '',
                                 ),
                               ),
                             ),
@@ -115,6 +123,8 @@ class _CategoryListState extends State<CategoryList> {
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
                                   categoryId: 7,
+                                  modelId: 1,
+                                  model: '',
                                 ),
                               ),
                             ),
@@ -128,6 +138,8 @@ class _CategoryListState extends State<CategoryList> {
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
                                   categoryId: 8,
+                                  modelId: 1,
+                                  model: '',
                                 ),
                               ),
                             ),
@@ -141,6 +153,8 @@ class _CategoryListState extends State<CategoryList> {
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
                                   categoryId: 9,
+                                  modelId: 1,
+                                  model: '',
                                 ),
                               ),
                             ),
@@ -154,6 +168,8 @@ class _CategoryListState extends State<CategoryList> {
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
                                   categoryId: 10,
+                                  modelId: 1,
+                                  model: '',
                                 ),
                               ),
                             ),
@@ -167,6 +183,8 @@ class _CategoryListState extends State<CategoryList> {
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
                                   categoryId: 11,
+                                  modelId: 1,
+                                  model: '',
                                 ),
                               ),
                             ),

@@ -16,8 +16,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
           emit(ProductListLoading());
           final products = await productRepository.getAll(
             categoryId: event.categoryId,
-            modelId: 0,
-            model: '',
+            modelId: event.modelId,
+            model: event.modelName,
           );
           emit(ProductListSuccess(
             products,
