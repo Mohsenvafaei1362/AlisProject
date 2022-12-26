@@ -15,30 +15,18 @@ class _SliderDetailsState extends State<SliderDetails> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: WebView(
-        initialUrl: 'https://www.google.com/',
+    return WillPopScope(
+      onWillPop: () async {
+        // show the snackbar with some text
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('The System Back Button is Deactivated')));
+        return false;
+      },
+      child: SafeArea(
+        child: WebView(
+          initialUrl: 'https://www.google.com/',
+        ),
       ),
     );
-    // Scaffold(
-    //   body: SafeArea(
-    //     child: SingleChildScrollView(
-    //       child: Column(
-    //         children: [
-    //           Container(
-    //             width: size.width,
-    //             height: size.height,
-    //             child: Column(
-    //               children: [
-    //                 Image.memory(widget.img),
-    //                 Text(widget.link),
-    //               ],
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
