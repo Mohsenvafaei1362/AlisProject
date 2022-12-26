@@ -166,7 +166,8 @@ class _DetailScreenState extends State<DetailScreen> {
     return WillPopScope(
       onWillPop: () async {
         print('object');
-        return _onWillPop();
+        // return _onWillPop();
+        return Future.value(true);
       },
       child: BlocProvider<DetailesBloc>(
         create: (context) {
@@ -189,128 +190,127 @@ class _DetailScreenState extends State<DetailScreen> {
                   backgroundColor: Colors.grey[200],
                   floatingActionButtonLocation:
                       FloatingActionButtonLocation.centerFloat,
-                  floatingActionButton: SizedBox(
-                    width: size.width * 0.95,
-                    height: size.height * 0.08,
-                    child: FloatingActionButton.extended(
-                      shape: BeveledRectangleBorder(
-                          borderRadius: BorderRadius.circular(0)),
-                      backgroundColor: const Color(0xfffafafa),
-                      onPressed: () {},
-                      label: state is ProductAddToCartBttonLoading
-                          ? const CupertinoActivityIndicator(
+                  floatingActionButton: FloatingActionButton.extended(
+                    shape: BeveledRectangleBorder(
+                        borderRadius: BorderRadius.circular(0)),
+                    backgroundColor: Colors.transparent,
+                    onPressed: () {},
+                    label: state is ProductAddToCartBttonLoading
+                        ? const CupertinoActivityIndicator(
+                            color: Colors.white,
+                          )
+                        : Container(
+                            width: size.width,
+                            height: size.height * 0.08,
+                            decoration: BoxDecoration(
                               color: Colors.white,
-                            )
-                          : Container(
-                              width: size.width * 0.95,
-                              height: size.height * 0.08,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      BlocProvider.of<ProductsBloc>(context)
-                                          .add(ProductAddToCartButtonClicked(
-                                              widget.product.id));
-                                    },
-                                    child: Container(
-                                      width: size.width * 0.38,
-                                      height: size.height * 0.06,
-                                      padding: const EdgeInsets.all(2),
-                                      decoration: BoxDecoration(
-                                          color: const Color(0xffef5350),
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      child: const Center(
-                                        child: Text('افزودن به سبد خرید'),
+                              // borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    BlocProvider.of<ProductsBloc>(context).add(
+                                        ProductAddToCartButtonClicked(
+                                            widget.product.id));
+                                  },
+                                  child: Container(
+                                    width: size.width * 0.38,
+                                    height: size.height * 0.06,
+                                    padding: const EdgeInsets.all(2),
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xff00ABB3),
+                                        borderRadius: BorderRadius.circular(5)),
+                                    child: const Center(
+                                      child: Text(
+                                        'افزودن به سبد خرید',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ),
-                                  // SizedBox(
-                                  //   width: 50,
-                                  // ),
-                                  SizedBox(
-                                    width: size.width * 0.35,
-                                    height: size.height * 0.07,
-                                    // color: Color(0xffffa34d),
-                                    child: Column(
-                                      // crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            widget.product.discount != 0
-                                                ? Container(
-                                                    width: size.width * 0.1,
-                                                    height: size.height * 0.03,
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.red,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${widget.product.discount.toString().withDiscountLable}'
-                                                            .toPersianDigit(),
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 13,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                : const Text(''),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Row(
-                                              children: [
-                                                widget.product.discount != 0
-                                                    ? Text(
-                                                        widget.product.price
-                                                            .withPriceLable
-                                                            .toPersianDigit(),
-                                                        style: const TextStyle(
-                                                          color: Colors.black38,
-                                                          fontSize: 12,
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .lineThrough,
-                                                        ),
-                                                      )
-                                                    : const Text(''),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              priceFinal.withPriceLable
-                                                  .toPersianDigit(),
-                                              style: const TextStyle(
-                                                color: Colors.black54,
-                                                fontSize: 12,
+                                ),
+                                // SizedBox(
+                                //   width: 50,
+                                // ),
+                                SizedBox(
+                                  width: size.width * 0.35,
+                                  height: size.height * 0.07,
+                                  // color: Color(0xffffa34d),
+                                  child: Column(
+                                    // crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          if (widget.product.discount != 0)
+                                            Container(
+                                              width: size.width * 0.1,
+                                              height: size.height * 0.03,
+                                              padding: const EdgeInsets.all(0),
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xff00ABB3),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: Center(
+                                                child: Text(
+                                                  '${widget.product.discount.toString().withDiscountLable}'
+                                                      .toPersianDigit(),
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Row(
+                                            children: [
+                                              if (widget.product.discount != 0)
+                                                Text(
+                                                  widget.product.price
+                                                      .withPriceLable
+                                                      .toPersianDigit(),
+                                                  style: const TextStyle(
+                                                    color: Color(0xff3C4048),
+                                                    fontSize: 12,
+                                                    decoration: TextDecoration
+                                                        .lineThrough,
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            priceFinal.withPriceLable
+                                                .toPersianDigit(),
+                                            style: const TextStyle(
+                                              color: Color(0xff3C4048),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                    ),
+                          ),
                   ),
                   body: SafeArea(
                     child: CustomScrollView(
@@ -963,7 +963,7 @@ class UserOpinion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: size.width,
-      margin: const EdgeInsets.symmetric(vertical: 5),
+      margin: const EdgeInsets.symmetric(vertical: 0),
       padding: const EdgeInsets.all(8.0),
       color: Colors.white,
       child: Column(
