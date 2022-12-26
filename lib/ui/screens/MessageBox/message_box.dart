@@ -107,7 +107,7 @@ class _MessageBoxState extends State<MessageBox> {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => Directionality(
                                         textDirection: TextDirection.rtl,
-                                        child: HomeScreen_Ui())));
+                                        child: RootScreen())));
                               },
                               child: const Icon(
                                 Icons.arrow_back_ios,
