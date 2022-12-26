@@ -1011,7 +1011,7 @@ class UserOpinion extends StatelessWidget {
                           color: Colors.white.withOpacity(0.95),
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
-                              color: Colors.black26,
+                              color: Colors.black12,
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(10),

@@ -170,7 +170,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
             List<Uint8List> _banners = [];
             List<String> _bannersllink = [];
 
-            for (var element in state.banners) {
+            for (var element in state.banners1) {
               _banners.add(
                 base64.decode(
                   element.img.toString(),
@@ -179,7 +179,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
             }
             _imagedetaile.imagedetaile = state.slider;
 
-            for (var element in state.banners) {
+            for (var element in state.banners1) {
               _bannersllink.add(
                 element.link.toString(),
               );
@@ -526,7 +526,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                                     child: ProductListScreen(
                                       categoryId: 1,
                                       modelId: 1,
-                                      model: '',
+                                      model: 'allproducts',
                                     ),
                                   ),
                                 ),
@@ -547,7 +547,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             // show: '',
                             showindex: 'مشاهده همه  >',
                             titr: 'پیشنهاد\nشگفت\nانگیز',
-                            backgroundColor: Colors.red,
+                            backgroundColor: Color(0xffFF1E1E),
                             image: 'assets/images/discount.png',
                             textColor: Colors.white,
                             itemCount: state.products.length + 1,
@@ -611,15 +611,14 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                           return NewProduct(
                             size: size,
                             state: state.products,
-                            // title: 'محصولات',
-                            // show: 'مشاهده همه  >',
-                            // titr: 'پیشنهاد\nشگفت\nانگیز',
-                            // backgroundColor: Colors.grey.withOpacity(0.05),
-                            // image: 'assets/images/discount.png',
-                            // textColor: Colors.white,
-                            itemCount: state.products.length,
-                            reverse: false,
-                            indexcount: state.products.length + 1,
+                            showindex: 'مشاهده همه  >',
+                            titr: ' پر بازدید\nترین ها',
+                            backgroundColor: Color(0xff31C6D4),
+                            image: 'assets/images/bestseller.png',
+                            textColor: Colors.white,
+                            itemCount: state.products.length + 1,
+                            reverse: true,
+                            indexcount: 0,
                             press: () {
                               Navigator.of(context, rootNavigator: true).push(
                                 CupertinoPageRoute<bool>(
@@ -653,6 +652,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
                               child: Image.memory(_banners[3]),
+
                               // child: Advertise(
                               //   size,
                               //   'https://www.boursenews.ir/files/fa/news/1399/3/17/195744_674.jpg',

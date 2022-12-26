@@ -9,7 +9,7 @@ import 'package:dio/dio.dart';
 final UserInfo _userInfo = Get.put(UserInfo());
 
 abstract class IBannerDataSource {
-  Future<List<SliderInfo>> getAll();
+  Future<List<SliderInfo>> getAll(String model , int modelid);
 }
 
 class BannerRemoteDataSource extends IBannerDataSource {
@@ -17,7 +17,7 @@ class BannerRemoteDataSource extends IBannerDataSource {
   BannerRemoteDataSource(this.httpClient);
 
   @override
-  Future<List<SliderInfo>> getAll() async {
+  Future<List<SliderInfo>> getAll(String model , int modelid) async {
     final response = await httpClient.get('Slider', queryParameters: {
       "SliderGroupName": 'Main',
       "UserRef": _userInfo.UserId.value,

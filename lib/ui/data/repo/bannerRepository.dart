@@ -8,7 +8,8 @@ import 'package:local_notification_flutter_project/ui/data/source/banner_remote_
 final bannerRepository = BannerRepository(BannerRemoteDataSource(httpClient));
 
 abstract class IBannerRepository {
-  Future<List<SliderInfo>> getAll();
+  Future<List<SliderInfo>> getAll(
+      {required String model, required int modelid});
 }
 
 class BannerRepository implements IBannerRepository {
@@ -17,7 +18,8 @@ class BannerRepository implements IBannerRepository {
   BannerRepository(this.dataSource);
 
   @override
-  Future<List<SliderInfo>> getAll() {
-    return dataSource.getAll();
+  Future<List<SliderInfo>> getAll(
+      {required String model, required int modelid}) {
+    return dataSource.getAll(model, modelid);
   }
 }

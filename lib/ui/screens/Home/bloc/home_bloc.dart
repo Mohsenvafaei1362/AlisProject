@@ -26,19 +26,35 @@ import 'package:equatable/equatable.dart';
 part 'home_event.dart';
 part 'home_state.dart';
 
-var product;
-var banner;
-var user;
-var message;
-var club;
-var ghole;
-var slider;
-var proposals;
-var bestsellings;
-var topPepole;
-var festival;
-var race;
-var survey;
+var product,
+    banner1,
+    banner2,
+    banner3,
+    user,
+    message,
+    club,
+    ghole,
+    slider,
+    proposals,
+    bestsellings,
+    topPepole,
+    festival,
+    race,
+    survey;
+// var banner1;
+// var banner2;
+// var banner3;
+// var user;
+// var message;
+// var club;
+// var ghole;
+// var slider;
+// var proposals;
+// var bestsellings;
+// var topPepole;
+// var festival;
+// var race;
+// var survey;
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final IBannerRepository bannerRepository;
@@ -84,7 +100,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             modelId: 0,
             model: 'bestselling',
           ); // پر فروش ترین
-          final banners = await bannerRepository.getAll(); //تبلیغات
+          final banners1 =
+              await bannerRepository.getAll(model: '', modelid: 1); //1 تبلیغات
+          final banners2 =
+              await bannerRepository.getAll(model: '', modelid: 2); //2 تبلیغات
+          final banners3 =
+              await bannerRepository.getAll(model: '', modelid: 3); //3 تبلیغات
           final messageCount =
               await messageCountRepository.messageCount(); //پیام
           final clubinfo = await clubRepository.club(); //باشگاه
@@ -98,7 +119,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
           // final userInfo = await userInfoRepository.userInfo();
           product = products;
-          banner = banners;
+          banner1 = banners1;
+          banner2 = banners2;
+          banner3 = banners3;
           message = messageCount;
           club = clubinfo;
           ghole = gholeinfo;
@@ -114,7 +137,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           // await loadCartItems(emit, false);
           // final popularProducts = await productRepository.getAll();
           emit(HomeSuccess(
-            banners: banners,
+            banners1: banner1,
+            banners2: banner2,
+            banners3: banner3,
             products: products,
             messageCount: message,
             club: clubinfo,
@@ -145,14 +170,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         modelId: 1,
         model: '',
       );
-      final banners = await bannerRepository.getAll();
+      final banners = await bannerRepository.getAll(model: '', modelid: 1);
       final messageCount = await messageCountRepository.messageCount();
       if (result.isEmpty || banners.isEmpty || messageCount.isEmpty) {
         emit(HomeLoading());
       } else {
         emit(HomeSuccess(
           products: result,
-          banners: banners,
+          banners1: banner1,
+          banners2: banner2,
+          banners3: banner3,
           messageCount: messageCount,
           club: club,
           ghole: ghole,
