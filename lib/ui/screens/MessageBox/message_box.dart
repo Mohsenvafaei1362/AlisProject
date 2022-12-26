@@ -64,21 +64,23 @@ class _MessageBoxState extends State<MessageBox> {
             gholeRepository: gholeRepository,
           );
           bloc.add(MessageBoxStarted());
-          subscription = bloc.stream.listen((state) {
-            if (state is MessageBoxNextPage) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Message_Post1(
-                      message: data!,
-                    ),
-                  ),
-                ),
-              );
-            }
-          });
+          subscription = bloc.stream.listen(
+            (state) {
+              // if (state is MessageBoxNextPage) {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => Directionality(
+              //         textDirection: TextDirection.rtl,
+              //         child: Message_Post1(
+              //           message: data!,
+              //         ),
+              //       ),
+              //     ),
+              //   );
+              // }
+            },
+          );
           return bloc;
         },
         child: SafeArea(
@@ -247,6 +249,8 @@ class _MessageBoxState extends State<MessageBox> {
                   return Center(
                     child: Text(state.exception.message),
                   );
+                } else if (state is MessageBoxNextPage) {
+                  return Container();
                 } else {
                   print(state);
                   throw Exception('state is not supported');

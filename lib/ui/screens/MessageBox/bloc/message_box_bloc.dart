@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/Club_info.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/Ghole_info.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/message_box_info.dart';
@@ -12,6 +13,8 @@ import 'package:get/get.dart';
 
 part 'message_box_event.dart';
 part 'message_box_state.dart';
+
+var message, ghole, club;
 
 class MessageBoxBloc extends Bloc<MessageBoxEvent, MessageBoxState> {
   final IMessageBoxRepository messageBoxRepository;
@@ -31,6 +34,10 @@ class MessageBoxBloc extends Bloc<MessageBoxEvent, MessageBoxState> {
           final messageInfo = await messageCountRepository.messageCount();
           final gholeInfo = await gholeRepository.ghole();
           final clubInfo = await clubRepository.club();
+          message = messageInfo;
+          ghole = gholeInfo;
+          club = clubInfo;
+
           emit(
             MessageBoxSuccess(
               club: clubInfo,
@@ -40,11 +47,15 @@ class MessageBoxBloc extends Bloc<MessageBoxEvent, MessageBoxState> {
           );
         } else if (event is MessageBoxClicked) {
           final successState = (state as MessageBoxSuccess);
+          emit(MessageBoxLoading());
           final index = successState.messageCount
               .indexWhere((element) => element.ID == event.messageId);
           successState.messageCount[index].isActive = false;
-          emit(MessageBoxNextPage());
-          // Get.to(()=>Message_Post1(message: successState.message));
+          // emit(MessageBoxNextPage());
+
+          Get.to(
+            () => Message_Post1(message: message, index: index),
+          );
           // emit(MessageBoxSuccess(message: message))
         }
       } catch (e) {
