@@ -12,6 +12,7 @@ import 'package:local_notification_flutter_project/ui/screens/Comment_Product/co
 import 'package:local_notification_flutter_project/ui/screens/Home/bloc/products_bloc.dart';
 import 'package:local_notification_flutter_project/ui/screens/cart/cart.dart';
 import 'package:local_notification_flutter_project/ui/screens/details/bloc/detailes_bloc.dart';
+import 'package:local_notification_flutter_project/ui/screens/details/detail.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/ScrollPhysics.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/image_loading_service.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/pricelable.dart';
@@ -65,6 +66,11 @@ class _DetailScreenState extends State<DetailScreen> {
                 child: new Text('No'),
               ),
               TextButton(
+                // onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                //     builder: ((context) => Detail(
+                //           product: widget.product,
+                //           data: 1,
+                //         )))),
                 onPressed: () => Navigator.of(context).pop(true),
                 child: new Text('Yes'),
               ),
@@ -166,8 +172,8 @@ class _DetailScreenState extends State<DetailScreen> {
     return WillPopScope(
       onWillPop: () async {
         print('object');
-        // return _onWillPop();
-        return Future.value(true);
+        return _onWillPop();
+        // return Future.value(true);
       },
       child: BlocProvider<DetailesBloc>(
         create: (context) {
@@ -393,6 +399,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               )
                             ],
                           ),
+
                           // ImageLoadingService(
                           //   imageUrl: _imageUrl.length != 0
                           //       ? _imageUrl

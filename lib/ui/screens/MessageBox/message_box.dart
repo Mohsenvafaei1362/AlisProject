@@ -104,10 +104,13 @@ class _MessageBoxState extends State<MessageBox> {
                           children: [
                             InkWell(
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => Directionality(
-                                        textDirection: TextDirection.rtl,
-                                        child: RootScreen())));
+                                // Navigator.of(context)
+                                //     .popUntil((route) => route.isActive);
+                                Navigator.of(context, rootNavigator: true).push(
+                                    MaterialPageRoute(
+                                        builder: (context) => Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child: RootScreen())));
                               },
                               child: const Icon(
                                 Icons.arrow_back_ios,
