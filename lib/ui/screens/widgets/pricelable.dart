@@ -10,25 +10,7 @@ extension PriceLable on int {
   }
 }
 
-// extension PriceLablenum on num {
-//   String get withPriceLable => this > 0 ? '$separateByComma  تومان' : 'رایگان';
-
-//   String get separateByComma {
-//     final numberFormat = NumberFormat.decimalPattern();
-//     return numberFormat.format(this);
-//   }
-// }
-
 extension PriceLabledouble on double {
-  String get withPriceLable => this > 0 ? '$separateByComma  تومان' : 'رایگان';
-
-  String get separateByComma {
-    final numberFormat = NumberFormat.decimalPattern();
-    return numberFormat.format(this);
-  }
-}
-
-extension PriceLablenum on num {
   String get withPriceLable => this > 0 ? '$separateByComma  تومان' : 'رایگان';
 
   String get separateByComma {

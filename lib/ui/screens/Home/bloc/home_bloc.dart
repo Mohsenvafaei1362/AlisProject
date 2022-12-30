@@ -40,7 +40,7 @@ var product,
     club,
     ghole,
     slider,
-    hotLists,
+    proposals,
     bestsellings,
     topPepole,
     festival,
@@ -90,34 +90,32 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (event is HomeStarted || event is HomeRefresh) {
         try {
           emit(HomeLoading());
-          final sliderInfo = await sliderRepository.getImage('Main'); //اسلایدر
-
           final products = await productRepository.getAll(
-            categoryId: 0,
-            modelId: 0,
-            model: 'allProduct',
-            roleRef: _userinfo.RoleId.value,
-            sellsCenter: _userinfo.sellsCenter.value,
-            userId: _dl.UserId.value,
-            usersGroupRef: _userinfo.userGroups.value,
-            visitorRef: _userinfo.visitor.value,
-          ); // همه محصولات
-          final hotList = await productRepository.getAll(
             categoryId: 0,
             modelId: 3,
             model: 'HotList',
             roleRef: _userinfo.RoleId.value,
-            sellsCenter: _userinfo.sellsCenter.value,
+            sellCenter: _userinfo.sellsCenter.value,
+            userId: _dl.UserId.value,
+            usersGroupRef: _userinfo.userGroups.value,
+            visitorRef: _userinfo.visitor.value,
+          ); // همه محصولات
+          final proposal = await productRepository.getAll(
+            categoryId: 0,
+            modelId: 3,
+            model: 'HotList',
+            roleRef: _userinfo.RoleId.value,
+            sellCenter: _userinfo.sellsCenter.value,
             userId: _dl.UserId.value,
             usersGroupRef: _userinfo.userGroups.value,
             visitorRef: _userinfo.visitor.value,
           ); //پیشنهاد ویژه
           final bestselling = await productRepository.getAll(
             categoryId: 0,
-            modelId: 0,
-            model: 'bestselling',
+            modelId: 4,
+            model: 'BestSell',
             roleRef: _userinfo.RoleId.value,
-            sellsCenter: _userinfo.sellsCenter.value,
+            sellCenter: _userinfo.sellsCenter.value,
             userId: _dl.UserId.value,
             usersGroupRef: _userinfo.userGroups.value,
             visitorRef: _userinfo.visitor.value,
@@ -132,6 +130,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               await messageCountRepository.messageCount(); //پیام
           final clubinfo = await clubRepository.club(); //باشگاه
           final gholeinfo = await gholeRepository.ghole(); //قله
+          final sliderInfo = await sliderRepository.getImage('Main'); //اسلایدر
           final topPepoles =
               await topPepoleRepository.topPepole(); //سه نفر برتر
           final festivals = await festivalRepository.festival(); //جشنواره
@@ -147,7 +146,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           club = clubinfo;
           ghole = gholeinfo;
           slider = sliderInfo;
-          hotLists = hotList;
+          proposals = proposal;
           bestsellings = bestselling;
           topPepole = topPepoles;
           festival = festivals;
@@ -167,7 +166,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             ghole: gholeinfo,
             slider: sliderInfo,
             bestselling: bestselling,
-            hotList: hotList,
+            proposal: proposal,
             topPepole: topPepoles,
             festival: festivals,
             race: races,
@@ -191,7 +190,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         modelId: 1,
         model: '',
         roleRef: _userinfo.RoleId.value,
-        sellsCenter: _userinfo.sellsCenter.value,
+        sellCenter: _userinfo.sellsCenter.value,
         userId: _dl.UserId.value,
         usersGroupRef: _userinfo.userGroups.value,
         visitorRef: _userinfo.visitor.value,
@@ -211,7 +210,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           ghole: ghole,
           slider: slider,
           bestselling: bestsellings,
-          hotList: hotLists,
+          proposal: proposals,
           topPepole: topPepole,
           festival: festival,
           race: race,

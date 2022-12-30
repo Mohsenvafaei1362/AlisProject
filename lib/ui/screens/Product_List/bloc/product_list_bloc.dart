@@ -24,7 +24,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
             modelId: event.modelId,
             model: event.modelName,
             roleRef: _userinfo.RoleId.value,
-            sellsCenter: _userinfo.sellsCenter.value,
+            sellCenter: _userinfo.sellsCenter.value,
             userId: _dl.UserId.value,
             usersGroupRef: _userinfo.userGroups.value,
             visitorRef: _userinfo.visitor.value,

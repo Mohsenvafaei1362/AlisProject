@@ -12,7 +12,7 @@ abstract class IProductRepository {
     required int categoryId,
     required int modelId,
     required int userId,
-    required int sellsCenter,
+    required int sellCenter,
     required String model,
     required int visitorRef,
     required int roleRef,
@@ -20,10 +20,19 @@ abstract class IProductRepository {
   });
   Future<List<ProductEntity>> detail(int data);
   Future<List<ProductEntity>> search(String searchTerm);
-  Future<List<ProductEntity>> sendLog(int id, String title, String message);
+  Future<void> sendLog(
+    int productId,
+    String sourceTitle,
+    String Model,
+    int userId,
+    int sellsCenter,
+    int categoryId,
+    String event,
+    int modelId,
+  );
   Future<List<ProductEntity>> similar(
       int categoryId, int modelId, String model);
-  Future<List<CommentProduct>> commentProduct(int productId);
+  Future<List<CommentProduct>> commentProduct(int productId, int sellsCenter);
 }
 
 class ProductRepository implements IProductRepository {
@@ -38,7 +47,7 @@ class ProductRepository implements IProductRepository {
     required int modelId,
     required String model,
     required int userId,
-    required int sellsCenter,
+    required int sellCenter,
     required int visitorRef,
     required int roleRef,
     required int usersGroupRef,
@@ -48,7 +57,7 @@ class ProductRepository implements IProductRepository {
         model: model,
         modelId: modelId,
         roleRef: roleRef,
-        sellsCenter: sellsCenter,
+        sellCenter: sellCenter,
         userId: userId,
         usersGroupRef: usersGroupRef,
         visitorRef: visitorRef,
@@ -65,8 +74,26 @@ class ProductRepository implements IProductRepository {
   Future<List<ProductEntity>> detail(int data) => dataSource.detail(data);
 
   @override
-  Future<List<ProductEntity>> sendLog(int id, String title, String message) {
-    return dataSource.sendLog(id, title, message);
+  Future<void> sendLog(
+    int productId,
+    String sourceTitle,
+    String Model,
+    int userId,
+    int sellsCenter,
+    int categoryId,
+    String event,
+    int modelId,
+  ) {
+    return dataSource.sendLog(
+      model: Model,
+      categoryId: categoryId,
+      event: event,
+      modelId: modelId,
+      userId: userId,
+      productId: productId,
+      sellsCenter: sellsCenter,
+      sourceTitle: sourceTitle,
+    );
   }
 
   @override
@@ -76,6 +103,6 @@ class ProductRepository implements IProductRepository {
   }
 
   @override
-  Future<List<CommentProduct>> commentProduct(int productId) =>
-      dataSource.commentProduct(productId);
+  Future<List<CommentProduct>> commentProduct(int productId, int sellsCenter) =>
+      dataSource.commentProduct(productId, sellsCenter);
 }

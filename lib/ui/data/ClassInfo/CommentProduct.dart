@@ -1,18 +1,11 @@
 class CommentProduct {
-  final String title;
-  final String desc;
+  final String comment;
   final String name;
-  final DateTime date;
+  final String date;
 
-  CommentProduct(
-    this.title,
-    this.desc,
-    this.name,
-    this.date,
-  );
+  CommentProduct(this.comment, this.name, this.date);
   CommentProduct.fromJson(Map json)
-      : title = json['title'],
-        desc = json['desc'],
+      : comment = json['comment'],
         name = json['name'],
         date = json['date'];
 }

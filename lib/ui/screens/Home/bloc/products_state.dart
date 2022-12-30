@@ -23,8 +23,6 @@ class ProductFiltterSuccess extends ProductsState {
   ProductFiltterSuccess(this.filtterProduct);
 }
 
-class ProductSuccess extends ProductsState {}
-
 class ProductFiltterLoading extends ProductsState {}
 
 class ProductSendLogLoading extends ProductsState {}

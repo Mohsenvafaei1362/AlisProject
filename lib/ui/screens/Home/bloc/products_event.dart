@@ -32,12 +32,22 @@ class ProductFiltterBttonClicked extends ProductsEvent {
 
 class ProductSendLog extends ProductsEvent {
   final int productId;
-  final String title;
-  final String message;
+  final String sourceTitle;
+  final String model;
+  final int userId;
+  final int sellsCenter;
+  final int categoryId;
+  final String event;
+  final int modelId;
 
-  const ProductSendLog(
-    this.productId,
-    this.title,
-    this.message,
-  );
+  const ProductSendLog({
+    required this.productId,
+    required this.sourceTitle,
+    required this.model,
+    required this.userId,
+    required this.sellsCenter,
+    required this.categoryId,
+    required this.event,
+    required this.modelId,
+  });
 }

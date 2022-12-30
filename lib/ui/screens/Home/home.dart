@@ -542,7 +542,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                         case 3:
                           return NewProduct(
                             size: size,
-                            state: state.hotList,
+                            state: state.products,
                             // title: '',
                             // show: '',
                             showindex: 'مشاهده همه  >',
@@ -610,7 +610,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                         case 7:
                           return NewProduct(
                             size: size,
-                            state: state.products,
+                            state: state.bestselling,
                             showindex: 'مشاهده همه  >',
                             titr: ' پر بازدید\nترین ها',
                             backgroundColor: Color(0xff31C6D4),
@@ -1349,7 +1349,7 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
         // ),
         Container(
           width: size.width,
-          height: size.height * 0.47,
+          height: size.height * 0.5,
           padding: EdgeInsets.symmetric(vertical: 8),
           color: backgroundColor,
           child: ListView.builder(
@@ -1405,14 +1405,13 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                         ),
                       ),
                       // if (data.discount != 0)
-                      // ProductItem(
-                      //   product: data,
-                      //   borderRadius: BorderRadius.circular(10),
-                      // ),
+                      ProductItem(
+                        product: data,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ],
                   ),
                 );
-              
               } else if (index < state.length) {
                 final data = state[index];
                 return ProductItem(

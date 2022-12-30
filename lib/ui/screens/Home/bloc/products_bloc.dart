@@ -42,8 +42,13 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
             emit(ProductSendLogLoading());
             final response = await productRepository.sendLog(
               event.productId,
-              event.message,
-              event.title,
+              event.model,
+              event.sourceTitle,
+              event.userId,
+              event.sellsCenter,
+              event.categoryId,
+              event.event,
+              event.modelId,
             );
             emit(ProductSendLogSuccess());
           }

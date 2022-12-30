@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
+import 'package:local_notification_flutter_project/ui/data/ClassInfo/CommentProduct.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_manager.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/sliderInfo.dart';
@@ -12,7 +13,6 @@ import 'package:local_notification_flutter_project/ui/screens/Comment_Product/co
 import 'package:local_notification_flutter_project/ui/screens/Home/bloc/products_bloc.dart';
 import 'package:local_notification_flutter_project/ui/screens/cart/cart.dart';
 import 'package:local_notification_flutter_project/ui/screens/details/bloc/detailes_bloc.dart';
-import 'package:local_notification_flutter_project/ui/screens/details/detail.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/ScrollPhysics.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/image_loading_service.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/pricelable.dart';
@@ -39,6 +39,8 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   StreamSubscription<ProductsState>? stateSubscription;
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey();
+
+  final UserInfo _userInfo = Get.put(UserInfo());
 
   final ImageDetaile _imagedetaile = Get.put(ImageDetaile());
   @override
@@ -85,90 +87,9 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    switch (widget.product.id) {
-      case 1:
-        comment = Comment.comments_milkt;
-        setState(() {
-          productsimilar = 'شیر';
-        });
-        break;
-      case 2:
-        comment = Comment.comments_milk;
-        setState(() {
-          productsimilar = 'شیر';
-        });
-        break;
-      case 3:
-        comment = Comment.comments_milkt;
-        setState(() {
-          productsimilar = 'شیر';
-        });
-        break;
-      case 4:
-        comment = Comment.comments_dogh;
-        setState(() {
-          productsimilar = 'دوغ';
-        });
-        break;
-      case 5:
-        comment = Comment.comments_dogh;
-        setState(() {
-          productsimilar = 'دوغ';
-        });
-        break;
-      case 6:
-        comment = Comment.comments_dogh;
-        setState(() {
-          productsimilar = 'دوغ';
-        });
-        break;
-      case 7:
-        comment = Comment.comments_dogh;
-        setState(() {
-          productsimilar = 'دوغ';
-        });
-        break;
-      case 8:
-        comment = Comment.comments_abmive;
-        setState(() {
-          productsimilar = 'نکتار';
-        });
-        break;
-      case 9:
-        comment = Comment.comments_abmive;
-        setState(() {
-          productsimilar = 'نکتار';
-        });
-        break;
-      case 10:
-        comment = Comment.comments_ab;
-        setState(() {
-          productsimilar = 'آب معدنی';
-        });
-        break;
-      case 11:
-        comment = Comment.comments_delester;
-        setState(() {
-          productsimilar = 'ماءالشعیر';
-        });
-        break;
-      case 12:
-        comment = Comment.comments_noshabe;
-        setState(() {
-          productsimilar = 'نوشابه';
-        });
-        break;
-      case 13:
-        comment = Comment.comments_abghazt;
-        setState(() {
-          productsimilar = "آبمیوه گازدار تشریفاتی";
-        });
-        break;
-      default:
-    }
     // const comment = Comment.comments_ab;
-    final priceFinal = widget.product.price -
-        (widget.product.price * widget.product.takhfif / 100);
+    // final priceFinal = widget.product.price -
+    //     (widget.product.price * widget.product.discount / 100);
     return WillPopScope(
       onWillPop: () async {
         print('object');
@@ -180,734 +101,725 @@ class _DetailScreenState extends State<DetailScreen> {
           final bloc = DetailesBloc(
             productRepository: productRepository,
           );
-          bloc.add(DetailesStarted(widget.data, widget.product.id));
+          bloc.add(DetailesStarted(
+            productId: widget.product.id,
+            sellsCenter: _userInfo.sellsCenter.value,
+          ));
           return bloc;
         },
-        child: Directionality(
-          textDirection: TextDirection.rtl,
-          child: ScaffoldMessenger(
-            key: _scaffoldKey,
-            child: BlocBuilder<DetailesBloc, DetailesState>(
-              builder: (context, state) {
-                if (state is DetailesSuccess) {
-                  final d = state.similar.where((element) =>
-                      element.productname.contains(productsimilar));
-                  final f = d.map((e) => e).toList();
-                  print(f);
-                  return Scaffold(
-                    backgroundColor: Colors.grey[200],
-                    floatingActionButtonLocation:
-                        FloatingActionButtonLocation.centerFloat,
-                    floatingActionButton: FloatingActionButton.extended(
-                      shape: BeveledRectangleBorder(
-                          borderRadius: BorderRadius.circular(0)),
-                      backgroundColor: Colors.transparent,
-                      onPressed: () {},
-                      label: state is ProductAddToCartBttonLoading
-                          ? const CupertinoActivityIndicator(
+        child: ScaffoldMessenger(
+          key: _scaffoldKey,
+          child: BlocBuilder<DetailesBloc, DetailesState>(
+            builder: (context, state) {
+              if (state is DetailesSuccess) {
+                final d = state.similar
+                    .where((element) => element.title.contains(productsimilar));
+                final f = d.map((e) => e).toList();
+                print(f);
+                return Scaffold(
+                  backgroundColor: Colors.grey[200],
+                  floatingActionButtonLocation:
+                      FloatingActionButtonLocation.centerFloat,
+                  floatingActionButton: FloatingActionButton.extended(
+                    shape: BeveledRectangleBorder(
+                        borderRadius: BorderRadius.circular(0)),
+                    backgroundColor: Colors.transparent,
+                    onPressed: () {},
+                    label: state is ProductAddToCartBttonLoading
+                        ? const CupertinoActivityIndicator(
+                            color: Colors.white,
+                          )
+                        : Container(
+                            width: size.width,
+                            height: size.height * 0.08,
+                            decoration: BoxDecoration(
                               color: Colors.white,
-                            )
-                          : Container(
-                              width: size.width,
-                              height: size.height * 0.08,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                // borderRadius: BorderRadius.circular(10),
+                              // borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    BlocProvider.of<ProductsBloc>(context).add(
+                                        ProductAddToCartButtonClicked(
+                                            widget.product.id));
+                                  },
+                                  child: Container(
+                                    width: size.width * 0.38,
+                                    height: size.height * 0.06,
+                                    padding: const EdgeInsets.all(2),
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xff00ABB3),
+                                        borderRadius: BorderRadius.circular(5)),
+                                    child: const Center(
+                                      child: Text(
+                                        'افزودن به سبد خرید',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                // SizedBox(
+                                //   width: 50,
+                                // ),
+                                SizedBox(
+                                  width: size.width * 0.35,
+                                  height: size.height * 0.07,
+                                  // color: Color(0xffffa34d),
+                                  child: Column(
+                                    // crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          if (widget.product.takhfif != '0')
+                                            Container(
+                                              width: size.width * 0.1,
+                                              height: size.height * 0.03,
+                                              padding: const EdgeInsets.all(0),
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xff00ABB3),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: Center(
+                                                child: Text(
+                                                  '${widget.product.takhfif.toString().withDiscountLable}'
+                                                      .toPersianDigit(),
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Row(
+                                            children: [
+                                              if (widget.product.takhfif != '0')
+                                                Text(
+                                                  widget.product.price
+                                                      .withPriceLable
+                                                      .toPersianDigit(),
+                                                  style: const TextStyle(
+                                                    color: Color(0xff3C4048),
+                                                    fontSize: 12,
+                                                    decoration: TextDecoration
+                                                        .lineThrough,
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            widget.product.finalprice
+                                                .toPersianDigit(),
+                                            style: const TextStyle(
+                                              color: Color(0xff3C4048),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                  ),
+                  body: SafeArea(
+                    child: CustomScrollView(
+                      physics: defaultScrollPhysics,
+                      slivers: [
+                        SliverAppBar(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(120),
+                              bottomRight: Radius.circular(2),
+                            ),
+                          ),
+                          expandedHeight:
+                              MediaQuery.of(context).size.height * 0.4,
+                          flexibleSpace:
+                              // Stack(
+                              //   children: [
+                              //     Padding(
+                              //       padding: const EdgeInsets.all(8.0),
+                              //       child: AspectRatio(
+                              //         aspectRatio: 1,
+                              //         child: PageView.builder(
+                              //             controller: _controller,
+                              //             itemCount: f.length,
+                              //             itemBuilder: (context, index) {
+                              //               // final d = state.similar.where((element) =>
+                              //               //     element.title
+                              //               //         .contains(widget.product.title));
+                              //               // final f = d.map((e) => e).toList();
+                              //               // print(f);
+                              //               // final data = state.similar[index];
+                              //               final data = f[index];
+                              //               return Padding(
+                              //                 padding: const EdgeInsets.all(8.0),
+                              //                 child: index == 0
+                              //                     ? Container(
+                              //                         width: size.width,
+                              //                         // color: Colors.amber,
+                              //                         padding: EdgeInsets.fromLTRB(
+                              //                             0, 0, 50, 0),
+                              //                         child: Image.memory(
+                              //                           base64.decode(
+                              //                             widget.product.imageUrl,
+                              //                           ),
+                              //                         ),
+                              //                         //  ImageLoadingService(
+                              //                         //   imageUrl:
+                              //                         //       widget.product.imageUrl,
+                              //                         // ),
+                              //                       )
+                              //                     : Container(
+                              //                         padding: EdgeInsets.fromLTRB(
+                              //                             0, 0, 50, 0),
+                              //                         child: Image.memory(
+                              //                           base64.decode(
+                              //                             widget.product.imageUrl,
+                              //                           ),
+                              //                         ),
+                              //                         // ImageLoadingService(
+                              //                         //   imageUrl: data.imageUrl,
+                              //                         // ),
+                              //                       ),
+                              //                 // Image.asset(
+                              //                 //     'assets/images/$index.jpg',
+                              //                 //     fit: BoxFit.cover),
+                              //               );
+                              //             }),
+                              //       ),
+                              //     ),
+                              //     Positioned(
+                              //       right: 0,
+                              //       left: 50,
+                              //       bottom: 8,
+                              //       child: Center(
+                              //         child: SmoothPageIndicator(
+                              //           controller: _controller,
+                              //           count: f.length,
+                              //           axisDirection: Axis.horizontal,
+                              //           effect: const SlideEffect(
+                              //               spacing: 8.0,
+                              //               radius: 4.0,
+                              //               dotWidth: 20.0,
+                              //               dotHeight: 2.0,
+                              //               paintStyle: PaintingStyle.stroke,
+                              //               strokeWidth: 1.5,
+                              //               dotColor: Colors.grey,
+                              //               activeDotColor: Colors.indigo),
+                              //         ),
+                              //       ),
+                              //     )
+                              //   ],
+                              // ),
+
+                              Image.memory(
+                            base64.decode(
+                              widget.product.imageUrl,
+                            ),
+                          ),
+                          foregroundColor: LightThemeColors.primaryTextColors,
+                          backgroundColor: Colors.white,
+                          actions: [
+                            IconButton(
+                              splashColor: Colors.white,
+                              highlightColor: Colors.white,
+                              onPressed: () {
+                                if (!favoritmanager
+                                    .isFavorite(widget.product)) {
+                                  favoritmanager.addFavorite(widget.product);
+                                } else {
+                                  favoritmanager.delete(widget.product);
+                                }
+                                setState(() {});
+                              },
+                              icon: Icon(
+                                favoritmanager.isFavorite(widget.product)
+                                    ? CupertinoIcons.heart_fill
+                                    : CupertinoIcons.heart,
+                                color: favoritmanager.isFavorite(widget.product)
+                                    ? Colors.pink[300]
+                                    : Colors.black38,
+                                size: 24,
                               ),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6),
+                              child: Stack(
+                                clipBehavior: Clip.none,
                                 children: [
-                                  InkWell(
-                                    onTap: () {
-                                      BlocProvider.of<ProductsBloc>(context)
-                                          .add(ProductAddToCartButtonClicked(
-                                              widget.product.id));
-                                    },
-                                    child: Container(
-                                      width: size.width * 0.38,
-                                      height: size.height * 0.06,
-                                      padding: const EdgeInsets.all(2),
-                                      decoration: BoxDecoration(
-                                          color: const Color(0xff00ABB3),
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      child: const Center(
-                                        child: Text(
-                                          'افزودن به سبد خرید',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
+                                  Positioned(
+                                    top: -3,
+                                    right: -2,
+                                    child: Badge(
+                                      badgeContent: Text(
+                                        widget.data.toString().toPersianDigit(),
+                                        style: const TextStyle(
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
                                   ),
-                                  // SizedBox(
-                                  //   width: 50,
-                                  // ),
-                                  SizedBox(
-                                    width: size.width * 0.35,
-                                    height: size.height * 0.07,
-                                    // color: Color(0xffffa34d),
-                                    child: Column(
-                                      // crossAxisAlignment: CrossAxisAlignment.end,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            if (widget.product.takhfif != 0)
-                                              Container(
-                                                width: size.width * 0.1,
-                                                height: size.height * 0.03,
-                                                padding:
-                                                    const EdgeInsets.all(0),
-                                                decoration: BoxDecoration(
-                                                    color: Color(0xff00ABB3),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10)),
-                                                child: Center(
-                                                  child: Text(
-                                                    '${widget.product.takhfif.toString().withDiscountLable}'
-                                                        .toPersianDigit(),
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 13,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Row(
-                                              children: [
-                                                if (widget.product.takhfif != 0)
-                                                  Text(
-                                                    widget.product.price
-                                                        .withPriceLable
-                                                        .toPersianDigit(),
-                                                    style: const TextStyle(
-                                                      color: Color(0xff3C4048),
-                                                      fontSize: 12,
-                                                      decoration: TextDecoration
-                                                          .lineThrough,
-                                                    ),
-                                                  ),
-                                              ],
-                                            ),
-                                          ],
+                                  IconButton(
+                                    splashColor: Colors.white,
+                                    highlightColor: Colors.white,
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child: CartScreen(),
+                                          ),
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              priceFinal.withPriceLable
-                                                  .toPersianDigit(),
-                                              style: const TextStyle(
-                                                color: Color(0xff3C4048),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      CupertinoIcons.cart,
+                                      color: Colors.black38,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                    ),
-                    body: SafeArea(
-                      child: CustomScrollView(
-                        physics: defaultScrollPhysics,
-                        slivers: [
-                          SliverAppBar(
-                            elevation: 10,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(120),
-                                bottomRight: Radius.circular(2),
-                              ),
-                            ),
-                            expandedHeight:
-                                MediaQuery.of(context).size.height * 0.4,
-                            flexibleSpace: Stack(
+                          ],
+                        ),
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Column(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: AspectRatio(
-                                    aspectRatio: 1,
-                                    child: PageView.builder(
-                                        controller: _controller,
-                                        itemCount: f.length,
-                                        itemBuilder: (context, index) {
-                                          // final d = state.similar.where((element) =>
-                                          //     element.title
-                                          //         .contains(widget.product.title));
-                                          // final f = d.map((e) => e).toList();
-                                          // print(f);
-                                          // final data = state.similar[index];
-                                          final data = f[index];
-                                          return Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: index == 0
-                                                ? Container(
-                                                    width: size.width,
-                                                    // color: Colors.amber,
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                            0, 0, 50, 0),
-                                                    child: ImageLoadingService(
-                                                      imageUrl: widget
-                                                          .product.productimg,
-                                                    ),
-                                                  )
-                                                : Container(
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                            0, 0, 50, 0),
-                                                    child: ImageLoadingService(
-                                                      imageUrl: data.productimg,
-                                                    ),
-                                                  ),
-                                            // Image.asset(
-                                            //     'assets/images/$index.jpg',
-                                            //     fit: BoxFit.cover),
-                                          );
-                                        }),
-                                  ),
-                                ),
-                                Positioned(
-                                  right: 0,
-                                  left: 50,
-                                  bottom: 8,
-                                  child: Center(
-                                    child: SmoothPageIndicator(
-                                      controller: _controller,
-                                      count: f.length,
-                                      axisDirection: Axis.horizontal,
-                                      effect: const SlideEffect(
-                                          spacing: 8.0,
-                                          radius: 4.0,
-                                          dotWidth: 20.0,
-                                          dotHeight: 2.0,
-                                          paintStyle: PaintingStyle.stroke,
-                                          strokeWidth: 1.5,
-                                          dotColor: Colors.grey,
-                                          activeDotColor: Colors.indigo),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-
-                            // ImageLoadingService(
-                            //   imageUrl: _imageUrl.length != 0
-                            //       ? _imageUrl
-                            //       : widget.product.imageUrl,
-                            //   boxfit: BoxFit.none,
-                            // ),
-                            foregroundColor: LightThemeColors.primaryTextColors,
-                            backgroundColor: Colors.white,
-                            actions: [
-                              IconButton(
-                                splashColor: Colors.white,
-                                highlightColor: Colors.white,
-                                onPressed: () {
-                                  if (!favoritmanager
-                                      .isFavorite(widget.product)) {
-                                    favoritmanager.addFavorite(widget.product);
-                                  } else {
-                                    favoritmanager.delete(widget.product);
-                                  }
-                                  setState(() {});
-                                },
-                                icon: Icon(
-                                  favoritmanager.isFavorite(widget.product)
-                                      ? CupertinoIcons.heart_fill
-                                      : CupertinoIcons.heart,
-                                  color:
-                                      favoritmanager.isFavorite(widget.product)
-                                          ? Colors.pink[300]
-                                          : Colors.black38,
-                                  size: 24,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 6),
-                                child: Stack(
-                                  clipBehavior: Clip.none,
+                                Column(
                                   children: [
-                                    Positioned(
-                                      top: -3,
-                                      right: -2,
-                                      child: Badge(
-                                        badgeContent: Text(
-                                          widget.data
-                                              .toString()
-                                              .toPersianDigit(),
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    IconButton(
-                                      splashColor: Colors.white,
-                                      highlightColor: Colors.white,
-                                      onPressed: () {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const Directionality(
-                                              textDirection: TextDirection.rtl,
-                                              child: CartScreen(),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      icon: const Icon(
-                                        CupertinoIcons.cart,
-                                        color: Colors.black38,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          SliverToBoxAdapter(
-                            child: Padding(
-                              padding: const EdgeInsets.all(0.0),
-                              child: Column(
-                                children: [
-                                  Column(
-                                    children: [
-                                      // Container(
-                                      //   width: size.width * 0.95,
-                                      //   height: size.height * 0.12,
-                                      //   // color: Colors.amber,
-                                      //   child: ListView.builder(
-                                      //     scrollDirection: Axis.horizontal,
-                                      //     itemCount:
-                                      //         _imagedetaile.imagedetaile.length,
-                                      //     itemBuilder: (context, index) {
-                                      //       List<Uint8List> _banners = [];
-                                      //       for (var element
-                                      //           in _imagedetaile.imagedetaile) {
-                                      //         _banners.add(
-                                      //           base64.decode(
-                                      //             element.img.toString(),
-                                      //           ),
-                                      //         );
-                                      //       }
-                                      //       final data =
-                                      //           _imagedetaile.imagedetaile[index];
-                                      //       return InkWell(
-                                      //         onTap: () {
-                                      //           setState(() {
-                                      //             if (index == 0) {
-                                      //               _imageUrl =
-                                      //                   widget.product.imageUrl;
-                                      //             } else {
-                                      //               _imageUrl = data.img;
-                                      //             }
-                                      //           });
-                                      //         },
-                                      //         child: index == 0
-                                      //             ? Container(
-                                      //                 width: size.width * 0.25,
-                                      //                 height: size.height,
-                                      //                 decoration: BoxDecoration(
-                                      //                   color: Colors.white,
-                                      //                   borderRadius:
-                                      //                       BorderRadius.circular(8),
-                                      //                 ),
-                                      //                 margin: EdgeInsets.all(2),
-                                      //                 padding: EdgeInsets.all(2),
-                                      //                 child: Center(
-                                      //                   child: ImageLoadingService(
-                                      //                     imageUrl:
-                                      //                         widget.product.imageUrl,
-                                      //                   ),
-                                      //                 ),
-                                      //               )
-                                      //             : Container(
-                                      //                 width: size.width * 0.25,
-                                      //                 height: size.height,
-                                      //                 decoration: BoxDecoration(
-                                      //                   color: Colors.white,
-                                      //                   borderRadius:
-                                      //                       BorderRadius.circular(8),
-                                      //                 ),
-                                      //                 margin: EdgeInsets.all(2),
-                                      //                 padding: EdgeInsets.all(2),
-                                      //                 child: ClipRRect(
-                                      //                   borderRadius:
-                                      //                       BorderRadius.circular(10),
-                                      //                   child: Image.memory(
-                                      //                     _banners[index],
-                                      //                     fit: BoxFit.cover,
-                                      //                     width: size.width,
-                                      //                     height: size.height,
-                                      //                   ),
-                                      //                 ),
-                                      //               ),
-                                      //       );
-                                      //     },
-                                      //   ),
-                                      // ),
+                                    // Container(
+                                    //   width: size.width * 0.95,
+                                    //   height: size.height * 0.12,
+                                    //   // color: Colors.amber,
+                                    //   child: ListView.builder(
+                                    //     scrollDirection: Axis.horizontal,
+                                    //     itemCount:
+                                    //         _imagedetaile.imagedetaile.length,
+                                    //     itemBuilder: (context, index) {
+                                    //       List<Uint8List> _banners = [];
+                                    //       for (var element
+                                    //           in _imagedetaile.imagedetaile) {
+                                    //         _banners.add(
+                                    //           base64.decode(
+                                    //             element.img.toString(),
+                                    //           ),
+                                    //         );
+                                    //       }
+                                    //       final data =
+                                    //           _imagedetaile.imagedetaile[index];
+                                    //       return InkWell(
+                                    //         onTap: () {
+                                    //           setState(() {
+                                    //             if (index == 0) {
+                                    //               _imageUrl =
+                                    //                   widget.product.imageUrl;
+                                    //             } else {
+                                    //               _imageUrl = data.img;
+                                    //             }
+                                    //           });
+                                    //         },
+                                    //         child: index == 0
+                                    //             ? Container(
+                                    //                 width: size.width * 0.25,
+                                    //                 height: size.height,
+                                    //                 decoration: BoxDecoration(
+                                    //                   color: Colors.white,
+                                    //                   borderRadius:
+                                    //                       BorderRadius.circular(8),
+                                    //                 ),
+                                    //                 margin: EdgeInsets.all(2),
+                                    //                 padding: EdgeInsets.all(2),
+                                    //                 child: Center(
+                                    //                   child: ImageLoadingService(
+                                    //                     imageUrl:
+                                    //                         widget.product.imageUrl,
+                                    //                   ),
+                                    //                 ),
+                                    //               )
+                                    //             : Container(
+                                    //                 width: size.width * 0.25,
+                                    //                 height: size.height,
+                                    //                 decoration: BoxDecoration(
+                                    //                   color: Colors.white,
+                                    //                   borderRadius:
+                                    //                       BorderRadius.circular(8),
+                                    //                 ),
+                                    //                 margin: EdgeInsets.all(2),
+                                    //                 padding: EdgeInsets.all(2),
+                                    //                 child: ClipRRect(
+                                    //                   borderRadius:
+                                    //                       BorderRadius.circular(10),
+                                    //                   child: Image.memory(
+                                    //                     _banners[index],
+                                    //                     fit: BoxFit.cover,
+                                    //                     width: size.width,
+                                    //                     height: size.height,
+                                    //                   ),
+                                    //                 ),
+                                    //               ),
+                                    //       );
+                                    //     },
+                                    //   ),
+                                    // ),
 
-                                      Container(
-                                        width: size.width,
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 15, horizontal: 10),
-                                        padding: const EdgeInsets.all(32.0),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          border: Border.all(
-                                            color: Colors.white,
-                                            width: 1,
-                                          ),
-                                          // color: Colors.yellow,
-                                          // color: Colors.white.withOpacity(0.9),
-                                          // borderRadius: BorderRadius.circular(30),
-                                          // BorderRadius.only(
-                                          //   topLeft: Radius.circular(30),
-                                          //   topRight: Radius.circular(30),
-                                          // ),
+                                    Container(
+                                      width: size.width,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 15, horizontal: 10),
+                                      padding: const EdgeInsets.all(32.0),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(30),
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 1,
                                         ),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  widget.product.productname,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black54,
-                                                  ),
+                                        // color: Colors.yellow,
+                                        // color: Colors.white.withOpacity(0.9),
+                                        // borderRadius: BorderRadius.circular(30),
+                                        // BorderRadius.only(
+                                        //   topLeft: Radius.circular(30),
+                                        //   topRight: Radius.circular(30),
+                                        // ),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                widget.product.title,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black54,
                                                 ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 15,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                const Icon(
-                                                  CupertinoIcons.star_fill,
-                                                  color: Colors.amber,
-                                                  size: 10,
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              const Icon(
+                                                CupertinoIcons.star_fill,
+                                                color: Colors.amber,
+                                                size: 10,
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                '${widget.product.takhfif}'
+                                                    .toPersianDigit(),
+                                                style: const TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.black45,
                                                 ),
-                                                const SizedBox(
-                                                  width: 5,
+                                              ),
+                                              const SizedBox(
+                                                width: 15,
+                                              ),
+                                              Text(
+                                                'دیدگاه کاربران',
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.blue[200],
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                                Text(
-                                                  '${widget.product.takhfif}'
-                                                      .toPersianDigit(),
-                                                  style: const TextStyle(
-                                                    fontSize: 10,
-                                                    color: Colors.black45,
-                                                  ),
+                                              ),
+                                              const SizedBox(
+                                                width: 15,
+                                              ),
+                                              Text(
+                                                'پرسش و پاسخ',
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.blue[200],
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                                const SizedBox(
-                                                  width: 15,
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const Icon(
+                                                CupertinoIcons.hand_thumbsup,
+                                                color: Colors.green,
+                                                size: 15,
+                                              ),
+                                              const SizedBox(
+                                                width: 15,
+                                              ),
+                                              Text(
+                                                '92% (870 نفر) از خریداران این کالا را پیشنهاد کرده اند'
+                                                    .toPersianDigit(),
+                                                style: const TextStyle(
+                                                  color: Colors.black54,
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                                Text(
-                                                  'دیدگاه کاربران',
-                                                  style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: Colors.blue[200],
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 15,
-                                                ),
-                                                Text(
-                                                  'پرسش و پاسخ',
-                                                  style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: Colors.blue[200],
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 15,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                const Icon(
-                                                  CupertinoIcons.hand_thumbsup,
-                                                  color: Colors.green,
-                                                  size: 15,
-                                                ),
-                                                const SizedBox(
-                                                  width: 15,
-                                                ),
-                                                Text(
-                                                  '92% (870 نفر) از خریداران این کالا را پیشنهاد کرده اند'
-                                                      .toPersianDigit(),
-                                                  style: const TextStyle(
-                                                    color: Colors.black54,
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 15,
-                                            ),
-                                          ],
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      // margin:
+                                      //     const EdgeInsets.only(bottom: 5, top: 5),
+                                      padding: const EdgeInsets.all(16),
+                                      width: size.width,
+                                      decoration: BoxDecoration(
+                                        // color: Colors.yellow,
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          topRight: Radius.circular(30),
                                         ),
                                       ),
-                                      Container(
-                                        // margin:
-                                        //     const EdgeInsets.only(bottom: 5, top: 5),
-                                        padding: const EdgeInsets.all(16),
-                                        width: size.width,
-                                        decoration: BoxDecoration(
-                                          // color: Colors.yellow,
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(30),
-                                            topRight: Radius.circular(30),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text('شعبه'),
+                                          const SizedBox(
+                                            height: 15,
                                           ),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text('شعبه'),
-                                            const SizedBox(
-                                              height: 15,
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 20),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: const [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.all(8.0),
-                                                    child: Text(
-                                                      'شعبه مرکزی',
-                                                      style: TextStyle(
-                                                        color: Colors.black54,
-                                                        fontSize: 12,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Divider(
-                                                    color: Colors.black26,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.all(8.0),
-                                                    child: Text(
-                                                      'موجود در انبار',
-                                                      style: TextStyle(
-                                                        color: Colors.black54,
-                                                        fontSize: 12,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Divider(
-                                                    color: Colors.black26,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 15,
-                                            ),
-                                            const Text('پروموشن ها'),
-                                            const SizedBox(
-                                              height: 15,
-                                            ),
-                                            Column(
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 20),
+                                            child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'در صورت خرید 4 عدد به بالا 3% تخفیف دریافت می کنید'
-                                                      .toPersianDigit(),
-                                                  style: const TextStyle(
-                                                    color: Colors.black54,
-                                                    fontSize: 11,
+                                              children: const [
+                                                Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    'شعبه مرکزی',
+                                                    style: TextStyle(
+                                                      color: Colors.black54,
+                                                      fontSize: 12,
+                                                    ),
                                                   ),
                                                 ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  'در صورت خرید 4 عدد به بالا 100  امتیاز دریافت می کنید'
-                                                      .toPersianDigit(),
-                                                  style: const TextStyle(
-                                                    color: Colors.black54,
-                                                    fontSize: 11,
-                                                  ),
-                                                ),
-                                                const Divider(
+                                                Divider(
                                                   color: Colors.black26,
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
+                                                  padding: EdgeInsets.all(8.0),
                                                   child: Text(
-                                                    'در صورت خرید یکی از کالاهای زیر به همراه این کالا 100 امتیاز دریافت می کنید'
-                                                        .toPersianDigit(),
-                                                    style: const TextStyle(
+                                                    'موجود در انبار',
+                                                    style: TextStyle(
                                                       color: Colors.black54,
-                                                      fontSize: 11,
+                                                      fontSize: 12,
                                                     ),
                                                   ),
                                                 ),
+                                                Divider(
+                                                  color: Colors.black26,
+                                                ),
                                               ],
                                             ),
-                                            const Divider(
-                                              color: Colors.black26,
-                                            ),
-                                            const Text(
-                                              'محصولات مشابه',
-                                              style: TextStyle(),
-                                            ),
-                                            Container(
-                                              width: size.width,
-                                              height: size.height * 0.25,
-                                              // color: Colors.grey[200],
-                                              child: ListView.builder(
-                                                itemCount: f.length,
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                itemBuilder: (context, index) {
-                                                  final data = f[index];
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          const Text('پروموشن ها'),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'در صورت خرید 4 عدد به بالا 3% تخفیف دریافت می کنید'
+                                                    .toPersianDigit(),
+                                                style: const TextStyle(
+                                                  color: Colors.black54,
+                                                  fontSize: 11,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                'در صورت خرید 4 عدد به بالا 100  امتیاز دریافت می کنید'
+                                                    .toPersianDigit(),
+                                                style: const TextStyle(
+                                                  color: Colors.black54,
+                                                  fontSize: 11,
+                                                ),
+                                              ),
+                                              const Divider(
+                                                color: Colors.black26,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  'در صورت خرید یکی از کالاهای زیر به همراه این کالا 100 امتیاز دریافت می کنید'
+                                                      .toPersianDigit(),
+                                                  style: const TextStyle(
+                                                    color: Colors.black54,
+                                                    fontSize: 11,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const Divider(
+                                            color: Colors.black26,
+                                          ),
+                                          const Text(
+                                            'محصولات مشابه',
+                                            style: TextStyle(),
+                                          ),
+                                          Container(
+                                            width: size.width,
+                                            height: size.height * 0.25,
+                                            // color: Colors.grey[200],
+                                            child: ListView.builder(
+                                              itemCount: f.length,
+                                              scrollDirection: Axis.horizontal,
+                                              itemBuilder: (context, index) {
+                                                final data = f[index];
 
-                                                  return InkWell(
-                                                    onTap: () {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                        MaterialPageRoute(
-                                                          builder: ((context) =>
-                                                              DetailScreen(
-                                                                  product: data,
-                                                                  data: 1)),
-                                                        ),
-                                                      );
-                                                    },
-                                                    child: SizedBox(
-                                                      width: size.width * 0.3,
-                                                      child: Card(
-                                                        elevation: 2,
-                                                        margin:
-                                                            EdgeInsets.all(5),
-                                                        color: Colors.grey[100],
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  5, 5, 5, 8),
-                                                          child: Column(
-                                                            children: [
-                                                              ImageLoadingService(
-                                                                imageUrl: data
-                                                                    .productimg,
+                                                return InkWell(
+                                                  onTap: () {
+                                                    Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                        builder: ((context) =>
+                                                            DetailScreen(
+                                                                product: data,
+                                                                data: 1)),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: SizedBox(
+                                                    width: size.width * 0.3,
+                                                    child: Card(
+                                                      elevation: 2,
+                                                      margin: EdgeInsets.all(5),
+                                                      color: Colors.grey[100],
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
+                                                                5, 5, 5, 8),
+                                                        child: Column(
+                                                          children: [
+                                                            ImageLoadingService(
+                                                              imageUrl:
+                                                                  data.imageUrl,
+                                                            ),
+                                                            Spacer(),
+                                                            Text(
+                                                              data.title,
+                                                              style: TextStyle(
+                                                                fontSize: 10,
                                                               ),
-                                                              Spacer(),
-                                                              Text(
-                                                                data.productname,
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 10,
-                                                                ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Text(
+                                                              data.price
+                                                                  .withPriceLableString
+                                                                  .toPersianDigit(),
+                                                              style: TextStyle(
+                                                                fontSize: 10,
                                                               ),
-                                                              SizedBox(
-                                                                height: 5,
-                                                              ),
-                                                              Text(
-                                                                data.price
-                                                                    .withPriceLableString
-                                                                    .toPersianDigit(),
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 10,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ),
                                                     ),
-                                                  );
-                                                },
-                                              ),
+                                                  ),
+                                                );
+                                              },
                                             ),
-                                            const SizedBox(
-                                              height: 15,
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                        ],
                                       ),
-                                      PropertyProduct(size: size), //ویژگی محصول
-                                      UserOpinion(
-                                        size: size,
-                                        comment: comment,
-                                      ), //دیدگاه کاربران
-                                      MyView(size: size), //دیدگاه خود
-                                      Container(
-                                        width: size.width,
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        padding: const EdgeInsets.all(32.0),
-                                        // color: Colors.white,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                    PropertyProduct(size: size), //ویژگی محصول
+                                    UserOpinion(
+                                      size: size,
+                                      comment: state.comment,
+                                    ), //دیدگاه کاربران
+                                    MyView(size: size), //دیدگاه خود
+                                    Container(
+                                      width: size.width,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      padding: const EdgeInsets.all(32.0),
+                                      // color: Colors.white,
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  );
-                } else if (state is DetailesLoading) {
-                  return Center(
-                    child: CupertinoActivityIndicator(),
-                  );
-                } else if (state is DetailesError) {
-                  return Center(
-                    child: Text(state.exception.message),
-                  );
-                } else {
-                  throw Exception('state is not support');
-                }
-              },
-            ),
+                  ),
+                );
+              } else if (state is DetailesLoading) {
+                return Center(
+                  child: CupertinoActivityIndicator(),
+                );
+              } else if (state is DetailesError) {
+                return Center(
+                  child: Text(state.exception.message),
+                );
+              } else {
+                throw Exception('state is not support');
+              }
+            },
           ),
         ),
       ),
@@ -986,7 +898,7 @@ class UserOpinion extends StatelessWidget {
   }) : super(key: key);
 
   final Size size;
-  final List<Comment> comment;
+  final List<CommentProduct> comment;
 
   @override
   Widget build(BuildContext context) {
@@ -1084,7 +996,7 @@ class UserOpinion extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  dataComment.title,
+                                  dataComment.name,
                                   textAlign: TextAlign.justify,
                                   style: const TextStyle(
                                     fontSize: 10,
@@ -1096,7 +1008,7 @@ class UserOpinion extends StatelessWidget {
                                   height: 5,
                                 ),
                                 Text(
-                                  dataComment.description,
+                                  dataComment.comment,
                                   textAlign: TextAlign.justify,
                                   maxLines: 4,
                                   overflow: TextOverflow.ellipsis,
@@ -1105,6 +1017,43 @@ class UserOpinion extends StatelessWidget {
                                     fontSize: 10,
                                     color: Colors.black,
                                   ),
+                                ),
+                                Spacer(),
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.zero,
+                                      height: size.height * 0.05,
+                                      alignment: Alignment.center,
+                                      color: Colors.lightGreen,
+                                      child: TextButton(
+                                        onPressed: () {},
+                                        child: Text(
+                                          'می پسندم',
+                                          style: TextStyle(
+                                            color: Colors.blue,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.zero,
+                                      height: size.height * 0.05,
+                                      alignment: Alignment.center,
+                                      color: Colors.lime,
+                                      child: TextButton(
+                                        onPressed: () {},
+                                        child: Text(
+                                          'نمی پسندم',
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),

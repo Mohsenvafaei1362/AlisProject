@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_manager.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/cart_repository.dart';
@@ -36,6 +38,8 @@ class ProductItem extends StatefulWidget {
 
 class _ProductItemState extends State<ProductItem> {
   StreamSubscription<ProductsState>? streamSubscription;
+  final UiDl _dl = Get.put(UiDl());
+  final UserInfo _userInfo = Get.put(UserInfo());
   bool isFavorite = true;
   ProductsBloc? productsBloc;
   @override
@@ -47,7 +51,21 @@ class _ProductItemState extends State<ProductItem> {
 
   send() {
     productsBloc?.add(
-      ProductSendLog(widget.product.id, 'detaile', 'showdetaile'),
+      ProductSendLog(
+        categoryId: widget.product.categoriesId,
+        event: 'Start',
+        model: 'ViewByList',
+        modelId: 1,
+        productId: widget.product.id,
+        sellsCenter: _userInfo.sellsCenter.value,
+        sourceTitle: 'MainPage',
+        userId: _userInfo.UserId.value,
+        // productId: widget.product.id,
+        // title: 'detaile',
+        // message: 'showdetaile',
+        // sellsCenter: _userInfo.sellsCenter.value,
+        // userId: _dl.UserId.value,
+      ),
     );
   }
 
@@ -81,32 +99,30 @@ class _ProductItemState extends State<ProductItem> {
               //   ),
               // );
             } else if (state is ProductSendLogSuccess) {
-              Get.to(
-                () => DetailScreen(
-                  product: widget.product,
-                  data: 1,
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: DetailScreen(
+                      product: widget.product,
+                      data: 1,
+                    ),
+                  ),
                 ),
               );
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (context) => Directionality(
-              //       textDirection: TextDirection.rtl,
-              //       child: DetailScreen(
-              //         product: widget.product,
-              //         data: 1,
-              //       ),
-              //     ),
-              //   ),
-              // );
             }
           });
           return bloc;
         },
         child: BlocBuilder<ProductsBloc, ProductsState>(
           builder: (context, state) {
-            List<Uint8List> _img = [];
-            print(widget.product.productname);
-
+            //  for (var element in widget.product.) {
+            //   _avatarLevellst.add(
+            //     base64.decode(
+            //       element.img.toString(),
+            //     ),
+            //   );
+            // }
             return SizedBox(
               width: size.width * 0.45,
               child: InkWell(
@@ -159,12 +175,11 @@ class _ProductItemState extends State<ProductItem> {
                             width: widget.itemWidth,
                             height: widget.itemHeight,
                             child: Hero(
-                              transitionOnUserGestures: true,
-                              tag: 'image',
-                              child: ImageLoadingService(
-                                imageUrl: widget.product.productimg,
-                              ),
-                            ),
+                                transitionOnUserGestures: true,
+                                tag: 'image',
+                                child: Image.memory(base64.decode(
+                                  widget.product.imageUrl.toString(),
+                                ))),
                           ),
                           Positioned(
                             top: 0,
@@ -207,7 +222,7 @@ class _ProductItemState extends State<ProductItem> {
                               ),
                             ),
                           ),
-                          widget.product.takhfif != 0
+                          widget.product.emtiaz != '0'
                               ? Positioned(
                                   top: 10,
                                   left: 20,
@@ -221,10 +236,9 @@ class _ProductItemState extends State<ProductItem> {
                                         ),
                                       ),
                                       child: Text(
-                                        widget.product.takhfif
+                                        widget.product.emtiaz
                                             .toString()
-                                            .toPersianDigit()
-                                            .withDiscountLable,
+                                            .toPersianDigit(),
                                         style: TextStyle(
                                           fontSize: 11,
                                           color: Colors.white,
@@ -241,7 +255,7 @@ class _ProductItemState extends State<ProductItem> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.product.productname,
+                              widget.product.title,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -256,21 +270,55 @@ class _ProductItemState extends State<ProductItem> {
                                 SizedBox(
                                   width: 5,
                                 ),
-                                Text('5'.toPersianDigit()),
+                                Text(widget.product.like.toPersianDigit()),
                               ],
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[100],
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text('قیمت : ${widget.product.price}'
+                                          .toPersianDigit())
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                          'امتیاز ریالی : ${widget.product.takhfif}'
+                                              .toPersianDigit())
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                          'اعتبار شما : ${widget.product.etebar}'
+                                              .toPersianDigit())
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                widget.product.takhfif != 0
-                                    ? Text(
-                                        '${(widget.product.price - (widget.product.price * (widget.product.takhfif / 100))).withPriceLable}'
-                                            .toPersianDigit(),
-                                      )
-                                    : Text(
-                                        widget.product.price.withPriceLable
-                                            .toPersianDigit(),
-                                      ),
+                                Text(
+                                  widget.product.finalprice.toPersianDigit() +
+                                      ' تومان ',
+                                ),
+                                // widget.product.discount != 0
+                                //     ? Text(
+                                //         '${(widget.product.price - (widget.product.price * (widget.product.discount / 100))).withPriceLable}'
+                                //             .toPersianDigit(),
+                                //       )
+                                //     : Text(
+                                //         widget.product.price.withPriceLable
+                                //             .toPersianDigit(),
+                                //       ),
                                 IconButton(
                                   padding: EdgeInsets.zero,
                                   alignment: Alignment.centerLeft,

@@ -111,7 +111,7 @@ class _ProductSearchState extends State<ProductSearch> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            widget.product.productname,
+                            widget.product.title,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -176,7 +176,7 @@ class _ProductSearchState extends State<ProductSearch> {
                                 transitionOnUserGestures: true,
                                 tag: 'image',
                                 child: ImageLoadingService(
-                                  imageUrl: widget.product.productimg,
+                                  imageUrl: widget.product.imageUrl,
                                 ),
                               ),
                             ),

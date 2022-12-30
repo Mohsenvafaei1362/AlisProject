@@ -1,6 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
-// part 'product.g.dart';
+part 'product.g.dart';
 
 class UiProductSort {
   static const int latest = 0;
@@ -61,48 +61,53 @@ class UiProductSort {
 //   }
 // }
 
-class ProductEntity {
-  final int emtiaz;
-  final num price;
-  final int etebar;
+@HiveType(typeId: 0)
+class ProductEntity extends HiveObject {
+  // final int product_id;
+  @HiveField(0)
   final int id;
-  final int like;
-  final String link;
-  final int productid;
-  final String productimg;
-  final String productname;
-  final double takhfif;
-  final double semifinalprice;
-  final double finalprice;
-
+  @HiveField(1)
+  final double price;
+  @HiveField(2)
+  final String takhfif;
+  @HiveField(3)
+  final int previousPrice;
+  @HiveField(4)
+  final String title;
+  @HiveField(5)
+  final String imageUrl;
+  final String like;
+  final String etebar;
+  final String finalprice;
+  final String emtiaz;
+  final int categoriesId;
   ProductEntity(
     this.id,
-    this.productid,
-    this.productname,
-    this.productimg,
-    this.link,
     this.price,
-    this.emtiaz,
-    this.etebar,
     this.takhfif,
-    this.finalprice,
+    this.previousPrice,
+    this.title,
+    this.imageUrl,
     this.like,
-    this.semifinalprice,
+    this.etebar,
+    this.finalprice,
+    this.emtiaz,
+    this.categoriesId,
   );
 
   ProductEntity.fromJson(Map json)
-      : id = json["id"],
-        productid = json['productid'],
-        productname = json['productname'],
-        productimg = json['productimg'],
-        link = json['link'],
+      : id = json['id'],
+        // id = 100,
+        title = json['productname'],
+        like = json['like'].toString(),
+        imageUrl = json['productimg'].toString(),
         price = json['price'],
-        emtiaz = json['emtiaz'],
-        etebar = json['etebar'],
-        finalprice = double.parse(json['finalprice'].toString()),
-        takhfif = double.parse(json['takhfif'].toString()),
-        semifinalprice = double.parse(json['semifinalprice'].toString()),
-        like = json['like'];
+        categoriesId = json['categoriesID'],
+        etebar = json['etebar'].toString(),
+        takhfif = json['takhfif'].toString(),
+        finalprice = json['finalprice'].toString(),
+        previousPrice = json['finalprice'],
+        emtiaz = json['emtiaz'].toString();
 
   static List<ProductEntity> parseJsonArray(List<dynamic> jsonArray) {
     final List<ProductEntity> productItems = [];

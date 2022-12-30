@@ -21,19 +21,20 @@ class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
       try {
         if (event is DetailesStarted) {
           emit(DetailesLoading());
-          final response = await productRepository.detail(event.data);
+          final response = await productRepository.detail(event.productId);
           final similar = await productRepository.getAll(
-            categoryId: event.categoryId,
+            categoryId: event.productId,
             modelId: 1,
             model: '',
             roleRef: _userinfo.RoleId.value,
-            sellsCenter: _userinfo.sellsCenter.value,
+            sellCenter: _userinfo.sellsCenter.value,
             userId: _dl.UserId.value,
             usersGroupRef: _userinfo.userGroups.value,
             visitorRef: _userinfo.visitor.value,
           ); //محصولات مشابه
           final comment = await productRepository.commentProduct(
-            event.categoryId,
+            event.productId,
+            event.sellsCenter,
           ); //کامنت ها
           emit(DetailesSuccess(response, similar, comment));
         }

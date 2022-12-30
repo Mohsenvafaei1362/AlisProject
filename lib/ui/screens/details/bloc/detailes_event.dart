@@ -7,8 +7,11 @@ abstract class DetailesEvent extends Equatable {
 }
 
 class DetailesStarted extends DetailesEvent {
-  final int data;
-  final int categoryId;
+  final int sellsCenter;
+  final int productId;
 
-  const DetailesStarted(this.data, this.categoryId);
+  const DetailesStarted({
+    required this.productId,
+    required this.sellsCenter,
+  });
 }
