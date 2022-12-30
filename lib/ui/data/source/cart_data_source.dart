@@ -40,7 +40,7 @@ class CartRemoteDataSource implements ICartDataSource {
 
   @override
   Future<int> count() async {
-    final response = await httpProduct.get('products');
+    final response = await httpClient.get('products');
     final List<CartResponseFake> cart = [];
     (response.data as List).forEach((element) {
       cart.add(CartResponseFake.fromJson(element));
@@ -56,7 +56,7 @@ class CartRemoteDataSource implements ICartDataSource {
 
   @override
   Future<List<CartResponseFake>> getAll() async {
-    final response = await httpProduct.get('products', queryParameters: {
+    final response = await httpClient.get('products', queryParameters: {
       "user_id": _dl.UserId.value,
     });
     final List<CartResponseFake> cart = [];

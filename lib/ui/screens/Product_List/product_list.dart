@@ -289,14 +289,15 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                         .addPostFrameCallback((timeStamp) {
                                       setState(() {
                                         count = products
-                                            .where((e) => e.title.contains(
-                                                searchController.text))
+                                            .where((e) => e.productname
+                                                .contains(
+                                                    searchController.text))
                                             .length;
                                         sort(products);
                                       });
                                     });
                                     final d = products
-                                        .where((e) => e.title
+                                        .where((e) => e.productname
                                             .contains(searchController.text))
                                         .map((e) => e)
                                         .toList();

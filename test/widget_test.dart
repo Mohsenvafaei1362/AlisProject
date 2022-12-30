@@ -13,19 +13,19 @@ import 'package:local_notification_flutter_project/ui/data/ClassInfo/auto_info.d
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 
 void main() {
-  group(
-    'TestProject',
-    () {
-      test(
-        'testclass',
-        () {
-          final productEntity = ProductEntity(1, 1, 1, 1, '', '');
-          final t = productEntity.title;
-          expect(t, 5);
-        },
-      );
-    },
-  );
+  // group(
+  //   'TestProject',
+  //   () {
+  //     test(
+  //       'testclass',
+  //       () {
+  //         final productEntity = ProductEntity(1, 1, 1, 1, '', '');
+  //         final t = productEntity.title;
+  //         expect(t, 5);
+  //       },
+  //     );
+  //   },
+  // );
   // testWidgets('Counter increments smoke test', (WidgetTester tester) async {
   //   // Build our app and trigger a frame.
   //   await tester.pumpWidget(MyApp());

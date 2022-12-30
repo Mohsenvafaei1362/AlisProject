@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/Club_info.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/Ghole_info.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/banner.dart';
@@ -26,6 +28,9 @@ import 'package:equatable/equatable.dart';
 part 'home_event.dart';
 part 'home_state.dart';
 
+final UiDl _dl = Get.put(UiDl());
+final UserInfo _userinfo = Get.put(UserInfo());
+
 var product,
     banner1,
     banner2,
@@ -35,7 +40,7 @@ var product,
     club,
     ghole,
     slider,
-    proposals,
+    hotLists,
     bestsellings,
     topPepole,
     festival,
@@ -85,20 +90,37 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (event is HomeStarted || event is HomeRefresh) {
         try {
           emit(HomeLoading());
+          final sliderInfo = await sliderRepository.getImage('Main'); //اسلایدر
+
           final products = await productRepository.getAll(
             categoryId: 0,
             modelId: 0,
             model: 'allProduct',
+            roleRef: _userinfo.RoleId.value,
+            sellsCenter: _userinfo.sellsCenter.value,
+            userId: _dl.UserId.value,
+            usersGroupRef: _userinfo.userGroups.value,
+            visitorRef: _userinfo.visitor.value,
           ); // همه محصولات
-          final proposal = await productRepository.getAll(
+          final hotList = await productRepository.getAll(
             categoryId: 0,
-            modelId: 0,
-            model: 'proposal',
+            modelId: 3,
+            model: 'HotList',
+            roleRef: _userinfo.RoleId.value,
+            sellsCenter: _userinfo.sellsCenter.value,
+            userId: _dl.UserId.value,
+            usersGroupRef: _userinfo.userGroups.value,
+            visitorRef: _userinfo.visitor.value,
           ); //پیشنهاد ویژه
           final bestselling = await productRepository.getAll(
             categoryId: 0,
             modelId: 0,
             model: 'bestselling',
+            roleRef: _userinfo.RoleId.value,
+            sellsCenter: _userinfo.sellsCenter.value,
+            userId: _dl.UserId.value,
+            usersGroupRef: _userinfo.userGroups.value,
+            visitorRef: _userinfo.visitor.value,
           ); // پر فروش ترین
           final banners1 =
               await bannerRepository.getAll(model: '', modelid: 1); //1 تبلیغات
@@ -110,7 +132,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               await messageCountRepository.messageCount(); //پیام
           final clubinfo = await clubRepository.club(); //باشگاه
           final gholeinfo = await gholeRepository.ghole(); //قله
-          final sliderInfo = await sliderRepository.getImage('Main'); //اسلایدر
           final topPepoles =
               await topPepoleRepository.topPepole(); //سه نفر برتر
           final festivals = await festivalRepository.festival(); //جشنواره
@@ -126,7 +147,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           club = clubinfo;
           ghole = gholeinfo;
           slider = sliderInfo;
-          proposals = proposal;
+          hotLists = hotList;
           bestsellings = bestselling;
           topPepole = topPepoles;
           festival = festivals;
@@ -146,7 +167,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             ghole: gholeinfo,
             slider: sliderInfo,
             bestselling: bestselling,
-            proposal: proposal,
+            hotList: hotList,
             topPepole: topPepoles,
             festival: festivals,
             race: races,
@@ -169,6 +190,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         categoryId: 1,
         modelId: 1,
         model: '',
+        roleRef: _userinfo.RoleId.value,
+        sellsCenter: _userinfo.sellsCenter.value,
+        userId: _dl.UserId.value,
+        usersGroupRef: _userinfo.userGroups.value,
+        visitorRef: _userinfo.visitor.value,
       );
       final banners = await bannerRepository.getAll(model: '', modelid: 1);
       final messageCount = await messageCountRepository.messageCount();
@@ -185,7 +211,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           ghole: ghole,
           slider: slider,
           bestselling: bestsellings,
-          proposal: proposals,
+          hotList: hotLists,
           topPepole: topPepole,
           festival: festival,
           race: race,

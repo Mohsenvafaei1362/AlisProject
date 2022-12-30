@@ -76,14 +76,14 @@ class _FavoriteListState extends State<FavoriteList> {
                           child: Row(
                             children: [
                               ImageLoadingService(
-                                imageUrl: data.imageUrl,
+                                imageUrl: data.productimg,
                                 width: 100,
                               ),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(data.title),
+                                  Text(data.productname),
                                   SizedBox(
                                     height: 10,
                                   ),

@@ -1,6 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
-part 'product.g.dart';
+// part 'product.g.dart';
 
 class UiProductSort {
   static const int latest = 0;
@@ -16,39 +16,93 @@ class UiProductSort {
   ];
 }
 
-@HiveType(typeId: 0)
-class ProductEntity extends HiveObject {
-  // final int product_id;
-  @HiveField(0)
+// @HiveType(typeId: 0)
+// class ProductEntity extends HiveObject {
+//   // final int product_id;
+//   @HiveField(0)
+//   final int id;
+//   @HiveField(1)
+//   final int price;
+//   @HiveField(2)
+//   final int discount;
+//   @HiveField(3)
+//   final int previousPrice;
+//   @HiveField(4)
+//   final String title;
+//   @HiveField(5)
+//   final String imageUrl;
+
+//   ProductEntity(
+//     this.id,
+//     this.price,
+//     this.discount,
+//     this.previousPrice,
+//     this.title,
+//     this.imageUrl,
+//   );
+
+//   ProductEntity.fromJson(Map json)
+//       : id = json['product_id'][0],
+//         // id = 100,
+//         title = json['product_name'],
+//         imageUrl = json['image_product'],
+//         price = json['product_price'],
+//         discount = json['product_discount'],
+//         previousPrice = 100;
+
+//   static List<ProductEntity> parseJsonArray(List<dynamic> jsonArray) {
+//     final List<ProductEntity> productItems = [];
+//     for (var element in jsonArray) {
+//       productItems.add(
+//         ProductEntity.fromJson(element),
+//       );
+//     }
+//     return productItems;
+//   }
+// }
+
+class ProductEntity {
+  final int emtiaz;
+  final num price;
+  final int etebar;
   final int id;
-  @HiveField(1)
-  final int price;
-  @HiveField(2)
-  final int discount;
-  @HiveField(3)
-  final int previousPrice;
-  @HiveField(4)
-  final String title;
-  @HiveField(5)
-  final String imageUrl;
+  final int like;
+  final String link;
+  final int productid;
+  final String productimg;
+  final String productname;
+  final double takhfif;
+  final double semifinalprice;
+  final double finalprice;
 
   ProductEntity(
     this.id,
+    this.productid,
+    this.productname,
+    this.productimg,
+    this.link,
     this.price,
-    this.discount,
-    this.previousPrice,
-    this.title,
-    this.imageUrl,
+    this.emtiaz,
+    this.etebar,
+    this.takhfif,
+    this.finalprice,
+    this.like,
+    this.semifinalprice,
   );
 
   ProductEntity.fromJson(Map json)
-      : id = json['product_id'][0],
-        // id = 100,
-        title = json['product_name'],
-        imageUrl = json['image_product'],
-        price = json['product_price'],
-        discount = json['product_discount'],
-        previousPrice = 100;
+      : id = json["id"],
+        productid = json['productid'],
+        productname = json['productname'],
+        productimg = json['productimg'],
+        link = json['link'],
+        price = json['price'],
+        emtiaz = json['emtiaz'],
+        etebar = json['etebar'],
+        finalprice = double.parse(json['finalprice'].toString()),
+        takhfif = double.parse(json['takhfif'].toString()),
+        semifinalprice = double.parse(json['semifinalprice'].toString()),
+        like = json['like'];
 
   static List<ProductEntity> parseJsonArray(List<dynamic> jsonArray) {
     final List<ProductEntity> productItems = [];
@@ -59,39 +113,4 @@ class ProductEntity extends HiveObject {
     }
     return productItems;
   }
-}
-
-class Products {
-  final int id;
-  final String name;
-  final String image;
-  final int price;
-  final int rank;
-  final int score;
-  final int discount;
-  final int payablePrice;
-  final bool isfavorite;
-
-  Products(
-    this.id,
-    this.name,
-    this.image,
-    this.price,
-    this.rank,
-    this.score,
-    this.payablePrice,
-    this.isfavorite,
-    this.discount,
-  );
-
-  Products.fromJson(Map json)
-      : id = json['id'],
-        name = json['name'],
-        image = json['image'],
-        price = json['price'],
-        rank = json['rank'],
-        score = json['score'],
-        payablePrice = json['payable_price'],
-        discount = json['discount'],
-        isfavorite = json['is_favorite'];
 }

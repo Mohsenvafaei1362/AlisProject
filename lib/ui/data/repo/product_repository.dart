@@ -11,7 +11,12 @@ abstract class IProductRepository {
   Future<List<ProductEntity>> getAll({
     required int categoryId,
     required int modelId,
+    required int userId,
+    required int sellsCenter,
     required String model,
+    required int visitorRef,
+    required int roleRef,
+    required int usersGroupRef,
   });
   Future<List<ProductEntity>> detail(int data);
   Future<List<ProductEntity>> search(String searchTerm);
@@ -32,11 +37,21 @@ class ProductRepository implements IProductRepository {
     required int categoryId,
     required int modelId,
     required String model,
+    required int userId,
+    required int sellsCenter,
+    required int visitorRef,
+    required int roleRef,
+    required int usersGroupRef,
   }) =>
       dataSource.getAll(
-        categoryId,
-        modelId,
-        model,
+        categoryId: categoryId,
+        model: model,
+        modelId: modelId,
+        roleRef: roleRef,
+        sellsCenter: sellsCenter,
+        userId: userId,
+        usersGroupRef: usersGroupRef,
+        visitorRef: visitorRef,
       );
 
   @override

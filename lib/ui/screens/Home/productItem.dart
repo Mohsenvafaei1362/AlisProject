@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_manager.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/cart_repository.dart';
@@ -79,23 +81,32 @@ class _ProductItemState extends State<ProductItem> {
               //   ),
               // );
             } else if (state is ProductSendLogSuccess) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: DetailScreen(
-                      product: widget.product,
-                      data: 1,
-                    ),
-                  ),
+              Get.to(
+                () => DetailScreen(
+                  product: widget.product,
+                  data: 1,
                 ),
               );
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (context) => Directionality(
+              //       textDirection: TextDirection.rtl,
+              //       child: DetailScreen(
+              //         product: widget.product,
+              //         data: 1,
+              //       ),
+              //     ),
+              //   ),
+              // );
             }
           });
           return bloc;
         },
         child: BlocBuilder<ProductsBloc, ProductsState>(
           builder: (context, state) {
+            List<Uint8List> _img = [];
+            print(widget.product.productname);
+
             return SizedBox(
               width: size.width * 0.45,
               child: InkWell(
@@ -151,7 +162,7 @@ class _ProductItemState extends State<ProductItem> {
                               transitionOnUserGestures: true,
                               tag: 'image',
                               child: ImageLoadingService(
-                                imageUrl: widget.product.imageUrl,
+                                imageUrl: widget.product.productimg,
                               ),
                             ),
                           ),
@@ -196,7 +207,7 @@ class _ProductItemState extends State<ProductItem> {
                               ),
                             ),
                           ),
-                          widget.product.discount != 0
+                          widget.product.takhfif != 0
                               ? Positioned(
                                   top: 10,
                                   left: 20,
@@ -210,7 +221,7 @@ class _ProductItemState extends State<ProductItem> {
                                         ),
                                       ),
                                       child: Text(
-                                        widget.product.discount
+                                        widget.product.takhfif
                                             .toString()
                                             .toPersianDigit()
                                             .withDiscountLable,
@@ -230,7 +241,7 @@ class _ProductItemState extends State<ProductItem> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.product.title,
+                              widget.product.productname,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -251,9 +262,9 @@ class _ProductItemState extends State<ProductItem> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                widget.product.discount != 0
+                                widget.product.takhfif != 0
                                     ? Text(
-                                        '${(widget.product.price - (widget.product.price * (widget.product.discount / 100))).withPriceLable}'
+                                        '${(widget.product.price - (widget.product.price * (widget.product.takhfif / 100))).withPriceLable}'
                                             .toPersianDigit(),
                                       )
                                     : Text(

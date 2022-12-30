@@ -6,7 +6,7 @@ import 'package:local_notification_flutter_project/ui/data/httpClient/httpClient
 import 'package:local_notification_flutter_project/ui/data/source/Test_data_source.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final testRepository = TestRepository(TestRemoteDataSource(httpClient2));
+final testRepository = TestRepository(TestRemoteDataSource(httpClient));
 
 abstract class ITestRepository {
   Future<String> test();

@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/CommentProduct.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/common/exception.dart';
@@ -8,6 +10,9 @@ import 'package:equatable/equatable.dart';
 
 part 'detailes_event.dart';
 part 'detailes_state.dart';
+
+final UiDl _dl = Get.put(UiDl());
+final UserInfo _userinfo = Get.put(UserInfo());
 
 class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
   final IProductRepository productRepository;
@@ -21,6 +26,11 @@ class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
             categoryId: event.categoryId,
             modelId: 1,
             model: '',
+            roleRef: _userinfo.RoleId.value,
+            sellsCenter: _userinfo.sellsCenter.value,
+            userId: _dl.UserId.value,
+            usersGroupRef: _userinfo.userGroups.value,
+            visitorRef: _userinfo.visitor.value,
           ); //محصولات مشابه
           final comment = await productRepository.commentProduct(
             event.categoryId,

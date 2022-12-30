@@ -13,7 +13,7 @@ class FavoritManager {
 
   static init() async {
     await Hive.initFlutter();
-    Hive.registerAdapter(ProductEntityAdapter());
+    // Hive.registerAdapter(ProductEntityAdapter());
     Hive.openBox<ProductEntity>(_boxName);
   }
 

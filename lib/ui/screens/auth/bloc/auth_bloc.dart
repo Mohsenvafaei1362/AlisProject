@@ -20,7 +20,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthLoading());
           final response =
               await authRepository.login(event.username, event.password);
-          await cartRepository.count();
+          // await cartRepository.count();
           emit(AuthSuccess(authInfo: response));
         } else if (event is AuthButtonRegisterIsClicked) {
           emit(AuthLoading());

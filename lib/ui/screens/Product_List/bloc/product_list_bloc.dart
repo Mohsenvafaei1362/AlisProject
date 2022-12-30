@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/common/exception.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/product_repository.dart';
@@ -6,6 +8,9 @@ import 'package:equatable/equatable.dart';
 
 part 'product_list_event.dart';
 part 'product_list_state.dart';
+
+final UiDl _dl = Get.put(UiDl());
+final UserInfo _userinfo = Get.put(UserInfo());
 
 class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   final IProductRepository productRepository;
@@ -18,6 +23,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
             categoryId: event.categoryId,
             modelId: event.modelId,
             model: event.modelName,
+            roleRef: _userinfo.RoleId.value,
+            sellsCenter: _userinfo.sellsCenter.value,
+            userId: _dl.UserId.value,
+            usersGroupRef: _userinfo.userGroups.value,
+            visitorRef: _userinfo.visitor.value,
           );
           emit(ProductListSuccess(
             products,

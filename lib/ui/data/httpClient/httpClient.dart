@@ -20,30 +20,30 @@ final httpClient = Dio(
 //     },
 //   ),
 // );
-final httpProduct = Dio(
-  BaseOptions(
-    baseUrl: "http://192.168.1.173:3000/",
-    // baseUrl: "http://185.135.229.96:806/",
-  ),
-);
+// final httpProduct = Dio(
+//   BaseOptions(
+//     baseUrl: "http://192.168.1.173:3000/",
+//     // baseUrl: "http://185.135.229.96:806/",
+//   ),
+// );
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-final httpClient2 = Dio(
-  BaseOptions(
-    baseUrl: "http://217.219.74.100/api/1.0/alis/",
-  ),
-)..interceptors.add(
-    InterceptorsWrapper(
-      onRequest: (Options, handler) {
-        final authInfo = testApi.token.value;
-        if (authInfo != null) {
-          Options.headers['Authorization'] = 'Bearer${authInfo}';
-        }
-        handler.next(Options);
-      },
-    ),
-  );
+// final httpClient2 = Dio(
+//   BaseOptions(
+//     baseUrl: "http://217.219.74.100/api/1.0/alis/",
+//   ),
+// )..interceptors.add(
+//     InterceptorsWrapper(
+//       onRequest: (Options, handler) {
+//         final authInfo = testApi.token.value;
+//         if (authInfo != null) {
+//           Options.headers['Authorization'] = 'Bearer${authInfo}';
+//         }
+//         handler.next(Options);
+//       },
+//     ),
+//   );
 
-final httpNike = Dio(
-  BaseOptions(baseUrl: 'https://fakestoreapi.com/'),
-);
+// final httpNike = Dio(
+//   BaseOptions(baseUrl: 'https://fakestoreapi.com/'),
+// );

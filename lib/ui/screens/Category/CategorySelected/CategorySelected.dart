@@ -164,7 +164,7 @@ class _CategorySelectedState extends State<CategorySelected> {
                         child: ListView.builder(
                           itemCount: state.filtterProduct.length,
                           itemBuilder: (contex, index) {
-                            if (state.filtterProduct[index].title
+                            if (state.filtterProduct[index].productname
                                 .contains(widget.name)) {
                               final data = state.filtterProduct[index];
                               return Card(
@@ -207,7 +207,7 @@ class _CategorySelectedState extends State<CategorySelected> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                data.title,
+                                                data.productname,
                                                 style: const TextStyle(
                                                   fontSize: 13,
                                                 ),
@@ -287,7 +287,7 @@ class _CategorySelectedState extends State<CategorySelected> {
                                                 ),
                                               ),
                                               ImageLoadingService(
-                                                imageUrl: data.imageUrl,
+                                                imageUrl: data.productimg,
                                                 width: widget.itemWidth,
                                                 height: widget.itemHeight,
                                               ),

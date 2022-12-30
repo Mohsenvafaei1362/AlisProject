@@ -1,18 +1,24 @@
-import 'package:get/get.dart';
-import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/CommentProduct.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
-import 'package:local_notification_flutter_project/ui/data/common/exception.dart';
 import 'package:local_notification_flutter_project/ui/data/httpClient/httpClient.dart';
 import 'package:dio/dio.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/ValidationResponse.dart';
 
-final UiDl _dl = Get.put(UiDl());
-final UserInfo _userInfo = Get.put(UserInfo());
+// final UiDl _dl = Get.put(UiDl());
+// final UserInfo _userInfo = Get.put(UserInfo());
 
 abstract class IProductDataSource {
   Future<List<ProductEntity>> filtter(String sort);
-  Future<List<ProductEntity>> getAll(int categoryId, int modelId, String model);
+  Future<List<ProductEntity>> getAll({
+    required int categoryId,
+    required int modelId,
+    required int userId,
+    required int sellsCenter,
+    required String model,
+    required int visitorRef,
+    required int roleRef,
+    required int usersGroupRef,
+  });
   Future<List<ProductEntity>> detail(int data);
   Future<List<ProductEntity>> search(String searchTerm);
   Future<List<ProductEntity>> sendLog(int id, String title, String message);
@@ -26,17 +32,28 @@ class ProductRemoteDataSource implements IProductDataSource {
 
   ProductRemoteDataSource(this.httpClient);
   @override
-  Future<List<ProductEntity>> getAll(
-      int categoryId, int modelId, String model) async {
-    final response = await httpProduct.get('products', queryParameters: {
+  Future<List<ProductEntity>> getAll({
+    required int categoryId,
+    required int modelId,
+    required int userId,
+    required int sellsCenter,
+    required String model,
+    required int visitorRef,
+    required int roleRef,
+    required int usersGroupRef,
+  }) async {
+    final response = await httpClient.get('ListView', queryParameters: {
       "CategoryId": categoryId,
-      "UserId": _dl.UserId.value,
-      "SellCenter": _userInfo.sellsCenter.value,
+      "UserId": userId,
+      "SellsCenterId": sellsCenter,
       "ModelId": modelId,
       "Model": model,
+      "VisitorRef": visitorRef,
+      "RoleRef": roleRef,
+      "UsersGroupRef": usersGroupRef,
     });
     validateResponse(response);
-    final products = <ProductEntity>[];
+    final List<ProductEntity> products = [];
 
     // var element = UiProductEntity.fromJson((response.data as List).first);
 
@@ -60,7 +77,7 @@ class ProductRemoteDataSource implements IProductDataSource {
   @override
   Future<List<ProductEntity>> filtter(String sort) async {
     // final response = await httpClient.get('http://185.135.229.96:806/products');
-    final response = await httpProduct.get('products');
+    final response = await httpClient.get('products');
     validateResponse(response);
     final products = <ProductEntity>[];
 
@@ -74,7 +91,7 @@ class ProductRemoteDataSource implements IProductDataSource {
 
   @override
   Future<List<ProductEntity>> detail(int data) async {
-    final response = await httpProduct.get('products', queryParameters: {
+    final response = await httpClient.get('products', queryParameters: {
       "code": data,
     });
     validateResponse(response);

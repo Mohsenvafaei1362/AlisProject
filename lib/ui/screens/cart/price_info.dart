@@ -44,7 +44,8 @@ class PriceInfo extends StatelessWidget {
                     const Text('مبلغ کل خرید'),
                     RichText(
                       text: TextSpan(
-                          text: totalPrice.separateByComma
+                          text: '$totalPrice'
+                              .separateByComma
                               .beToman()
                               .seRagham()
                               .toPersianDigit(),
@@ -79,7 +80,8 @@ class PriceInfo extends StatelessWidget {
                     if (shippingCost != 0)
                       RichText(
                         text: TextSpan(
-                          text: shippingCost.separateByComma
+                          text: '$shippingCost'
+                              .separateByComma
                               .toString()
                               .beToman()
                               .seRagham()
@@ -122,7 +124,8 @@ class PriceInfo extends StatelessWidget {
                     const Text('مبلغ قابل پرداخت'),
                     RichText(
                       text: TextSpan(
-                          text: payablePrice.separateByComma
+                          text: '$payablePrice'
+                              .separateByComma
                               .beToman()
                               .seRagham()
                               .toPersianDigit(),

@@ -55,7 +55,7 @@ class _DetailState extends State<Detail> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final priceFinal = widget.product.price -
-        (widget.product.price * widget.product.discount / 100);
+        (widget.product.price * widget.product.takhfif / 100);
     switch (widget.product.id) {
       case 1:
         comment = Comment.comments_milkt;
@@ -154,8 +154,8 @@ class _DetailState extends State<Detail> {
           child: BlocBuilder<DetailesBloc, DetailesState>(
             builder: (context, state) {
               if (state is DetailesSuccess) {
-                final d = state.similar
-                    .where((element) => element.title.contains(productsimilar));
+                final d = state.similar.where(
+                    (element) => element.productname.contains(productsimilar));
                 final f = d.map((e) => e).toList();
                 print(f);
                 return Scaffold(
@@ -216,7 +216,7 @@ class _DetailState extends State<Detail> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
-                                          if (widget.product.discount != 0)
+                                          if (widget.product.takhfif != 0)
                                             Container(
                                               width: size.width * 0.1,
                                               height: size.height * 0.03,
@@ -228,7 +228,7 @@ class _DetailState extends State<Detail> {
                                                           10)),
                                               child: Center(
                                                 child: Text(
-                                                  '${widget.product.discount.toString().withDiscountLable}'
+                                                  '${widget.product.takhfif.toString().withDiscountLable}'
                                                       .toPersianDigit(),
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
@@ -242,7 +242,7 @@ class _DetailState extends State<Detail> {
                                           ),
                                           Row(
                                             children: [
-                                              if (widget.product.discount != 0)
+                                              if (widget.product.takhfif != 0)
                                                 Text(
                                                   widget.product.price
                                                       .withPriceLable
@@ -405,12 +405,12 @@ class _DetailState extends State<Detail> {
                                                     width: size.width,
                                                     child: ImageLoadingService(
                                                       imageUrl: widget
-                                                          .product.imageUrl,
+                                                          .product.productimg,
                                                     ),
                                                   )
                                                 : Container(
                                                     child: ImageLoadingService(
-                                                      imageUrl: data.imageUrl,
+                                                      imageUrl: data.productimg,
                                                     ),
                                                   ),
                                           );
@@ -461,7 +461,7 @@ class _DetailState extends State<Detail> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Text(
-                                  widget.product.title,
+                                  widget.product.productname,
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -476,7 +476,7 @@ class _DetailState extends State<Detail> {
                                       width: 5,
                                     ),
                                     Text(
-                                      '${widget.product.discount}'
+                                      '${widget.product.takhfif}'
                                           .toPersianDigit(),
                                       style: const TextStyle(
                                         fontSize: 10,
@@ -663,11 +663,11 @@ class _DetailState extends State<Detail> {
                                               child: Column(
                                                 children: [
                                                   ImageLoadingService(
-                                                    imageUrl: data.imageUrl,
+                                                    imageUrl: data.productimg,
                                                   ),
                                                   Spacer(),
                                                   Text(
-                                                    data.title,
+                                                    data.productname,
                                                     style: TextStyle(
                                                       fontSize: 10,
                                                     ),
