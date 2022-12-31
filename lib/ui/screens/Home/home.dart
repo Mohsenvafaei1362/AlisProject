@@ -1322,31 +1322,6 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
   }) {
     return Column(
       children: [
-        // Padding(
-        //   padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //     children: [
-        //       Text(
-        //         title!,
-        //         style: TextStyle(
-        //           fontWeight: FontWeight.bold,
-        //           color: Colors.black45,
-        //         ),
-        //       ),
-        //       TextButton(
-        //         onPressed: press,
-        //         child: Text(
-        //           show!,
-        //           style: TextStyle(
-        //             fontWeight: FontWeight.bold,
-        //             color: Colors.black45,
-        //           ),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
         Container(
           width: size.width,
           height: size.height * 0.5,

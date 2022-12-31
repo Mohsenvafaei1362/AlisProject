@@ -8,6 +8,18 @@ final productRepository =
 
 abstract class IProductRepository {
   Future<List<ProductEntity>> filtter(String sort);
+  Future<List<PropertyEntity>> property(int productId, int sellsCenterId);
+  Future<List<ProductEntity>> Promotion({
+    required int poductId,
+    required int categoryId,
+    required int modelId,
+    required int userId,
+    required int sellCenter,
+    required String model,
+    required int visitorRef,
+    required int roleRef,
+    required int usersGroupRef,
+  });
   Future<List<ProductEntity>> getAll({
     required int categoryId,
     required int modelId,
@@ -18,7 +30,14 @@ abstract class IProductRepository {
     required int roleRef,
     required int usersGroupRef,
   });
-  Future<List<ProductEntity>> detail(int data);
+  Future<void> liked({
+    required String name,
+    required int userId,
+    required int commentId,
+    required int productId,
+    required int sellsCenter,
+    required bool liked,
+  });
   Future<List<ProductEntity>> search(String searchTerm);
   Future<void> sendLog(
     int productId,
@@ -71,7 +90,22 @@ class ProductRepository implements IProductRepository {
   Future<List<ProductEntity>> filtter(String sort) => dataSource.filtter(sort);
 
   @override
-  Future<List<ProductEntity>> detail(int data) => dataSource.detail(data);
+  Future<void> liked({
+    required String name,
+    required int userId,
+    required int commentId,
+    required int productId,
+    required int sellsCenter,
+    required bool liked,
+  }) =>
+      dataSource.liked(
+        name,
+        userId,
+        commentId,
+        productId,
+        sellsCenter,
+        liked,
+      );
 
   @override
   Future<void> sendLog(
@@ -105,4 +139,33 @@ class ProductRepository implements IProductRepository {
   @override
   Future<List<CommentProduct>> commentProduct(int productId, int sellsCenter) =>
       dataSource.commentProduct(productId, sellsCenter);
+
+  @override
+  Future<List<PropertyEntity>> property(int productId, int sellsCenterId) =>
+      dataSource.property(productId, sellsCenterId);
+
+  @override
+  Future<List<ProductEntity>> Promotion({
+    required int poductId,
+    required int categoryId,
+    required int modelId,
+    required int userId,
+    required int sellCenter,
+    required String model,
+    required int visitorRef,
+    required int roleRef,
+    required int usersGroupRef,
+  }) {
+    return dataSource.Promotion(
+      poductId: poductId,
+      categoryId: categoryId,
+      modelId: modelId,
+      userId: userId,
+      sellCenter: sellCenter,
+      model: model,
+      visitorRef: visitorRef,
+      roleRef: roleRef,
+      usersGroupRef: usersGroupRef,
+    );
+  }
 }

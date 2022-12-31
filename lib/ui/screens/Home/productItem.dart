@@ -1,18 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_manager.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/cart_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/product_repository.dart';
-import 'package:local_notification_flutter_project/ui/models/Comment/comment.dart';
 import 'package:local_notification_flutter_project/ui/screens/Home/bloc/products_bloc.dart';
 import 'package:local_notification_flutter_project/ui/screens/details/details.dart';
-import 'package:local_notification_flutter_project/ui/screens/widgets/image_loading_service.dart';
-import 'package:local_notification_flutter_project/ui/screens/widgets/pricelable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,9 +21,11 @@ class ProductItem extends StatefulWidget {
     required this.borderRadius,
     this.itemWidth = 176,
     this.itemHeight = 170,
+    this.property,
   }) : super(key: key);
 
   final ProductEntity product;
+  final PropertyEntity? property;
   final BorderRadius borderRadius;
   final double itemWidth;
   final double itemHeight;
@@ -145,7 +143,8 @@ class _ProductItemState extends State<ProductItem> {
                   //   );
                   // }
                 },
-                child: Card(
+                child: 
+                Card(
                   shape: RoundedRectangleBorder(
                     side: BorderSide(color: Colors.white70, width: 1),
                     borderRadius: widget.borderRadius,
@@ -347,6 +346,7 @@ class _ProductItemState extends State<ProductItem> {
                     ],
                   ),
                 ),
+              
               ),
             );
           },

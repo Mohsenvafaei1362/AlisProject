@@ -81,6 +81,8 @@ class ProductEntity extends HiveObject {
   final String finalprice;
   final String emtiaz;
   final int categoriesId;
+  final int minBy;
+  final String text;
   ProductEntity(
     this.id,
     this.price,
@@ -93,6 +95,8 @@ class ProductEntity extends HiveObject {
     this.finalprice,
     this.emtiaz,
     this.categoriesId,
+    this.minBy,
+    this.text,
   );
 
   ProductEntity.fromJson(Map json)
@@ -107,6 +111,8 @@ class ProductEntity extends HiveObject {
         takhfif = json['takhfif'].toString(),
         finalprice = json['finalprice'].toString(),
         previousPrice = json['finalprice'],
+        minBy = json['minbuy'],
+        text = json['text'],
         emtiaz = json['emtiaz'].toString();
 
   static List<ProductEntity> parseJsonArray(List<dynamic> jsonArray) {
@@ -118,4 +124,58 @@ class ProductEntity extends HiveObject {
     }
     return productItems;
   }
+}
+
+class PropertyEntity {
+  final String title;
+  final String newTitle;
+  final String value1;
+  final String value2;
+  // final String sugarLoaf; //قند
+  // final String fat; //چربی
+  // final String salt; //نمک
+  // final String acid; //اسیدهای چرب
+  // final int licenseNumber; //شماره پروانه
+  // final String product; //محصول
+  // final int size; //سایز
+  // final String packaging; //جنس بسته بندی
+  // final int count; //تعداددر بسته
+  // final int serial; //سریال
+  // final int volume; //حجم
+
+  PropertyEntity(
+    this.title,
+    this.value1,
+    this.value2,
+    this.newTitle,
+
+    // this.sugarLoaf,
+    // this.fat,
+    // this.salt,
+    // this.acid,
+    // this.licenseNumber,
+    // this.product,
+    // this.size,
+    // this.packaging,
+    // this.count,
+    // this.serial,
+    // this.volume,
+  );
+
+  PropertyEntity.fromJson(Map json)
+      : title = json['title'],
+        newTitle = json['newTitle'],
+        value1 = json['value1'],
+        value2 = json['value2'];
+  // sugarLoaf = json['sugarLoaf'],
+  // fat = json['fat'],
+  // salt = json['salt'],
+  // acid = json['acid'],
+  // licenseNumber = json['licenseNumber'],
+  // product = json['product'],
+  // size = json['size'],
+  // packaging = json['packaging'],
+  // count = json['count'],
+  // serial = json['serial'],
+  // volume = json['volume'];
 }

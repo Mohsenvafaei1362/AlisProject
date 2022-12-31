@@ -12,6 +12,18 @@ final UserInfo _userInfo = Get.put(UserInfo());
 
 abstract class IProductDataSource {
   Future<List<ProductEntity>> filtter(String sort);
+  Future<List<PropertyEntity>> property(int productId, int sellsCenterId);
+  Future<List<ProductEntity>> Promotion({
+    required int poductId,
+    required int categoryId,
+    required int modelId,
+    required int userId,
+    required int sellCenter,
+    required String model,
+    required int visitorRef,
+    required int roleRef,
+    required int usersGroupRef,
+  });
   Future<List<ProductEntity>> getAll({
     required int categoryId,
     required int modelId,
@@ -22,7 +34,14 @@ abstract class IProductDataSource {
     required int roleRef,
     required int usersGroupRef,
   });
-  Future<List<ProductEntity>> detail(int data);
+  Future<void> liked(
+    String name,
+    int userId,
+    int commentId,
+    int productId,
+    int sellsCenter,
+    bool liked,
+  );
   Future<List<ProductEntity>> search(String searchTerm);
   Future<void> sendLog({
     required int productId,
@@ -102,19 +121,31 @@ class ProductRemoteDataSource implements IProductDataSource {
   }
 
   @override
-  Future<List<ProductEntity>> detail(int data) async {
-    // final response = await httpProduct.get('products', queryParameters: {
-    //   "code": data,
-    // });
+  Future<void> liked(
+    String name,
+    int userId,
+    int commentId,
+    int productId,
+    int sellsCenter,
+    bool liked,
+  ) async {
+    final response = await httpClient.post('Comments', data: {
+      "Name": name,
+      "UserRef": userId,
+      "ProductId": productId,
+      "SellsCenterId": sellsCenter,
+      "Liked": liked,
+      "CommentsRef": commentId,
+    });
     // validateResponse(response);
-    final products = <ProductEntity>[];
+    // final like = <CommentProduct>[];
 
-    // var element = UiProductEntity.fromJson((response.data as List).first);
+    // // var element = CommentProduct.fromJson((response.data as List).first);
 
     // for (var element in (response.data as List)) {
-    //   products.add(ProductEntity.fromJson(element));
+    //   like.add(CommentProduct.fromJson(element));
     // }
-    return products;
+    // return like;
   }
 
   @override
@@ -175,5 +206,57 @@ class ProductRemoteDataSource implements IProductDataSource {
       comment.add(CommentProduct.fromJson(element));
     });
     return comment;
+  }
+
+  @override
+  Future<List<PropertyEntity>> property(
+    int productId,
+    int sellsCenterId,
+  ) async {
+    final response = await httpClient.get(
+      'ProductDetails',
+      queryParameters: {
+        "ProductId": productId,
+        "SellsCenterId": sellsCenterId,
+      },
+    );
+    validateResponse(response);
+    final List<PropertyEntity> properties = [];
+    (response.data as List).forEach((element) {
+      properties.add(PropertyEntity.fromJson(element));
+    });
+    return properties;
+  }
+
+  @override
+  Future<List<ProductEntity>> Promotion({
+    required int poductId,
+    required int categoryId,
+    required int modelId,
+    required int userId,
+    required int sellCenter,
+    required String model,
+    required int visitorRef,
+    required int roleRef,
+    required int usersGroupRef,
+  }) async {
+    final response = await httpClient.get('Promotion', queryParameters: {
+      "CategoryId": categoryId,
+      "UserId": userId,
+      "SellsCenterId": sellCenter,
+      "ModelId": modelId,
+      "Model": model,
+      "VisitorRef": visitorRef,
+      "RoleRef": roleRef,
+      "UsersGroupRef": usersGroupRef,
+      "ProductId": poductId,
+    });
+
+    validateResponse(response);
+    final List<ProductEntity> promotion = [];
+    (response.data as List).forEach((element) {
+      promotion.add(ProductEntity.fromJson(element));
+    });
+    return promotion;
   }
 }

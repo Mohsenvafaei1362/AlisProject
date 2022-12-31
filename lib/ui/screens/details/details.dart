@@ -8,9 +8,11 @@ import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_man
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/sliderInfo.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/product_repository.dart';
+import 'package:local_notification_flutter_project/ui/data/repo/promotion_repository.dart';
 import 'package:local_notification_flutter_project/ui/models/Comment/comment.dart';
 import 'package:local_notification_flutter_project/ui/screens/Comment_Product/comment_product.dart';
 import 'package:local_notification_flutter_project/ui/screens/Home/bloc/products_bloc.dart';
+import 'package:local_notification_flutter_project/ui/screens/Home/productItem.dart';
 import 'package:local_notification_flutter_project/ui/screens/cart/cart.dart';
 import 'package:local_notification_flutter_project/ui/screens/details/bloc/detailes_bloc.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/ScrollPhysics.dart';
@@ -29,8 +31,16 @@ class DetailScreen extends StatefulWidget {
   final ProductEntity product;
   final int data;
   final List<SliderInfo>? images;
-  const DetailScreen(
-      {key, required this.product, required this.data, this.images});
+  final double itemWidth;
+  final double itemHeight;
+  const DetailScreen({
+    key,
+    required this.product,
+    required this.data,
+    this.images,
+    this.itemWidth = 176,
+    this.itemHeight = 170,
+  });
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -39,8 +49,6 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   StreamSubscription<ProductsState>? stateSubscription;
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey();
-
-  final UserInfo _userInfo = Get.put(UserInfo());
 
   final ImageDetaile _imagedetaile = Get.put(ImageDetaile());
   @override
@@ -82,6 +90,9 @@ class _DetailScreenState extends State<DetailScreen> {
         false;
   }
 
+  final UserInfo _userInfo = Get.put(UserInfo());
+  final UiDl _dl = Get.put(UiDl());
+
   String productsimilar = '';
   @override
   Widget build(BuildContext context) {
@@ -100,6 +111,7 @@ class _DetailScreenState extends State<DetailScreen> {
         create: (context) {
           final bloc = DetailesBloc(
             productRepository: productRepository,
+            promotionRepository: promotionRepository,
           );
           bloc.add(DetailesStarted(
             productId: widget.product.id,
@@ -112,12 +124,12 @@ class _DetailScreenState extends State<DetailScreen> {
           child: BlocBuilder<DetailesBloc, DetailesState>(
             builder: (context, state) {
               if (state is DetailesSuccess) {
-                final d = state.similar
-                    .where((element) => element.title.contains(productsimilar));
-                final f = d.map((e) => e).toList();
-                print(f);
+                // final d = state.similar
+                //     .where((element) => element.title.contains(productsimilar));
+                // final f = d.map((e) => e).toList();
+                // print(f);
                 return Scaffold(
-                  backgroundColor: Colors.grey[200],
+                  backgroundColor: Color.fromARGB(255, 238, 238, 238),
                   floatingActionButtonLocation:
                       FloatingActionButtonLocation.centerFloat,
                   floatingActionButton: FloatingActionButton.extended(
@@ -152,7 +164,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     height: size.height * 0.06,
                                     padding: const EdgeInsets.all(2),
                                     decoration: BoxDecoration(
-                                        color: const Color(0xff00ABB3),
+                                        color: const Color(0xffEB455F),
                                         borderRadius: BorderRadius.circular(5)),
                                     child: const Center(
                                       child: Text(
@@ -184,7 +196,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                               height: size.height * 0.03,
                                               padding: const EdgeInsets.all(0),
                                               decoration: BoxDecoration(
-                                                  color: Color(0xff00ABB3),
+                                                  color: Color(0xffEB455F),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10)),
@@ -413,87 +425,13 @@ class _DetailScreenState extends State<DetailScreen> {
                               children: [
                                 Column(
                                   children: [
-                                    // Container(
-                                    //   width: size.width * 0.95,
-                                    //   height: size.height * 0.12,
-                                    //   // color: Colors.amber,
-                                    //   child: ListView.builder(
-                                    //     scrollDirection: Axis.horizontal,
-                                    //     itemCount:
-                                    //         _imagedetaile.imagedetaile.length,
-                                    //     itemBuilder: (context, index) {
-                                    //       List<Uint8List> _banners = [];
-                                    //       for (var element
-                                    //           in _imagedetaile.imagedetaile) {
-                                    //         _banners.add(
-                                    //           base64.decode(
-                                    //             element.img.toString(),
-                                    //           ),
-                                    //         );
-                                    //       }
-                                    //       final data =
-                                    //           _imagedetaile.imagedetaile[index];
-                                    //       return InkWell(
-                                    //         onTap: () {
-                                    //           setState(() {
-                                    //             if (index == 0) {
-                                    //               _imageUrl =
-                                    //                   widget.product.imageUrl;
-                                    //             } else {
-                                    //               _imageUrl = data.img;
-                                    //             }
-                                    //           });
-                                    //         },
-                                    //         child: index == 0
-                                    //             ? Container(
-                                    //                 width: size.width * 0.25,
-                                    //                 height: size.height,
-                                    //                 decoration: BoxDecoration(
-                                    //                   color: Colors.white,
-                                    //                   borderRadius:
-                                    //                       BorderRadius.circular(8),
-                                    //                 ),
-                                    //                 margin: EdgeInsets.all(2),
-                                    //                 padding: EdgeInsets.all(2),
-                                    //                 child: Center(
-                                    //                   child: ImageLoadingService(
-                                    //                     imageUrl:
-                                    //                         widget.product.imageUrl,
-                                    //                   ),
-                                    //                 ),
-                                    //               )
-                                    //             : Container(
-                                    //                 width: size.width * 0.25,
-                                    //                 height: size.height,
-                                    //                 decoration: BoxDecoration(
-                                    //                   color: Colors.white,
-                                    //                   borderRadius:
-                                    //                       BorderRadius.circular(8),
-                                    //                 ),
-                                    //                 margin: EdgeInsets.all(2),
-                                    //                 padding: EdgeInsets.all(2),
-                                    //                 child: ClipRRect(
-                                    //                   borderRadius:
-                                    //                       BorderRadius.circular(10),
-                                    //                   child: Image.memory(
-                                    //                     _banners[index],
-                                    //                     fit: BoxFit.cover,
-                                    //                     width: size.width,
-                                    //                     height: size.height,
-                                    //                   ),
-                                    //                 ),
-                                    //               ),
-                                    //       );
-                                    //     },
-                                    //   ),
-                                    // ),
-
                                     Container(
                                       width: size.width,
                                       margin: const EdgeInsets.symmetric(
                                           vertical: 15, horizontal: 10),
                                       padding: const EdgeInsets.all(32.0),
                                       decoration: BoxDecoration(
+                                        color: Colors.white,
                                         borderRadius: BorderRadius.circular(30),
                                         border: Border.all(
                                           color: Colors.white,
@@ -620,79 +558,84 @@ class _DetailScreenState extends State<DetailScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          const Text('شعبه'),
                                           const SizedBox(
-                                            height: 15,
+                                            height: 10,
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 20),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: const [
-                                                Padding(
-                                                  padding: EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    'شعبه مرکزی',
-                                                    style: TextStyle(
-                                                      color: Colors.black54,
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  color: Colors.black26,
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    'موجود در انبار',
-                                                    style: TextStyle(
-                                                      color: Colors.black54,
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  color: Colors.black26,
-                                                ),
-                                              ],
+                                          const Text(
+                                            'پروموشن ها',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black54,
                                             ),
                                           ),
                                           const SizedBox(
                                             height: 15,
                                           ),
-                                          const Text('پروموشن ها'),
-                                          const SizedBox(
-                                            height: 15,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'در صورت خرید 4 عدد به بالا 3% تخفیف دریافت می کنید'
-                                                    .toPersianDigit(),
-                                                style: const TextStyle(
-                                                  color: Colors.black54,
-                                                  fontSize: 11,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(
-                                                'در صورت خرید 4 عدد به بالا 100  امتیاز دریافت می کنید'
-                                                    .toPersianDigit(),
-                                                style: const TextStyle(
-                                                  color: Colors.black54,
-                                                  fontSize: 11,
-                                                ),
-                                              ),
-                                              const Divider(
+                                          Container(
+                                            width: size.width,
+                                            height: size.height * 0.2,
+                                            padding: EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black26,
+                                                  blurRadius: 5,
+                                                )
+                                              ],
+                                              color: Colors.white,
+                                              border: Border.all(
                                                 color: Colors.black26,
+                                                width: 1,
                                               ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: ListView.builder(
+                                              itemCount: state.similar.length,
+                                              // itemCount: 10,
+                                              itemBuilder: (context, index) {
+                                                final data =
+                                                    state.similar[index];
+                                                return Container(
+                                                  child: Text(
+                                                    data.text,
+                                                    textAlign:
+                                                        TextAlign.justify,
+                                                    style: TextStyle(
+                                                      height: 2.5,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black54,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          Row(
+                                            children: [
+                                              // Text(
+                                              //   'در صورت خرید 4 عدد به بالا 3% تخفیف دریافت می کنید'
+                                              //       .toPersianDigit(),
+                                              //   style: const TextStyle(
+                                              //     color: Colors.black54,
+                                              //     fontSize: 11,
+                                              //   ),
+                                              // ),
+                                              // const SizedBox(
+                                              //   height: 10,
+                                              // ),
+                                              // Text(
+                                              //   'در صورت خرید 4 عدد به بالا 100  امتیاز دریافت می کنید'
+                                              //       .toPersianDigit(),
+                                              //   style: const TextStyle(
+                                              //     color: Colors.black54,
+                                              //     fontSize: 11,
+                                              //   ),
+                                              // ),
+                                              // const Divider(
+                                              //   color: Colors.black26,
+                                              // ),
                                               Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
@@ -716,62 +659,344 @@ class _DetailScreenState extends State<DetailScreen> {
                                           ),
                                           Container(
                                             width: size.width,
-                                            height: size.height * 0.25,
+                                            height: size.height * 0.5,
                                             // color: Colors.grey[200],
                                             child: ListView.builder(
-                                              itemCount: f.length,
+                                              itemCount: state.similar.length,
                                               scrollDirection: Axis.horizontal,
                                               itemBuilder: (context, index) {
-                                                final data = f[index];
+                                                final data =
+                                                    state.similar[index];
 
                                                 return InkWell(
                                                   onTap: () {
-                                                    Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                        builder: ((context) =>
-                                                            DetailScreen(
-                                                                product: data,
-                                                                data: 1)),
-                                                      ),
-                                                    );
+                                                    // Navigator.of(context).push(
+                                                    //   MaterialPageRoute(
+                                                    //     builder: ((context) =>
+                                                    //         DetailScreen(
+                                                    //             product: data,
+                                                    //             data: 1)),
+                                                    //   ),
+                                                    // );
                                                   },
                                                   child: SizedBox(
-                                                    width: size.width * 0.3,
-                                                    child: Card(
-                                                      elevation: 2,
-                                                      margin: EdgeInsets.all(5),
-                                                      color: Colors.grey[100],
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .fromLTRB(
-                                                                5, 5, 5, 8),
-                                                        child: Column(
-                                                          children: [
-                                                            ImageLoadingService(
-                                                              imageUrl:
-                                                                  data.imageUrl,
-                                                            ),
-                                                            Spacer(),
-                                                            Text(
-                                                              data.title,
-                                                              style: TextStyle(
-                                                                fontSize: 10,
+                                                    width: size.width * 0.45,
+                                                    child:
+                                                        // Card(
+                                                        //   elevation: 2,
+                                                        //   margin: EdgeInsets.all(5),
+                                                        //   color: Colors.grey[100],
+                                                        //   child: Padding(
+                                                        //     padding:
+                                                        //         const EdgeInsets
+                                                        //                 .fromLTRB(
+                                                        //             5, 5, 5, 8),
+                                                        //     child: Column(
+                                                        //       children: [
+                                                        //         Image.memory(
+                                                        //           base64.decode(
+                                                        //             data.imageUrl,
+                                                        //           ),
+                                                        //         ),
+                                                        //         Spacer(),
+                                                        //         Text(
+                                                        //           data.title,
+                                                        //           style: TextStyle(
+                                                        //             fontSize: 10,
+                                                        //           ),
+                                                        //         ),
+                                                        //         SizedBox(
+                                                        //           height: 5,
+                                                        //         ),
+                                                        //         // Text(
+                                                        //         //   data.price
+                                                        //         //       .withPriceLableString
+                                                        //         //       .toPersianDigit(),
+                                                        //         //   style: TextStyle(
+                                                        //         //     fontSize: 10,
+                                                        //         //   ),
+                                                        //         // ),
+                                                        //       ],
+                                                        //     ),
+                                                        //   ),
+                                                        // ),
+                                                        Card(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        side: BorderSide(
+                                                            color:
+                                                                Colors.white70,
+                                                            width: 1),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                      elevation: 5,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceAround,
+                                                        children: [
+                                                          Stack(
+                                                            children: [
+                                                              Positioned(
+                                                                bottom: 0,
+                                                                right: 0,
+                                                                left: 0,
+                                                                child: ClipOval(
+                                                                  child:
+                                                                      Container(
+                                                                    // width: size.width * 0.2,
+                                                                    height: size
+                                                                            .height *
+                                                                        0.04,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: Colors
+                                                                              .grey[
+                                                                          100],
+                                                                    ),
+                                                                  ),
+                                                                ),
                                                               ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            Text(
-                                                              data.price
-                                                                  .withPriceLableString
-                                                                  .toPersianDigit(),
-                                                              style: TextStyle(
-                                                                fontSize: 10,
+                                                              SizedBox(
+                                                                // color: Colors.amber,
+                                                                width: widget
+                                                                    .itemWidth,
+                                                                height: widget
+                                                                    .itemHeight,
+                                                                child: Hero(
+                                                                    transitionOnUserGestures:
+                                                                        true,
+                                                                    tag:
+                                                                        'image',
+                                                                    child: Image
+                                                                        .memory(
+                                                                            base64.decode(
+                                                                      data.imageUrl
+                                                                          .toString(),
+                                                                    ))),
                                                               ),
+                                                              Positioned(
+                                                                top: 0,
+                                                                right: 20,
+                                                                child:
+                                                                    Container(
+                                                                  width: 32,
+                                                                  height: 32,
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  decoration:
+                                                                      const BoxDecoration(
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                  child:
+                                                                      IconButton(
+                                                                    splashColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    highlightColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    onPressed:
+                                                                        () {
+                                                                      // isFavorite = !isFavorite;
+                                                                      if (!favoritmanager
+                                                                          .isFavorite(
+                                                                              widget.product)) {
+                                                                        favoritmanager
+                                                                            .addFavorite(widget.product);
+                                                                      } else {
+                                                                        favoritmanager
+                                                                            .delete(widget.product);
+                                                                      }
+                                                                      setState(
+                                                                          () {});
+                                                                      // BlocProvider.of<ProductsBloc>(context).add(
+                                                                      //   ProductAddToFavoriteButtonClicked(
+                                                                      //     widget.product.id,
+                                                                      //   ),
+                                                                      // );
+                                                                    },
+                                                                    icon: Icon(
+                                                                      favoritmanager.isFavorite(widget
+                                                                              .product)
+                                                                          ? CupertinoIcons
+                                                                              .heart_fill
+                                                                          : CupertinoIcons
+                                                                              .heart,
+                                                                      color: favoritmanager.isFavorite(widget
+                                                                              .product)
+                                                                          ? Colors.pink[
+                                                                              300]
+                                                                          : Colors
+                                                                              .black38,
+                                                                      size: 24,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              widget.product
+                                                                          .emtiaz !=
+                                                                      '0'
+                                                                  ? Positioned(
+                                                                      top: 10,
+                                                                      left: 20,
+                                                                      child: Container(
+                                                                          width: 32,
+                                                                          alignment: Alignment.center,
+                                                                          decoration: BoxDecoration(
+                                                                            color:
+                                                                                Colors.pink[400],
+                                                                            borderRadius:
+                                                                                BorderRadius.all(
+                                                                              Radius.circular(10),
+                                                                            ),
+                                                                          ),
+                                                                          child: Text(
+                                                                            widget.product.emtiaz.toString().toPersianDigit(),
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 11,
+                                                                              color: Colors.white,
+                                                                              fontWeight: FontWeight.bold,
+                                                                            ),
+                                                                          )),
+                                                                    )
+                                                                  : Text(''),
+                                                            ],
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    right: 10,
+                                                                    left: 10),
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  widget.product
+                                                                      .title,
+                                                                  maxLines: 1,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                ),
+                                                                Row(
+                                                                  // mainAxisAlignment: MainAxisAlignment.center,
+                                                                  children: [
+                                                                    Icon(
+                                                                      Icons
+                                                                          .star,
+                                                                      color: Colors
+                                                                          .amber,
+                                                                      size: 15,
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: 5,
+                                                                    ),
+                                                                    Text(widget
+                                                                        .product
+                                                                        .like
+                                                                        .toPersianDigit()),
+                                                                  ],
+                                                                ),
+                                                                Container(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              5),
+                                                                  decoration: BoxDecoration(
+                                                                      color: Colors
+                                                                              .grey[
+                                                                          100],
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10)),
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Row(
+                                                                        children: [
+                                                                          Text('قیمت : ${widget.product.price}'
+                                                                              .toPersianDigit())
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        children: [
+                                                                          Text('امتیاز ریالی : ${widget.product.takhfif}'
+                                                                              .toPersianDigit())
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        children: [
+                                                                          Text('اعتبار شما : ${widget.product.etebar}'
+                                                                              .toPersianDigit())
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Text(
+                                                                      widget.product
+                                                                              .finalprice
+                                                                              .toPersianDigit() +
+                                                                          ' تومان ',
+                                                                    ),
+                                                                    // widget.product.discount != 0
+                                                                    //     ? Text(
+                                                                    //         '${(widget.product.price - (widget.product.price * (widget.product.discount / 100))).withPriceLable}'
+                                                                    //             .toPersianDigit(),
+                                                                    //       )
+                                                                    //     : Text(
+                                                                    //         widget.product.price.withPriceLable
+                                                                    //             .toPersianDigit(),
+                                                                    //       ),
+                                                                    IconButton(
+                                                                      padding:
+                                                                          EdgeInsets
+                                                                              .zero,
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .centerLeft,
+                                                                      onPressed:
+                                                                          () {
+                                                                        // print(widget.product.title);
+                                                                        // print(widget.product.id);
+                                                                        BlocProvider.of<ProductsBloc>(context)
+                                                                            .add(
+                                                                          ProductAddToCartButtonClicked(widget
+                                                                              .product
+                                                                              .id),
+                                                                        );
+                                                                      },
+                                                                      icon:
+                                                                          const Icon(
+                                                                        CupertinoIcons
+                                                                            .cart_badge_plus,
+                                                                        color: Colors
+                                                                            .green,
+                                                                      ),
+                                                                    ),
+                                                                    // const Icon(
+                                                                    //   CupertinoIcons.cart_badge_plus,
+                                                                    //   color: Colors.green,
+                                                                    // ),
+                                                                  ],
+                                                                ),
+                                                              ],
                                                             ),
-                                                          ],
-                                                        ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   ),
@@ -785,10 +1010,16 @@ class _DetailScreenState extends State<DetailScreen> {
                                         ],
                                       ),
                                     ),
-                                    PropertyProduct(size: size), //ویژگی محصول
+
+                                    PropertyProduct(
+                                      size: size,
+                                      property: state.property,
+                                    ),
+                                    //ویژگی محصول
                                     UserOpinion(
                                       size: size,
                                       comment: state.comment,
+                                      product: widget.product,
                                     ), //دیدگاه کاربران
                                     MyView(size: size), //دیدگاه خود
                                     Container(
@@ -854,7 +1085,7 @@ class MyView extends StatelessWidget {
         width: size.width,
         margin: const EdgeInsets.symmetric(vertical: 5),
         padding: const EdgeInsets.all(32.0),
-        color: Colors.grey[100],
+        color: Colors.white,
         child: Row(
           children: [
             const Icon(CupertinoIcons.chat_bubble),
@@ -895,10 +1126,12 @@ class UserOpinion extends StatelessWidget {
     Key? key,
     required this.size,
     required this.comment,
+    required this.product,
   }) : super(key: key);
 
   final Size size;
   final List<CommentProduct> comment;
+  final ProductEntity product;
 
   @override
   Widget build(BuildContext context) {
@@ -933,14 +1166,14 @@ class UserOpinion extends StatelessWidget {
             height: size.height * 0.2,
             // color: Colors.red,
             child: ListView.builder(
-              scrollDirection: Axis.horizontal,
+              scrollDirection: Axis.vertical,
               itemCount: comment.length,
               itemBuilder: (context, index) {
                 final dataComment = comment[index];
                 return Column(
                   children: [
                     SizedBox(
-                      width: size.width * 0.47,
+                      width: size.width * 0.9,
                       height: size.height * 0.2,
                       child: InkWell(
                         onTap: () {
@@ -1020,38 +1253,79 @@ class UserOpinion extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 Row(
+                                  // mainAxisAlignment:
+                                  //     MainAxisAlignment.spaceAround,
                                   children: [
-                                    Container(
-                                      padding: EdgeInsets.zero,
-                                      height: size.height * 0.05,
-                                      alignment: Alignment.center,
-                                      color: Colors.lightGreen,
-                                      child: TextButton(
-                                        onPressed: () {},
+                                    SizedBox(
+                                      height: size.height * 0.035,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          final UiDl _dl = Get.put(UiDl());
+                                          final UserInfo _userInfo =
+                                              Get.put(UserInfo());
+                                          BlocProvider.of<DetailesBloc>(context)
+                                              .add(
+                                            DetailesClickedButton(
+                                              name: _dl.FullName.value,
+                                              userRef: _userInfo.UserId.value,
+                                              productId: product.id,
+                                              sellsCenter:
+                                                  _userInfo.sellsCenter.value,
+                                              liked: true,
+                                              commentRef: dataComment.id,
+                                            ),
+                                          );
+                                        },
                                         child: Text(
                                           'می پسندم',
                                           style: TextStyle(
-                                            color: Colors.blue,
+                                            // color: Colors.blue,
                                             fontSize: 12,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      padding: EdgeInsets.zero,
-                                      height: size.height * 0.05,
-                                      alignment: Alignment.center,
-                                      color: Colors.lime,
-                                      child: TextButton(
-                                        onPressed: () {},
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.035,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.pink[300],
+                                        ),
+                                        onPressed: () {
+                                          final UiDl _dl = Get.put(UiDl());
+                                          final UserInfo _userInfo =
+                                              Get.put(UserInfo());
+                                          BlocProvider.of<DetailesBloc>(context)
+                                              .add(
+                                            DetailesClickedButton(
+                                              name: _dl.FullName.value,
+                                              userRef: _userInfo.UserId.value,
+                                              productId: product.id,
+                                              sellsCenter:
+                                                  _userInfo.sellsCenter.value,
+                                              liked: false,
+                                              commentRef: dataComment.id,
+                                            ),
+                                          );
+                                        },
                                         child: Text(
                                           'نمی پسندم',
                                           style: TextStyle(
-                                            color: Colors.red,
+                                            // color: Colors.blue,
                                             fontSize: 12,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      'نفر پسندیده اند : ${dataComment.countlike.toString()}'
+                                          .toPersianDigit(),
                                     ),
                                   ],
                                 ),
@@ -1076,97 +1350,151 @@ class PropertyProduct extends StatelessWidget {
   const PropertyProduct({
     Key? key,
     required this.size,
+    required this.property,
   }) : super(key: key);
 
   final Size size;
+  final List<PropertyEntity> property;
 
   @override
   Widget build(BuildContext context) {
+    // return Container(
+    //   width: size.width,
+    //   margin: const EdgeInsets.symmetric(vertical: 5),
+    //   padding: const EdgeInsets.all(32.0),
+    //   color: Colors.white,
+    //   child: Column(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: [
+    //       const Text('ویژگی های محصول'),
+    //       Padding(
+    //         padding: const EdgeInsets.all(8.0),
+    //         child: Column(
+    //           children: [
+    //             Row(
+    //               children: const [
+    //                 Text(
+    //                   'تیتر1 : ',
+    //                   style: TextStyle(
+    //                     color: Colors.black38,
+    //                     fontSize: 12,
+    //                   ),
+    //                 ),
+    //                 Text(
+    //                   ' لیمو ',
+    //                   style: TextStyle(
+    //                     color: Colors.black87,
+    //                     fontSize: 12,
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //             const SizedBox(
+    //               height: 15,
+    //             ),
+    //             Row(
+    //               children: [
+    //                 const Text(
+    //                   'حجم : ',
+    //                   style: TextStyle(
+    //                     color: Colors.black38,
+    //                     fontSize: 12,
+    //                   ),
+    //                 ),
+    //                 // Text(
+    //                 //   '${detalilsProduct.map['Size']}'
+    //                 //       .toPersianDigit(),
+    //                 //   style: TextStyle(
+    //                 //     color: Colors.black87,
+    //                 //     fontSize: 12,
+    //                 //   ),
+    //                 // ),
+    //                 const SizedBox(
+    //                   width: 3,
+    //                 ),
+    //                 Text(
+    //                   'سی سی'.toPersianDigit(),
+    //                   style: const TextStyle(
+    //                     color: Colors.black87,
+    //                     fontSize: 12,
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //             const SizedBox(
+    //               height: 15,
+    //             ),
+    //             Row(
+    //               children: const [
+    //                 Text(
+    //                   'ویژگی : ',
+    //                   style: TextStyle(
+    //                     color: Colors.black38,
+    //                     fontSize: 12,
+    //                   ),
+    //                 ),
+    //                 Text(
+    //                   ' بدون الکل ',
+    //                   style: TextStyle(
+    //                     color: Colors.black87,
+    //                     fontSize: 12,
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
     return Container(
       width: size.width,
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      padding: const EdgeInsets.all(32.0),
-      color: Colors.white,
+      height: size.height * 0.25,
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('ویژگی های محصول'),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                  children: const [
-                    Text(
-                      'نوع رایحه : ',
-                      style: TextStyle(
-                        color: Colors.black38,
-                        fontSize: 12,
-                      ),
-                    ),
-                    Text(
-                      ' لیمو ',
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 3, 12, 3),
+                child: Text(
+                  'ویژگی محصول',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
+                  ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      'حجم : ',
-                      style: TextStyle(
-                        color: Colors.black38,
-                        fontSize: 12,
-                      ),
-                    ),
-                    // Text(
-                    //   '${detalilsProduct.map['Size']}'
-                    //       .toPersianDigit(),
-                    //   style: TextStyle(
-                    //     color: Colors.black87,
-                    //     fontSize: 12,
-                    //   ),
-                    // ),
-                    const SizedBox(
-                      width: 3,
-                    ),
-                    Text(
-                      'سی سی'.toPersianDigit(),
-                      style: const TextStyle(
-                        color: Colors.black87,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  children: const [
-                    Text(
-                      'ویژگی : ',
-                      style: TextStyle(
-                        color: Colors.black38,
-                        fontSize: 12,
-                      ),
-                    ),
-                    Text(
-                      ' بدون الکل ',
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+              )
+            ],
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: property.length,
+              // itemCount: 10,
+              itemBuilder: (context, index) {
+                final data = property[index];
+                return Container(
+                  padding: EdgeInsets.fromLTRB(12, 5, 12, 5),
+                  margin: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    // color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(data.newTitle),
+                      // Text('titr2'),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         ],
