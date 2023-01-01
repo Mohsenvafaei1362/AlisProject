@@ -16,7 +16,7 @@ class DetailesStarted extends DetailesEvent {
   });
 }
 
-class DetailesClickedButton extends DetailesEvent {
+class DetailesLikeClickedButton extends DetailesEvent {
   String name;
   final int userRef;
   final int productId;
@@ -24,7 +24,7 @@ class DetailesClickedButton extends DetailesEvent {
   final int sellsCenter;
   final bool liked;
 
-  DetailesClickedButton({
+  DetailesLikeClickedButton({
     required this.name,
     required this.userRef,
     required this.productId,
@@ -32,4 +32,17 @@ class DetailesClickedButton extends DetailesEvent {
     required this.liked,
     required this.commentRef,
   });
+}
+
+class DetailesIncrementClickedButton extends DetailesEvent {
+  final int productId;
+  final int value;
+
+  DetailesIncrementClickedButton(this.productId, this.value);
+}
+
+class DetailesDecrementClickedButton extends DetailesEvent {
+  final int productId;
+  final int value;
+  DetailesDecrementClickedButton(this.productId, this.value);
 }

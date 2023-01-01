@@ -9,12 +9,14 @@ abstract class DetailesState extends Equatable {
 class DetailesInitial extends DetailesState {}
 
 class DetailesSuccess extends DetailesState {
-  final List<ProductEntity> similar;
+  final List<PromotionEntity> similar;
   final List<PropertyEntity> property;
   final List<CommentProduct> comment;
+  final List<ProductEntity> productDetail;
   // final List<PromotionInfo> promotion;
 
-  const DetailesSuccess(this.similar, this.comment, this.property);
+  const DetailesSuccess(
+      this.similar, this.comment, this.property, this.productDetail);
 }
 
 class DetailesClickedSuccess extends DetailesState {}

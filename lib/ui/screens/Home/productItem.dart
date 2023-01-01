@@ -102,7 +102,7 @@ class _ProductItemState extends State<ProductItem> {
                   builder: (context) => Directionality(
                     textDirection: TextDirection.rtl,
                     child: DetailScreen(
-                      product: widget.product,
+                      productId: widget.product.id,
                       data: 1,
                     ),
                   ),
@@ -143,8 +143,7 @@ class _ProductItemState extends State<ProductItem> {
                   //   );
                   // }
                 },
-                child: 
-                Card(
+                child: Card(
                   shape: RoundedRectangleBorder(
                     side: BorderSide(color: Colors.white70, width: 1),
                     borderRadius: widget.borderRadius,
@@ -346,7 +345,6 @@ class _ProductItemState extends State<ProductItem> {
                     ],
                   ),
                 ),
-              
               ),
             );
           },

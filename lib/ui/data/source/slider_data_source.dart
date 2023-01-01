@@ -3,6 +3,7 @@ import 'package:local_notification_flutter_project/ui/data/ClassInfo/sliderInfo.
 import 'package:local_notification_flutter_project/ui/data/common/exception.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:local_notification_flutter_project/ui/screens/widgets/ValidationResponse.dart';
 
 final UserInfo _userInfo = Get.put(UserInfo());
 
@@ -21,14 +22,11 @@ class SliderRemoteDataSource implements ISliderDataSource {
       "UsersGroupRef": _userInfo.userGroups.value,
       "sellsCenterRef": _userInfo.sellsCenter.value,
     });
-    if (response.statusCode != 200) {
-      throw AppException();
-    } else {
-      final List<SliderInfo> getImage = [];
-      for (var element in (response.data as List<dynamic>)) {
-        getImage.add(SliderInfo.fromJson(element));
-      }
-      return getImage;
+    validateResponse(response);
+    final List<SliderInfo> getImage = [];
+    for (var element in (response.data as List<dynamic>)) {
+      getImage.add(SliderInfo.fromJson(element));
     }
+    return getImage;
   }
 }

@@ -15,6 +15,7 @@ import 'package:local_notification_flutter_project/ui/screens/Home/bloc/products
 import 'package:local_notification_flutter_project/ui/screens/Home/productItem.dart';
 import 'package:local_notification_flutter_project/ui/screens/cart/cart.dart';
 import 'package:local_notification_flutter_project/ui/screens/details/bloc/detailes_bloc.dart';
+import 'package:local_notification_flutter_project/ui/screens/details/promotionText.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/ScrollPhysics.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/image_loading_service.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/pricelable.dart';
@@ -28,16 +29,14 @@ import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class DetailScreen extends StatefulWidget {
-  final ProductEntity product;
+  final int productId;
   final int data;
-  final List<SliderInfo>? images;
   final double itemWidth;
   final double itemHeight;
   const DetailScreen({
     key,
-    required this.product,
+    required this.productId,
     required this.data,
-    this.images,
     this.itemWidth = 176,
     this.itemHeight = 170,
   });
@@ -90,6 +89,7 @@ class _DetailScreenState extends State<DetailScreen> {
         false;
   }
 
+  int count = 0;
   final UserInfo _userInfo = Get.put(UserInfo());
   final UiDl _dl = Get.put(UiDl());
 
@@ -114,7 +114,7 @@ class _DetailScreenState extends State<DetailScreen> {
             promotionRepository: promotionRepository,
           );
           bloc.add(DetailesStarted(
-            productId: widget.product.id,
+            productId: widget.productId,
             sellsCenter: _userInfo.sellsCenter.value,
           ));
           return bloc;
@@ -124,10 +124,6 @@ class _DetailScreenState extends State<DetailScreen> {
           child: BlocBuilder<DetailesBloc, DetailesState>(
             builder: (context, state) {
               if (state is DetailesSuccess) {
-                // final d = state.similar
-                //     .where((element) => element.title.contains(productsimilar));
-                // final f = d.map((e) => e).toList();
-                // print(f);
                 return Scaffold(
                   backgroundColor: Color.fromARGB(255, 238, 238, 238),
                   floatingActionButtonLocation:
@@ -157,7 +153,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                   onTap: () {
                                     BlocProvider.of<ProductsBloc>(context).add(
                                         ProductAddToCartButtonClicked(
-                                            widget.product.id));
+                                            widget.productId));
                                   },
                                   child: Container(
                                     width: size.width * 0.38,
@@ -175,8 +171,74 @@ class _DetailScreenState extends State<DetailScreen> {
                                     ),
                                   ),
                                 ),
-                                // SizedBox(
-                                //   width: 50,
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        if (count > 0) {
+                                          setState(() {
+                                            --count;
+                                          });
+                                          // BlocProvider.of<DetailesBloc>(context)
+                                          //     .add(
+                                          //   DetailesDecrementClickedButton(
+                                          //     widget.productId,
+                                          //     count,
+                                          //   ),
+                                          // );
+                                        }
+                                      },
+                                      child: Icon(
+                                        CupertinoIcons.minus_rectangle,
+                                        color: Colors.red,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    count == 0
+                                        ? Text('')
+                                        : Text(
+                                            count.toString().toPersianDigit(),
+                                            style: TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          ++count;
+                                        });
+                                        // BlocProvider.of<DetailesBloc>(context)
+                                        //     .add(
+                                        //   DetailesIncrementClickedButton(
+                                        //     widget.productId,
+                                        //     count,
+                                        //   ),
+                                        // );
+                                      },
+                                      child: Icon(
+                                        CupertinoIcons.plus_rectangle,
+                                        color: Colors.green,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                // IconButton(
+                                //   onPressed: () {},
+                                //   icon: const Icon(
+                                //     CupertinoIcons.minus_rectangle,
+                                //     color: Colors.red,
+                                //   ),
+                                // ),
+                                // IconButton(
+                                //   onPressed: () {},
+                                //   icon: const Icon(
+                                //     CupertinoIcons.plus_rectangle,
+                                //     color: Colors.green,
+                                //   ),
                                 // ),
                                 SizedBox(
                                   width: size.width * 0.35,
@@ -190,7 +252,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
-                                          if (widget.product.takhfif != '0')
+                                          if (state.productDetail.first
+                                                  .takhfif !=
+                                              '0')
                                             Container(
                                               width: size.width * 0.1,
                                               height: size.height * 0.03,
@@ -202,7 +266,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                                           10)),
                                               child: Center(
                                                 child: Text(
-                                                  '${widget.product.takhfif.toString().withDiscountLable}'
+                                                  '${state.productDetail.first.takhfif.toString().withDiscountLable}'
                                                       .toPersianDigit(),
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
@@ -216,10 +280,12 @@ class _DetailScreenState extends State<DetailScreen> {
                                           ),
                                           Row(
                                             children: [
-                                              if (widget.product.takhfif != '0')
+                                              if (state.productDetail.first
+                                                      .takhfif !=
+                                                  '0')
                                                 Text(
-                                                  widget.product.price
-                                                      .withPriceLable
+                                                  state.productDetail.first
+                                                      .price.withPriceLable
                                                       .toPersianDigit(),
                                                   style: const TextStyle(
                                                     color: Color(0xff3C4048),
@@ -237,7 +303,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                             MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            widget.product.finalprice
+                                            state.productDetail.first.finalprice
                                                 .toPersianDigit(),
                                             style: const TextStyle(
                                               color: Color(0xff3C4048),
@@ -349,7 +415,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
                               Image.memory(
                             base64.decode(
-                              widget.product.imageUrl,
+                              state.productDetail.first.imageUrl,
                             ),
                           ),
                           foregroundColor: LightThemeColors.primaryTextColors,
@@ -360,18 +426,22 @@ class _DetailScreenState extends State<DetailScreen> {
                               highlightColor: Colors.white,
                               onPressed: () {
                                 if (!favoritmanager
-                                    .isFavorite(widget.product)) {
-                                  favoritmanager.addFavorite(widget.product);
+                                    .isFavorite(state.productDetail.first)) {
+                                  favoritmanager
+                                      .addFavorite(state.productDetail.first);
                                 } else {
-                                  favoritmanager.delete(widget.product);
+                                  favoritmanager
+                                      .delete(state.productDetail.first);
                                 }
                                 setState(() {});
                               },
                               icon: Icon(
-                                favoritmanager.isFavorite(widget.product)
+                                favoritmanager
+                                        .isFavorite(state.productDetail.first)
                                     ? CupertinoIcons.heart_fill
                                     : CupertinoIcons.heart,
-                                color: favoritmanager.isFavorite(widget.product)
+                                color: favoritmanager
+                                        .isFavorite(state.productDetail.first)
                                     ? Colors.pink[300]
                                     : Colors.black38,
                                 size: 24,
@@ -452,7 +522,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                                 MainAxisAlignment.start,
                                             children: [
                                               Text(
-                                                widget.product.title,
+                                                state.productDetail.first.title,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black54,
@@ -478,10 +548,10 @@ class _DetailScreenState extends State<DetailScreen> {
                                                 width: 5,
                                               ),
                                               Text(
-                                                '${widget.product.takhfif}'
+                                                '${state.productDetail.first.emtiaz} امتیاز دریافت می کنید'
                                                     .toPersianDigit(),
                                                 style: const TextStyle(
-                                                  fontSize: 10,
+                                                  fontSize: 12,
                                                   color: Colors.black45,
                                                 ),
                                               ),
@@ -525,7 +595,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                                 width: 15,
                                               ),
                                               Text(
-                                                '92% (870 نفر) از خریداران این کالا را پیشنهاد کرده اند'
+                                                '92% (${state.productDetail.first.like} نفر) از خریداران این کالا را پیشنهاد کرده اند'
                                                     .toPersianDigit(),
                                                 style: const TextStyle(
                                                   color: Colors.black54,
@@ -576,13 +646,13 @@ class _DetailScreenState extends State<DetailScreen> {
                                             height: size.height * 0.2,
                                             padding: EdgeInsets.all(10),
                                             decoration: BoxDecoration(
+                                              color: Colors.white,
                                               boxShadow: [
                                                 BoxShadow(
                                                   color: Colors.black26,
-                                                  blurRadius: 5,
+                                                  blurRadius: 2,
                                                 )
                                               ],
-                                              color: Colors.white,
                                               border: Border.all(
                                                 color: Colors.black26,
                                                 width: 1,
@@ -590,26 +660,68 @@ class _DetailScreenState extends State<DetailScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                             ),
-                                            child: ListView.builder(
-                                              itemCount: state.similar.length,
-                                              // itemCount: 10,
-                                              itemBuilder: (context, index) {
-                                                final data =
-                                                    state.similar[index];
-                                                return Container(
-                                                  child: Text(
-                                                    data.text,
-                                                    textAlign:
-                                                        TextAlign.justify,
-                                                    style: TextStyle(
-                                                      height: 2.5,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black54,
-                                                    ),
+                                            child: Column(
+                                              children: [
+                                                Expanded(
+                                                  child: ListView.builder(
+                                                    itemCount:
+                                                        state.similar.length,
+                                                    // itemCount: 10,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      final data =
+                                                          state.similar[index];
+                                                      return Container(
+                                                        child: Text(
+                                                          data.text,
+                                                          textAlign:
+                                                              TextAlign.justify,
+                                                          maxLines: 1,
+                                                          style: TextStyle(
+                                                            height: 2.5,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.black54,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
                                                   ),
-                                                );
-                                              },
+                                                ),
+                                                // Text(
+                                                //   state.similar.first.text,
+                                                //   style: TextStyle(
+                                                //     height: 2,
+                                                //   ),
+                                                // ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: () {
+                                                        Navigator.of(context).push(
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        PromotionText(
+                                                                          promotion:
+                                                                              state.similar,
+                                                                        )));
+                                                      },
+                                                      child: Text(
+                                                        'بیشتر بخوانید',
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.blue,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
                                             ),
                                           ),
                                           Row(
@@ -670,14 +782,16 @@ class _DetailScreenState extends State<DetailScreen> {
 
                                                 return InkWell(
                                                   onTap: () {
-                                                    // Navigator.of(context).push(
-                                                    //   MaterialPageRoute(
-                                                    //     builder: ((context) =>
-                                                    //         DetailScreen(
-                                                    //             product: data,
-                                                    //             data: 1)),
-                                                    //   ),
-                                                    // );
+                                                    Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                        builder: ((context) =>
+                                                            DetailScreen(
+                                                              productId:
+                                                                  data.id,
+                                                              data: 1,
+                                                            )),
+                                                      ),
+                                                    );
                                                   },
                                                   child: SizedBox(
                                                     width: size.width * 0.45,
@@ -803,14 +917,16 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                     onPressed:
                                                                         () {
                                                                       // isFavorite = !isFavorite;
-                                                                      if (!favoritmanager
-                                                                          .isFavorite(
-                                                                              widget.product)) {
-                                                                        favoritmanager
-                                                                            .addFavorite(widget.product);
+                                                                      if (!favoritmanager.isFavorite(state
+                                                                          .productDetail
+                                                                          .first)) {
+                                                                        favoritmanager.addFavorite(state
+                                                                            .productDetail
+                                                                            .first);
                                                                       } else {
-                                                                        favoritmanager
-                                                                            .delete(widget.product);
+                                                                        favoritmanager.delete(state
+                                                                            .productDetail
+                                                                            .first);
                                                                       }
                                                                       setState(
                                                                           () {});
@@ -821,14 +937,16 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                       // );
                                                                     },
                                                                     icon: Icon(
-                                                                      favoritmanager.isFavorite(widget
-                                                                              .product)
+                                                                      favoritmanager.isFavorite(state
+                                                                              .productDetail
+                                                                              .first)
                                                                           ? CupertinoIcons
                                                                               .heart_fill
                                                                           : CupertinoIcons
                                                                               .heart,
-                                                                      color: favoritmanager.isFavorite(widget
-                                                                              .product)
+                                                                      color: favoritmanager.isFavorite(state
+                                                                              .productDetail
+                                                                              .first)
                                                                           ? Colors.pink[
                                                                               300]
                                                                           : Colors
@@ -838,7 +956,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                   ),
                                                                 ),
                                                               ),
-                                                              widget.product
+                                                              state.productDetail.first
                                                                           .emtiaz !=
                                                                       '0'
                                                                   ? Positioned(
@@ -856,7 +974,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                             ),
                                                                           ),
                                                                           child: Text(
-                                                                            widget.product.emtiaz.toString().toPersianDigit(),
+                                                                            state.productDetail.first.emtiaz.toString().toPersianDigit(),
                                                                             style:
                                                                                 TextStyle(
                                                                               fontSize: 11,
@@ -880,7 +998,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                       .start,
                                                               children: [
                                                                 Text(
-                                                                  widget.product
+                                                                  state
+                                                                      .productDetail
+                                                                      .first
                                                                       .title,
                                                                   maxLines: 1,
                                                                   overflow:
@@ -900,8 +1020,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                     SizedBox(
                                                                       width: 5,
                                                                     ),
-                                                                    Text(widget
-                                                                        .product
+                                                                    Text(state
+                                                                        .productDetail
+                                                                        .first
                                                                         .like
                                                                         .toPersianDigit()),
                                                                   ],
@@ -922,19 +1043,19 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                     children: [
                                                                       Row(
                                                                         children: [
-                                                                          Text('قیمت : ${widget.product.price}'
+                                                                          Text('قیمت : ${state.productDetail.first.price}'
                                                                               .toPersianDigit())
                                                                         ],
                                                                       ),
                                                                       Row(
                                                                         children: [
-                                                                          Text('امتیاز ریالی : ${widget.product.takhfif}'
+                                                                          Text('امتیاز ریالی : ${state.productDetail.first.takhfif}'
                                                                               .toPersianDigit())
                                                                         ],
                                                                       ),
                                                                       Row(
                                                                         children: [
-                                                                          Text('اعتبار شما : ${widget.product.etebar}'
+                                                                          Text('اعتبار شما : ${state.productDetail.first.etebar}'
                                                                               .toPersianDigit())
                                                                         ],
                                                                       ),
@@ -947,7 +1068,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                           .spaceBetween,
                                                                   children: [
                                                                     Text(
-                                                                      widget.product
+                                                                      state.productDetail.first
                                                                               .finalprice
                                                                               .toPersianDigit() +
                                                                           ' تومان ',
@@ -974,8 +1095,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                         // print(widget.product.id);
                                                                         BlocProvider.of<ProductsBloc>(context)
                                                                             .add(
-                                                                          ProductAddToCartButtonClicked(widget
-                                                                              .product
+                                                                          ProductAddToCartButtonClicked(state
+                                                                              .productDetail
+                                                                              .first
                                                                               .id),
                                                                         );
                                                                       },
@@ -1019,7 +1141,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     UserOpinion(
                                       size: size,
                                       comment: state.comment,
-                                      product: widget.product,
+                                      product: state.productDetail.first,
                                     ), //دیدگاه کاربران
                                     MyView(size: size), //دیدگاه خود
                                     Container(
@@ -1265,7 +1387,7 @@ class UserOpinion extends StatelessWidget {
                                               Get.put(UserInfo());
                                           BlocProvider.of<DetailesBloc>(context)
                                               .add(
-                                            DetailesClickedButton(
+                                            DetailesLikeClickedButton(
                                               name: _dl.FullName.value,
                                               userRef: _userInfo.UserId.value,
                                               productId: product.id,
@@ -1301,7 +1423,7 @@ class UserOpinion extends StatelessWidget {
                                               Get.put(UserInfo());
                                           BlocProvider.of<DetailesBloc>(context)
                                               .add(
-                                            DetailesClickedButton(
+                                            DetailesLikeClickedButton(
                                               name: _dl.FullName.value,
                                               userRef: _userInfo.UserId.value,
                                               productId: product.id,

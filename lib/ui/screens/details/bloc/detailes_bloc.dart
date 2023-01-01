@@ -16,7 +16,7 @@ part 'detailes_state.dart';
 final UiDl _dl = Get.put(UiDl());
 final UserInfo _userinfo = Get.put(UserInfo());
 
-var similars, comments, properties, promotions;
+var similars, comments, properties, promotions, productDetailes;
 
 class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
   final IProductRepository productRepository;
@@ -47,6 +47,8 @@ class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
             event.productId,
             event.sellsCenter,
           ); //کامنت ها
+          final productDetaile =
+              await productRepository.productDetaile(event.productId);
           // final promotion = await promotionRepository.promotionList(
           //   categoryId: 1,
           //   model: '',
@@ -61,9 +63,10 @@ class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
           similars = similar;
           comments = comment;
           properties = property;
+          productDetailes = productDetaile;
           // promotions = promotion;
-          emit(DetailesSuccess(similar, comment, property));
-        } else if (event is DetailesClickedButton) {
+          emit(DetailesSuccess(similar, comment, property, productDetaile));
+        } else if (event is DetailesLikeClickedButton) {
           emit(DetailesLoading());
           final liked = await productRepository.liked(
             liked: event.liked,
@@ -73,7 +76,12 @@ class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
             userId: event.userRef,
             commentId: event.commentRef,
           ); //می پسندم / نمی پسندم
-          emit(DetailesSuccess(similars, comments, properties));
+          emit(
+              DetailesSuccess(similars, comments, properties, productDetailes));
+        } else if (event is DetailesIncrementClickedButton) {
+          emit(DetailesLoading());
+        } else if (event is DetailesDecrementClickedButton) {
+          emit(DetailesLoading());
         }
       } catch (e) {
         emit(DetailesError(AppException()));

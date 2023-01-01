@@ -12,8 +12,11 @@ final UserInfo _userInfo = Get.put(UserInfo());
 
 abstract class IProductDataSource {
   Future<List<ProductEntity>> filtter(String sort);
+  Future<List<ProductEntity>> productDetaile(int productId);
+  Future<void> increment({required int productId, required int count});
+  Future<void> decrement({required int productId, required int count});
   Future<List<PropertyEntity>> property(int productId, int sellsCenterId);
-  Future<List<ProductEntity>> Promotion({
+  Future<List<PromotionEntity>> Promotion({
     required int poductId,
     required int categoryId,
     required int modelId,
@@ -229,7 +232,7 @@ class ProductRemoteDataSource implements IProductDataSource {
   }
 
   @override
-  Future<List<ProductEntity>> Promotion({
+  Future<List<PromotionEntity>> Promotion({
     required int poductId,
     required int categoryId,
     required int modelId,
@@ -253,10 +256,33 @@ class ProductRemoteDataSource implements IProductDataSource {
     });
 
     validateResponse(response);
-    final List<ProductEntity> promotion = [];
+    final List<PromotionEntity> promotion = [];
     (response.data as List).forEach((element) {
-      promotion.add(ProductEntity.fromJson(element));
+      promotion.add(PromotionEntity.fromJson(element));
     });
     return promotion;
+  }
+
+  @override
+  Future<void> decrement({required int productId, required int count}) async {
+    final response = await httpClient.post('');
+  }
+
+  @override
+  Future<void> increment({required int productId, required int count}) async {
+    final response = await httpClient.post('path');
+  }
+
+  @override
+  Future<List<ProductEntity>> productDetaile(int productId) async {
+    final response = await httpClient.get('ListViewById', queryParameters: {
+      "ListViewDetailId": productId,
+    });
+    validateResponse(response);
+    final List<ProductEntity> productDetail = [];
+    (response.data as List).forEach((element) {
+      productDetail.add(ProductEntity.fromJson(element));
+    });
+    return productDetail;
   }
 }

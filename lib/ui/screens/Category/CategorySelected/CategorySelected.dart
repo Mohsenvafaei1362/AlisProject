@@ -180,7 +180,7 @@ class _CategorySelectedState extends State<CategorySelected> {
                                         builder: (contex) => Directionality(
                                           textDirection: TextDirection.rtl,
                                           child: DetailScreen(
-                                            product: data,
+                                            productId: data.id,
                                             data: 1,
                                           ),
                                         ),

@@ -82,7 +82,6 @@ class ProductEntity extends HiveObject {
   final String emtiaz;
   final int categoriesId;
   final int minBy;
-  final String text;
   ProductEntity(
     this.id,
     this.price,
@@ -96,7 +95,6 @@ class ProductEntity extends HiveObject {
     this.emtiaz,
     this.categoriesId,
     this.minBy,
-    this.text,
   );
 
   ProductEntity.fromJson(Map json)
@@ -112,7 +110,6 @@ class ProductEntity extends HiveObject {
         finalprice = json['finalprice'].toString(),
         previousPrice = json['finalprice'],
         minBy = json['minbuy'],
-        text = json['text'],
         emtiaz = json['emtiaz'].toString();
 
   static List<ProductEntity> parseJsonArray(List<dynamic> jsonArray) {
@@ -178,4 +175,59 @@ class PropertyEntity {
   // count = json['count'],
   // serial = json['serial'],
   // volume = json['volume'];
+}
+
+@HiveType(typeId: 0)
+class PromotionEntity extends HiveObject {
+  // final int product_id;
+  @HiveField(0)
+  final int id;
+  @HiveField(1)
+  final double price;
+  @HiveField(2)
+  final String takhfif;
+  @HiveField(3)
+  final int previousPrice;
+  @HiveField(4)
+  final String title;
+  @HiveField(5)
+  final String imageUrl;
+  final String like;
+  final String etebar;
+  final String finalprice;
+  final String emtiaz;
+  final int categoriesId;
+  final int minBy;
+  final String text;
+  PromotionEntity(
+    this.id,
+    this.price,
+    this.takhfif,
+    this.previousPrice,
+    this.title,
+    this.imageUrl,
+    this.like,
+    this.etebar,
+    this.finalprice,
+    this.emtiaz,
+    this.categoriesId,
+    this.minBy,
+    this.text,
+  );
+
+  PromotionEntity.fromJson(Map json)
+      : id = json['id'],
+        // id = 100,
+        title = json['productname'],
+        like = json['like'].toString(),
+        imageUrl = json['productimg'].toString(),
+        price = json['price'],
+        categoriesId = json['categoriesID'],
+        etebar = json['etebar'].toString(),
+        takhfif = json['takhfif'].toString(),
+        finalprice = json['finalprice'].toString(),
+        previousPrice = json['finalprice'],
+        minBy = json['minbuy'],
+        text = json['text'],
+        emtiaz = json['emtiaz'].toString();
 }

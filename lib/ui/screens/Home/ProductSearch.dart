@@ -51,7 +51,7 @@ class _ProductSearchState extends State<ProductSearch> {
             builder: (context) => Directionality(
               textDirection: TextDirection.rtl,
               child: DetailScreen(
-                product: widget.product,
+                productId: widget.product.id,
                 data: 1,
               ),
             ),
