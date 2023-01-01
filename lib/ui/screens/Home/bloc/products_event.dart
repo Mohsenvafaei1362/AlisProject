@@ -14,8 +14,9 @@ class ProductStarted extends ProductsEvent {
 
 class ProductAddToCartButtonClicked extends ProductsEvent {
   final int productId;
+  final int count;
 
-  const ProductAddToCartButtonClicked(this.productId);
+  const ProductAddToCartButtonClicked(this.productId, this.count);
 }
 
 class ProductAddToFavoriteButtonClicked extends ProductsEvent {

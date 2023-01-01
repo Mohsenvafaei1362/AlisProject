@@ -15,7 +15,42 @@ class CartRepository implements ICartRepository {
 
   CartRepository(this.dataSource);
   @override
-  Future<AddToCartResponse> add(int productId) => dataSource.add(productId);
+  Future<AddToCartResponse> add(
+    int productId,
+    int count,
+    double price,
+    int takhfif,
+    int etebar,
+    int emtiaz,
+    int userId,
+    int dlRef,
+    int listViewDetailRef,
+    String productName,
+    int sellsCenterId,
+    int categoriesId,
+    int userGroupId,
+    int visitorId,
+    double lat,
+    double long,
+  ) =>
+      dataSource.add(
+        productId,
+        count,
+        price,
+        takhfif,
+        etebar,
+        emtiaz,
+        userId,
+        dlRef,
+        listViewDetailRef,
+        productName,
+        sellsCenterId,
+        categoriesId,
+        userGroupId,
+        visitorId,
+        lat,
+        long,
+      );
 
   @override
   Future<int> count() async {

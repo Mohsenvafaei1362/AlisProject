@@ -102,8 +102,9 @@ class _ProductItemState extends State<ProductItem> {
                   builder: (context) => Directionality(
                     textDirection: TextDirection.rtl,
                     child: DetailScreen(
-                      productId: widget.product.id,
+                      listViewDetailId: widget.product.id,
                       data: 1,
+                      pid: widget.product.productId,
                     ),
                   ),
                 ),
@@ -325,7 +326,7 @@ class _ProductItemState extends State<ProductItem> {
                                     // print(widget.product.id);
                                     BlocProvider.of<ProductsBloc>(context).add(
                                       ProductAddToCartButtonClicked(
-                                          widget.product.id),
+                                          widget.product.id, 1),
                                     );
                                   },
                                   icon: const Icon(

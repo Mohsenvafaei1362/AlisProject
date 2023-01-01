@@ -64,8 +64,9 @@ class _FavoriteListState extends State<FavoriteList> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => DetailScreen(
-                                  productId: data.id,
+                                  listViewDetailId: data.id,
                                   data: 1,
+                                  pid: data.productId,
                                 ),
                               ),
                             );

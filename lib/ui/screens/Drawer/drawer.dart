@@ -27,6 +27,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({

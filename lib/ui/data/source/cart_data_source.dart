@@ -10,7 +10,24 @@ import 'package:local_notification_flutter_project/ui/screens/widgets/Validation
 final UiDl _dl = Get.put(UiDl());
 
 abstract class ICartDataSource {
-  Future<AddToCartResponse> add(int productId);
+  Future<AddToCartResponse> add(
+    int productId,
+    int count,
+    double price,
+    int takhfif,
+    int etebar,
+    int emtiaz,
+    int userId,
+    int dlRef,
+    int listViewDetailRef,
+    String productName,
+    int sellsCenterId,
+    int categoriesId,
+    int userGroupId,
+    int visitorId,
+    double lat,
+    double long,
+  );
   Future<FavoriteInfo> Favorite(int productId);
   Future<AddToCartResponse> changeCount(int cartId, int count);
   Future<void> delete(int cartItemId);
@@ -22,11 +39,43 @@ class CartRemoteDataSource implements ICartDataSource {
   late final Dio httpClient;
   CartRemoteDataSource(this.httpClient);
   @override
-  Future<AddToCartResponse> add(int productId) async {
+  Future<AddToCartResponse> add(
+    int productId,
+    int count,
+    double price,
+    int takhfif,
+    int etebar,
+    int emtiaz,
+    int userId,
+    int dlRef,
+    int listViewDetailRef,
+    String productName,
+    int sellsCenterId,
+    int categoriesId,
+    int userGroupId,
+    int visitorId,
+    double lat,
+    double long,
+  ) async {
     final response = await httpClient.post('path', data: {
       "product_id": productId,
+      "Count": count,
+      "Price": price,
+      "Takhfif": takhfif,
+      "Etebar": etebar,
+      "Emtiaz": emtiaz,
+      "UserRef": userId,
+      "DlRef": dlRef,
+      "ListViewDetailRef": listViewDetailRef,
+      "ProductName": productName,
+      "SellsCenterId": sellsCenterId,
+      "CategoriesId": categoriesId,
+      "UserGroupId": userGroupId,
+      "VisitorId": visitorId,
+      "Lat": lat,
+      "Long": long,
     });
-    // validateResponse(response);
+    validateResponse(response);
     return AddToCartResponse.fromJson(response.data);
   }
 

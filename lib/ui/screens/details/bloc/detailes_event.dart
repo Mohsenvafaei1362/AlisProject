@@ -46,3 +46,41 @@ class DetailesDecrementClickedButton extends DetailesEvent {
   final int value;
   DetailesDecrementClickedButton(this.productId, this.value);
 }
+
+class DetailesAddToCartButtonClicked extends DetailesEvent {
+  final int productId;
+  final int count;
+  final double price;
+  final int takhfif;
+  final int etebar;
+  final int emtiaz;
+  final int userId;
+  final int dlRef;
+  final int listViewDetailRef;
+  final String productName;
+  final int sellsCenterId;
+  final int categoriesId;
+  final int userGroupId;
+  final int visitorId;
+  final double lat;
+  final double long;
+
+  const DetailesAddToCartButtonClicked({
+    required this.productId,
+    required this.count,
+    required this.price,
+    required this.takhfif,
+    required this.etebar,
+    required this.emtiaz,
+    required this.userId,
+    required this.dlRef,
+    required this.listViewDetailRef,
+    required this.productName,
+    required this.sellsCenterId,
+    required this.categoriesId,
+    required this.userGroupId,
+    required this.visitorId,
+    required this.lat,
+    required this.long,
+  });
+}

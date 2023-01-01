@@ -20,7 +20,8 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
             emit(
               ProductAddToCartBttonLoading(),
             );
-            final result = await cartRepository.add(event.productId);
+            // final result =
+            //     await cartRepository.add(event.productId, event.count);
             await cartRepository.count();
             emit(
               ProductAddToCartSuccess(),

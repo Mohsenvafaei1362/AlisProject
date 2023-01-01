@@ -1,23 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/CommentProduct.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/favorit_manager.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
-import 'package:local_notification_flutter_project/ui/data/ClassInfo/sliderInfo.dart';
+import 'package:local_notification_flutter_project/ui/data/repo/cart_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/product_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/promotion_repository.dart';
-import 'package:local_notification_flutter_project/ui/models/Comment/comment.dart';
 import 'package:local_notification_flutter_project/ui/screens/Comment_Product/comment_product.dart';
 import 'package:local_notification_flutter_project/ui/screens/Home/bloc/products_bloc.dart';
-import 'package:local_notification_flutter_project/ui/screens/Home/productItem.dart';
 import 'package:local_notification_flutter_project/ui/screens/cart/cart.dart';
 import 'package:local_notification_flutter_project/ui/screens/details/bloc/detailes_bloc.dart';
 import 'package:local_notification_flutter_project/ui/screens/details/promotionText.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/ScrollPhysics.dart';
-import 'package:local_notification_flutter_project/ui/screens/widgets/image_loading_service.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/pricelable.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,19 +22,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:local_notification_flutter_project/ui/theme/theme.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class DetailScreen extends StatefulWidget {
-  final int productId;
+  final int listViewDetailId;
+  final int pid;
+
   final int data;
   final double itemWidth;
   final double itemHeight;
   const DetailScreen({
     key,
-    required this.productId,
+    required this.listViewDetailId,
     required this.data,
     this.itemWidth = 176,
     this.itemHeight = 170,
+    required this.pid,
   });
 
   @override
@@ -50,6 +48,7 @@ class _DetailScreenState extends State<DetailScreen> {
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey();
 
   final ImageDetaile _imagedetaile = Get.put(ImageDetaile());
+  final UiGetLocation getLocation = Get.put(UiGetLocation());
   @override
   void dispose() {
     stateSubscription?.cancel();
@@ -89,7 +88,7 @@ class _DetailScreenState extends State<DetailScreen> {
         false;
   }
 
-  int count = 0;
+  int count = 1;
   final UserInfo _userInfo = Get.put(UserInfo());
   final UiDl _dl = Get.put(UiDl());
 
@@ -112,9 +111,10 @@ class _DetailScreenState extends State<DetailScreen> {
           final bloc = DetailesBloc(
             productRepository: productRepository,
             promotionRepository: promotionRepository,
+            cartRepository: cartRepository,
           );
           bloc.add(DetailesStarted(
-            productId: widget.productId,
+            productId: widget.listViewDetailId,
             sellsCenter: _userInfo.sellsCenter.value,
           ));
           return bloc;
@@ -151,9 +151,33 @@ class _DetailScreenState extends State<DetailScreen> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    BlocProvider.of<ProductsBloc>(context).add(
-                                        ProductAddToCartButtonClicked(
-                                            widget.productId));
+                                    BlocProvider.of<DetailesBloc>(context).add(
+                                      DetailesAddToCartButtonClicked(
+                                        count: count,
+                                        emtiaz: int.parse(
+                                            state.productDetail.first.emtiaz),
+                                        etebar: int.parse(
+                                            state.productDetail.first.etebar),
+                                        price: state.productDetail.first.price,
+                                        productId: widget.listViewDetailId,
+                                        takhfif: int.parse(
+                                            state.productDetail.first.takhfif),
+                                        userId: _userInfo.UserId.value,
+                                        categoriesId: state
+                                            .productDetail.first.categoriesId,
+                                        dlRef: _dl.DlId.value,
+                                        listViewDetailRef:
+                                            widget.listViewDetailId,
+                                        productName:
+                                            state.productDetail.first.title,
+                                        sellsCenterId:
+                                            _userInfo.sellsCenter.value,
+                                        userGroupId: _userInfo.userGroups.value,
+                                        visitorId: _userInfo.visitor.value,
+                                        lat: getLocation.lat.value,
+                                        long: getLocation.long.value,
+                                      ),
+                                    );
                                   },
                                   child: Container(
                                     width: size.width * 0.38,
@@ -203,6 +227,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                             style: TextStyle(
                                               color: Colors.black54,
                                               fontSize: 12,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                     InkWell(
@@ -304,7 +329,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                         children: [
                                           Text(
                                             state.productDetail.first.finalprice
-                                                .toPersianDigit(),
+                                                .toPersianDigit()
+                                                .seRagham(),
                                             style: const TextStyle(
                                               color: Color(0xff3C4048),
                                               fontSize: 14,
@@ -631,19 +657,23 @@ class _DetailScreenState extends State<DetailScreen> {
                                           const SizedBox(
                                             height: 10,
                                           ),
-                                          const Text(
-                                            'پروموشن ها',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black54,
-                                            ),
-                                          ),
+                                          state.similar.length != 0
+                                              ? Text(
+                                                  'پروموشن ها',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black54,
+                                                  ),
+                                                )
+                                              : Text(''),
                                           const SizedBox(
                                             height: 15,
                                           ),
                                           Container(
                                             width: size.width,
-                                            height: size.height * 0.2,
+                                            // height: size.height * 0.2,
+                                            height: 50 *
+                                                state.similar.length.toDouble(),
                                             padding: EdgeInsets.all(10),
                                             decoration: BoxDecoration(
                                               color: Colors.white,
@@ -786,9 +816,11 @@ class _DetailScreenState extends State<DetailScreen> {
                                                       MaterialPageRoute(
                                                         builder: ((context) =>
                                                             DetailScreen(
-                                                              productId:
+                                                              listViewDetailId:
                                                                   data.id,
                                                               data: 1,
+                                                              pid: data
+                                                                  .productId,
                                                             )),
                                                       ),
                                                     );
@@ -1095,10 +1127,10 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                         // print(widget.product.id);
                                                                         BlocProvider.of<ProductsBloc>(context)
                                                                             .add(
-                                                                          ProductAddToCartButtonClicked(state
-                                                                              .productDetail
-                                                                              .first
-                                                                              .id),
+                                                                          ProductAddToCartButtonClicked(
+                                                                            state.productDetail.first.id,
+                                                                            count,
+                                                                          ),
                                                                         );
                                                                       },
                                                                       icon:
@@ -1257,214 +1289,220 @@ class UserOpinion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: size.width,
-      margin: const EdgeInsets.symmetric(vertical: 0),
-      padding: const EdgeInsets.all(8.0),
-      color: Colors.white,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              Padding(
-                padding: EdgeInsets.only(
-                  right: 10,
-                ),
-                child: Text(
-                  'دیدگاه کاربران',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+    if (comment.length != 0) {
+      return Container(
+        width: size.width,
+        margin: const EdgeInsets.symmetric(vertical: 0),
+        padding: const EdgeInsets.all(8.0),
+        color: Colors.white,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: const [
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: 10,
+                  ),
+                  child: Text(
+                    'دیدگاه کاربران',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Container(
-            width: size.width,
-            height: size.height * 0.2,
-            // color: Colors.red,
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: comment.length,
-              itemBuilder: (context, index) {
-                final dataComment = comment[index];
-                return Column(
-                  children: [
-                    SizedBox(
-                      width: size.width * 0.9,
-                      height: size.height * 0.2,
-                      child: InkWell(
-                        onTap: () {
-                          // Get.defaultDialog(
-                          //   title: dataComment.title,
-                          //   titleStyle: TextStyle(
-                          //     color: Colors.black54,
-                          //     fontWeight: FontWeight.bold,
-                          //   ),
-                          //   backgroundColor: Colors.grey[50],
-                          //   content: Text(
-                          //     dataComment.description,
-                          //     textAlign: TextAlign.justify,
-                          //     textDirection: TextDirection.rtl,
-                          //     style: TextStyle(
-                          //       fontSize: 12,
-                          //       height: 2,
-                          //     ),
-                          //   ),
-                          // );
-                        },
-                        child: Container(
-                          width: size.width * 0.3,
-                          margin: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: Color(0xffEEEEEE),
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: Color(0xffD6E4E5),
-                              width: 3,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black54,
-                                blurRadius: 0,
-                                // spreadRadius: 1,
-                                // blurStyle: BlurStyle.outer,
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Container(
+              width: size.width,
+              height: size.height * 0.2,
+              // color: Colors.red,
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: comment.length,
+                itemBuilder: (context, index) {
+                  final dataComment = comment[index];
+                  return Column(
+                    children: [
+                      SizedBox(
+                        width: size.width * 0.9,
+                        height: size.height * 0.2,
+                        child: InkWell(
+                          onTap: () {
+                            // Get.defaultDialog(
+                            //   title: dataComment.title,
+                            //   titleStyle: TextStyle(
+                            //     color: Colors.black54,
+                            //     fontWeight: FontWeight.bold,
+                            //   ),
+                            //   backgroundColor: Colors.grey[50],
+                            //   content: Text(
+                            //     dataComment.description,
+                            //     textAlign: TextAlign.justify,
+                            //     textDirection: TextDirection.rtl,
+                            //     style: TextStyle(
+                            //       fontSize: 12,
+                            //       height: 2,
+                            //     ),
+                            //   ),
+                            // );
+                          },
+                          child: Container(
+                            width: size.width * 0.3,
+                            margin: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Color(0xffEEEEEE),
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: Color(0xffD6E4E5),
+                                width: 3,
                               ),
-                            ],
-                          ),
-                          // elevation: 3,
-                          // color: Colors.white.withOpacity(0.95),
-                          // shape: RoundedRectangleBorder(
-                          //   side: BorderSide(
-                          //     color: Colors.black12,
-                          //     width: 1,
-                          //   ),
-                          //   borderRadius: BorderRadius.circular(10),
-                          // ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  dataComment.name,
-                                  textAlign: TextAlign.justify,
-                                  style: const TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  dataComment.comment,
-                                  textAlign: TextAlign.justify,
-                                  maxLines: 4,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    height: 2.1,
-                                    fontSize: 10,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Spacer(),
-                                Row(
-                                  // mainAxisAlignment:
-                                  //     MainAxisAlignment.spaceAround,
-                                  children: [
-                                    SizedBox(
-                                      height: size.height * 0.035,
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          final UiDl _dl = Get.put(UiDl());
-                                          final UserInfo _userInfo =
-                                              Get.put(UserInfo());
-                                          BlocProvider.of<DetailesBloc>(context)
-                                              .add(
-                                            DetailesLikeClickedButton(
-                                              name: _dl.FullName.value,
-                                              userRef: _userInfo.UserId.value,
-                                              productId: product.id,
-                                              sellsCenter:
-                                                  _userInfo.sellsCenter.value,
-                                              liked: true,
-                                              commentRef: dataComment.id,
-                                            ),
-                                          );
-                                        },
-                                        child: Text(
-                                          'می پسندم',
-                                          style: TextStyle(
-                                            // color: Colors.blue,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    SizedBox(
-                                      height: size.height * 0.035,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.pink[300],
-                                        ),
-                                        onPressed: () {
-                                          final UiDl _dl = Get.put(UiDl());
-                                          final UserInfo _userInfo =
-                                              Get.put(UserInfo());
-                                          BlocProvider.of<DetailesBloc>(context)
-                                              .add(
-                                            DetailesLikeClickedButton(
-                                              name: _dl.FullName.value,
-                                              userRef: _userInfo.UserId.value,
-                                              productId: product.id,
-                                              sellsCenter:
-                                                  _userInfo.sellsCenter.value,
-                                              liked: false,
-                                              commentRef: dataComment.id,
-                                            ),
-                                          );
-                                        },
-                                        child: Text(
-                                          'نمی پسندم',
-                                          style: TextStyle(
-                                            // color: Colors.blue,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Spacer(),
-                                    Text(
-                                      'نفر پسندیده اند : ${dataComment.countlike.toString()}'
-                                          .toPersianDigit(),
-                                    ),
-                                  ],
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black54,
+                                  blurRadius: 0,
+                                  // spreadRadius: 1,
+                                  // blurStyle: BlurStyle.outer,
                                 ),
                               ],
+                            ),
+                            // elevation: 3,
+                            // color: Colors.white.withOpacity(0.95),
+                            // shape: RoundedRectangleBorder(
+                            //   side: BorderSide(
+                            //     color: Colors.black12,
+                            //     width: 1,
+                            //   ),
+                            //   borderRadius: BorderRadius.circular(10),
+                            // ),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    dataComment.name,
+                                    textAlign: TextAlign.justify,
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    dataComment.comment,
+                                    textAlign: TextAlign.justify,
+                                    maxLines: 4,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      height: 2.1,
+                                      fontSize: 10,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Row(
+                                    // mainAxisAlignment:
+                                    //     MainAxisAlignment.spaceAround,
+                                    children: [
+                                      SizedBox(
+                                        height: size.height * 0.035,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            final UiDl _dl = Get.put(UiDl());
+                                            final UserInfo _userInfo =
+                                                Get.put(UserInfo());
+                                            BlocProvider.of<DetailesBloc>(
+                                                    context)
+                                                .add(
+                                              DetailesLikeClickedButton(
+                                                name: _dl.FullName.value,
+                                                userRef: _userInfo.UserId.value,
+                                                productId: product.id,
+                                                sellsCenter:
+                                                    _userInfo.sellsCenter.value,
+                                                liked: true,
+                                                commentRef: dataComment.id,
+                                              ),
+                                            );
+                                          },
+                                          child: Text(
+                                            'می پسندم',
+                                            style: TextStyle(
+                                              // color: Colors.blue,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      SizedBox(
+                                        height: size.height * 0.035,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.pink[300],
+                                          ),
+                                          onPressed: () {
+                                            final UiDl _dl = Get.put(UiDl());
+                                            final UserInfo _userInfo =
+                                                Get.put(UserInfo());
+                                            BlocProvider.of<DetailesBloc>(
+                                                    context)
+                                                .add(
+                                              DetailesLikeClickedButton(
+                                                name: _dl.FullName.value,
+                                                userRef: _userInfo.UserId.value,
+                                                productId: product.id,
+                                                sellsCenter:
+                                                    _userInfo.sellsCenter.value,
+                                                liked: false,
+                                                commentRef: dataComment.id,
+                                              ),
+                                            );
+                                          },
+                                          child: Text(
+                                            'نمی پسندم',
+                                            style: TextStyle(
+                                              // color: Colors.blue,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Text(
+                                        'نفر پسندیده اند : ${dataComment.countlike.toString()}'
+                                            .toPersianDigit(),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                );
-              },
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 }
 
@@ -1572,7 +1610,8 @@ class PropertyProduct extends StatelessWidget {
     // );
     return Container(
       width: size.width,
-      height: size.height * 0.25,
+      // height: size.height * 0.25,
+      height: 48 * property.length.toDouble(),
       margin: EdgeInsets.all(8),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(

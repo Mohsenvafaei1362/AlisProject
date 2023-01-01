@@ -21,8 +21,11 @@ var similars, comments, properties, promotions, productDetailes;
 class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
   final IProductRepository productRepository;
   final IPromotionRepository promotionRepository;
+  final ICartRepository cartRepository;
   DetailesBloc(
-      {required this.productRepository, required this.promotionRepository})
+      {required this.productRepository,
+      required this.promotionRepository,
+      required this.cartRepository})
       : super(DetailesLoading()) {
     on<DetailesEvent>((event, emit) async {
       try {
@@ -82,6 +85,29 @@ class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
           emit(DetailesLoading());
         } else if (event is DetailesDecrementClickedButton) {
           emit(DetailesLoading());
+        } else if (event is DetailesAddToCartButtonClicked) {
+          emit(DetailesLoading());
+
+          final result = await cartRepository.add(
+            event.productId,
+            event.count,
+            event.price,
+            event.takhfif,
+            event.etebar,
+            event.emtiaz,
+            event.userId,
+            event.dlRef,
+            event.listViewDetailRef,
+            event.productName,
+            event.sellsCenterId,
+            event.categoriesId,
+            event.userGroupId,
+            event.visitorId,
+            event.lat,
+            event.long,
+          );
+          emit(
+              DetailesSuccess(similars, comments, properties, productDetailes));
         }
       } catch (e) {
         emit(DetailesError(AppException()));

@@ -530,6 +530,10 @@ class ImageDetaile extends GetxController {
   List<SliderInfo> imagedetaile = [];
 }
 
+class ProductId extends GetxController {
+  RxInt Pid = 0.obs;
+}
+
 class UiAddressIp {
   // ignore: non_constant_identifier_names
   String Get_url(String code) {

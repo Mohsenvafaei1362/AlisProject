@@ -25,6 +25,9 @@ class PromotionText extends StatelessWidget {
                 child: Text(
                   data.text,
                   textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    height: 2.5,
+                  ),
                 ),
               );
             },

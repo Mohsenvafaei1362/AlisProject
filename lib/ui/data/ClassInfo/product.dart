@@ -1,6 +1,10 @@
+import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 
 part 'product.g.dart';
+
+final ProductId _Pid = Get.put(ProductId());
 
 class UiProductSort {
   static const int latest = 0;
@@ -15,51 +19,6 @@ class UiProductSort {
     'قیمت صعودی',
   ];
 }
-
-// @HiveType(typeId: 0)
-// class ProductEntity extends HiveObject {
-//   // final int product_id;
-//   @HiveField(0)
-//   final int id;
-//   @HiveField(1)
-//   final int price;
-//   @HiveField(2)
-//   final int discount;
-//   @HiveField(3)
-//   final int previousPrice;
-//   @HiveField(4)
-//   final String title;
-//   @HiveField(5)
-//   final String imageUrl;
-
-//   ProductEntity(
-//     this.id,
-//     this.price,
-//     this.discount,
-//     this.previousPrice,
-//     this.title,
-//     this.imageUrl,
-//   );
-
-//   ProductEntity.fromJson(Map json)
-//       : id = json['product_id'][0],
-//         // id = 100,
-//         title = json['product_name'],
-//         imageUrl = json['image_product'],
-//         price = json['product_price'],
-//         discount = json['product_discount'],
-//         previousPrice = 100;
-
-//   static List<ProductEntity> parseJsonArray(List<dynamic> jsonArray) {
-//     final List<ProductEntity> productItems = [];
-//     for (var element in jsonArray) {
-//       productItems.add(
-//         ProductEntity.fromJson(element),
-//       );
-//     }
-//     return productItems;
-//   }
-// }
 
 @HiveType(typeId: 0)
 class ProductEntity extends HiveObject {
@@ -82,6 +41,7 @@ class ProductEntity extends HiveObject {
   final String emtiaz;
   final int categoriesId;
   final int minBy;
+  final int productId;
   ProductEntity(
     this.id,
     this.price,
@@ -95,6 +55,7 @@ class ProductEntity extends HiveObject {
     this.emtiaz,
     this.categoriesId,
     this.minBy,
+    this.productId,
   );
 
   ProductEntity.fromJson(Map json)
@@ -110,6 +71,7 @@ class ProductEntity extends HiveObject {
         finalprice = json['finalprice'].toString(),
         previousPrice = json['finalprice'],
         minBy = json['minbuy'],
+        productId = json['productid'],
         emtiaz = json['emtiaz'].toString();
 
   static List<ProductEntity> parseJsonArray(List<dynamic> jsonArray) {
@@ -199,6 +161,7 @@ class PromotionEntity extends HiveObject {
   final int categoriesId;
   final int minBy;
   final String text;
+  final int productId;
   PromotionEntity(
     this.id,
     this.price,
@@ -213,6 +176,7 @@ class PromotionEntity extends HiveObject {
     this.categoriesId,
     this.minBy,
     this.text,
+    this.productId,
   );
 
   PromotionEntity.fromJson(Map json)
@@ -229,5 +193,6 @@ class PromotionEntity extends HiveObject {
         previousPrice = json['finalprice'],
         minBy = json['minbuy'],
         text = json['text'],
+        productId = json['productid'],
         emtiaz = json['emtiaz'].toString();
 }
