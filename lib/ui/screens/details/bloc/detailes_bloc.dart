@@ -16,7 +16,7 @@ part 'detailes_state.dart';
 final UiDl _dl = Get.put(UiDl());
 final UserInfo _userinfo = Get.put(UserInfo());
 
-var similars, comments, properties, promotions, productDetailes;
+var similars, comments, properties, promotions, productDetailes, productCounts;
 
 class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
   final IProductRepository productRepository;
@@ -32,7 +32,7 @@ class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
         if (event is DetailesStarted) {
           emit(DetailesLoading());
           final similar = await productRepository.Promotion(
-            poductId: event.productId,
+            poductId: event.listViewDetailId,
             categoryId: 0,
             modelId: 5,
             model: 'Promotion',
@@ -43,32 +43,34 @@ class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
             visitorRef: _userinfo.visitor.value,
           ); //محصولات مشابه
           final property = await productRepository.property(
-            event.productId,
+            event.listViewDetailId,
             event.sellsCenter,
           ); //ویژگی های محصول
           final comment = await productRepository.commentProduct(
-            event.productId,
+            event.listViewDetailId,
             event.sellsCenter,
           ); //کامنت ها
           final productDetaile =
-              await productRepository.productDetaile(event.productId);
-          // final promotion = await promotionRepository.promotionList(
-          //   categoryId: 1,
-          //   model: '',
-          //   modelId: 1,
-          //   roleRef: _userinfo.RoleId.value,
-          //   poductId: event.productId,
-          //   sellCenter: event.sellsCenter,
-          //   userId: _userinfo.UserId.value,
-          //   usersGroupRef: _userinfo.userGroups.value,
-          //   visitorRef: _userinfo.visitor.value,
-          // ); //پروموشن
+              await productRepository.productDetaile(event.listViewDetailId);
+          final productCount = await productRepository.productCount(
+            poductId: event.productId,
+            categoryId: event.categoryId,
+            modelId: event.modelId,
+            userId: event.userId,
+            sellCenter: event.sellsCenter,
+            model: event.model,
+            visitorRef: event.visitorRef,
+            roleRef: event.roleRef,
+            usersGroupRef: event.usersGroupRef,
+          );
           similars = similar;
           comments = comment;
           properties = property;
           productDetailes = productDetaile;
+          productCounts = productCount;
           // promotions = promotion;
-          emit(DetailesSuccess(similar, comment, property, productDetaile));
+          emit(DetailesSuccess(
+              similar, comment, property, productDetaile, productCount));
         } else if (event is DetailesLikeClickedButton) {
           emit(DetailesLoading());
           final liked = await productRepository.liked(
@@ -79,8 +81,8 @@ class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
             userId: event.userRef,
             commentId: event.commentRef,
           ); //می پسندم / نمی پسندم
-          emit(
-              DetailesSuccess(similars, comments, properties, productDetailes));
+          emit(DetailesSuccess(
+              similars, comments, properties, productDetailes, productCounts));
         } else if (event is DetailesIncrementClickedButton) {
           emit(DetailesLoading());
         } else if (event is DetailesDecrementClickedButton) {
@@ -106,8 +108,13 @@ class DetailesBloc extends Bloc<DetailesEvent, DetailesState> {
             event.lat,
             event.long,
           );
-          emit(
-              DetailesSuccess(similars, comments, properties, productDetailes));
+          emit(DetailesSuccess(
+              similars, comments, properties, productDetailes, productCounts));
+        } else if (event is DetailAddToFavoriteButtonClicked) {
+          emit(DetailesLoading());
+          final response = await cartRepository.Favorite(event.productId);
+          emit(DetailesSuccess(
+              similars, comments, properties, productDetailes, productCounts));
         }
       } catch (e) {
         emit(DetailesError(AppException()));

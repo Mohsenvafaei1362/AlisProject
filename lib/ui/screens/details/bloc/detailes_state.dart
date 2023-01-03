@@ -13,10 +13,15 @@ class DetailesSuccess extends DetailesState {
   final List<PropertyEntity> property;
   final List<CommentProduct> comment;
   final List<ProductEntity> productDetail;
-  // final List<PromotionInfo> promotion;
+  final List<ProductEntity> productCount;
 
   const DetailesSuccess(
-      this.similar, this.comment, this.property, this.productDetail);
+    this.similar,
+    this.comment,
+    this.property,
+    this.productDetail,
+    this.productCount,
+  );
 }
 
 class DetailesClickedSuccess extends DetailesState {}

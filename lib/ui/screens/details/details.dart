@@ -114,8 +114,16 @@ class _DetailScreenState extends State<DetailScreen> {
             cartRepository: cartRepository,
           );
           bloc.add(DetailesStarted(
-            productId: widget.listViewDetailId,
+            listViewDetailId: widget.listViewDetailId,
             sellsCenter: _userInfo.sellsCenter.value,
+            productId: widget.pid,
+            categoryId: 0,
+            model: '',
+            modelId: 0,
+            roleRef: _userInfo.RoleId.value,
+            userId: _userInfo.UserId.value,
+            usersGroupRef: _userInfo.userGroups.value,
+            visitorRef: _userInfo.visitor.value,
           ));
           return bloc;
         },
@@ -202,7 +210,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        if (count > 0) {
+                                        if (count > 1) {
                                           setState(() {
                                             --count;
                                           });
@@ -361,86 +369,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           ),
                           expandedHeight:
                               MediaQuery.of(context).size.height * 0.4,
-                          flexibleSpace:
-                              // Stack(
-                              //   children: [
-                              //     Padding(
-                              //       padding: const EdgeInsets.all(8.0),
-                              //       child: AspectRatio(
-                              //         aspectRatio: 1,
-                              //         child: PageView.builder(
-                              //             controller: _controller,
-                              //             itemCount: f.length,
-                              //             itemBuilder: (context, index) {
-                              //               // final d = state.similar.where((element) =>
-                              //               //     element.title
-                              //               //         .contains(widget.product.title));
-                              //               // final f = d.map((e) => e).toList();
-                              //               // print(f);
-                              //               // final data = state.similar[index];
-                              //               final data = f[index];
-                              //               return Padding(
-                              //                 padding: const EdgeInsets.all(8.0),
-                              //                 child: index == 0
-                              //                     ? Container(
-                              //                         width: size.width,
-                              //                         // color: Colors.amber,
-                              //                         padding: EdgeInsets.fromLTRB(
-                              //                             0, 0, 50, 0),
-                              //                         child: Image.memory(
-                              //                           base64.decode(
-                              //                             widget.product.imageUrl,
-                              //                           ),
-                              //                         ),
-                              //                         //  ImageLoadingService(
-                              //                         //   imageUrl:
-                              //                         //       widget.product.imageUrl,
-                              //                         // ),
-                              //                       )
-                              //                     : Container(
-                              //                         padding: EdgeInsets.fromLTRB(
-                              //                             0, 0, 50, 0),
-                              //                         child: Image.memory(
-                              //                           base64.decode(
-                              //                             widget.product.imageUrl,
-                              //                           ),
-                              //                         ),
-                              //                         // ImageLoadingService(
-                              //                         //   imageUrl: data.imageUrl,
-                              //                         // ),
-                              //                       ),
-                              //                 // Image.asset(
-                              //                 //     'assets/images/$index.jpg',
-                              //                 //     fit: BoxFit.cover),
-                              //               );
-                              //             }),
-                              //       ),
-                              //     ),
-                              //     Positioned(
-                              //       right: 0,
-                              //       left: 50,
-                              //       bottom: 8,
-                              //       child: Center(
-                              //         child: SmoothPageIndicator(
-                              //           controller: _controller,
-                              //           count: f.length,
-                              //           axisDirection: Axis.horizontal,
-                              //           effect: const SlideEffect(
-                              //               spacing: 8.0,
-                              //               radius: 4.0,
-                              //               dotWidth: 20.0,
-                              //               dotHeight: 2.0,
-                              //               paintStyle: PaintingStyle.stroke,
-                              //               strokeWidth: 1.5,
-                              //               dotColor: Colors.grey,
-                              //               activeDotColor: Colors.indigo),
-                              //         ),
-                              //       ),
-                              //     )
-                              //   ],
-                              // ),
-
-                              Image.memory(
+                          flexibleSpace: Image.memory(
                             base64.decode(
                               state.productDetail.first.imageUrl,
                             ),
@@ -452,15 +381,11 @@ class _DetailScreenState extends State<DetailScreen> {
                               splashColor: Colors.white,
                               highlightColor: Colors.white,
                               onPressed: () {
-                                if (!favoritmanager
-                                    .isFavorite(state.productDetail.first)) {
-                                  favoritmanager
-                                      .addFavorite(state.productDetail.first);
-                                } else {
-                                  favoritmanager
-                                      .delete(state.productDetail.first);
-                                }
-                                setState(() {});
+                                BlocProvider.of<DetailesBloc>(context).add(
+                                  DetailAddToFavoriteButtonClicked(
+                                    state.productDetail.first.productId,
+                                  ),
+                                );
                               },
                               icon: Icon(
                                 favoritmanager
@@ -828,46 +753,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                                   },
                                                   child: SizedBox(
                                                     width: size.width * 0.45,
-                                                    child:
-                                                        // Card(
-                                                        //   elevation: 2,
-                                                        //   margin: EdgeInsets.all(5),
-                                                        //   color: Colors.grey[100],
-                                                        //   child: Padding(
-                                                        //     padding:
-                                                        //         const EdgeInsets
-                                                        //                 .fromLTRB(
-                                                        //             5, 5, 5, 8),
-                                                        //     child: Column(
-                                                        //       children: [
-                                                        //         Image.memory(
-                                                        //           base64.decode(
-                                                        //             data.imageUrl,
-                                                        //           ),
-                                                        //         ),
-                                                        //         Spacer(),
-                                                        //         Text(
-                                                        //           data.title,
-                                                        //           style: TextStyle(
-                                                        //             fontSize: 10,
-                                                        //           ),
-                                                        //         ),
-                                                        //         SizedBox(
-                                                        //           height: 5,
-                                                        //         ),
-                                                        //         // Text(
-                                                        //         //   data.price
-                                                        //         //       .withPriceLableString
-                                                        //         //       .toPersianDigit(),
-                                                        //         //   style: TextStyle(
-                                                        //         //     fontSize: 10,
-                                                        //         //   ),
-                                                        //         // ),
-                                                        //       ],
-                                                        //     ),
-                                                        //   ),
-                                                        // ),
-                                                        Card(
+                                                    child: Card(
                                                       shape:
                                                           RoundedRectangleBorder(
                                                         side: BorderSide(
@@ -944,25 +830,13 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                             .white,
                                                                     onPressed:
                                                                         () {
-                                                                      // isFavorite = !isFavorite;
-                                                                      if (!favoritmanager.isFavorite(state
-                                                                          .productDetail
-                                                                          .first)) {
-                                                                        favoritmanager.addFavorite(state
-                                                                            .productDetail
-                                                                            .first);
-                                                                      } else {
-                                                                        favoritmanager.delete(state
-                                                                            .productDetail
-                                                                            .first);
-                                                                      }
-                                                                      setState(
-                                                                          () {});
-                                                                      // BlocProvider.of<ProductsBloc>(context).add(
-                                                                      //   ProductAddToFavoriteButtonClicked(
-                                                                      //     widget.product.id,
-                                                                      //   ),
-                                                                      // );
+                                                                      BlocProvider.of<DetailesBloc>(
+                                                                              context)
+                                                                          .add(
+                                                                        DetailAddToFavoriteButtonClicked(
+                                                                          data.id,
+                                                                        ),
+                                                                      );
                                                                     },
                                                                     icon: Icon(
                                                                       favoritmanager.isFavorite(state

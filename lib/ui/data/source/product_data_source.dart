@@ -12,6 +12,17 @@ final UserInfo _userInfo = Get.put(UserInfo());
 
 abstract class IProductDataSource {
   Future<List<ProductEntity>> filtter(String sort);
+  Future<List<ProductEntity>> productCount({
+    required int poductId,
+    required int categoryId,
+    required int modelId,
+    required int userId,
+    required int sellCenter,
+    required String model,
+    required int visitorRef,
+    required int roleRef,
+    required int usersGroupRef,
+  });
   Future<List<ProductEntity>> productDetaile(int productId);
   Future<void> increment({required int productId, required int count});
   Future<void> decrement({required int productId, required int count});
@@ -284,5 +295,25 @@ class ProductRemoteDataSource implements IProductDataSource {
       productDetail.add(ProductEntity.fromJson(element));
     });
     return productDetail;
+  }
+
+  @override
+  Future<List<ProductEntity>> productCount({
+    required int poductId,
+    required int categoryId,
+    required int modelId,
+    required int userId,
+    required int sellCenter,
+    required String model,
+    required int visitorRef,
+    required int roleRef,
+    required int usersGroupRef,
+  }) async {
+    // final response = await httpClient.get('address', queryParameters: {});
+    // validateResponse(response);
+    final List<ProductEntity> product = [];
+    // (response.data as List)
+    //     .forEach((element) => {product.add(ProductEntity.fromJson(element))});
+    return product;
   }
 }

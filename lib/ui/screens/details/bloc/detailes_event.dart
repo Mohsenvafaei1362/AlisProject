@@ -7,12 +7,28 @@ abstract class DetailesEvent extends Equatable {
 }
 
 class DetailesStarted extends DetailesEvent {
-  final int sellsCenter;
   final int productId;
+  final int categoryId;
+  final int modelId;
+  final int userId;
+  final int sellsCenter;
+  final String model;
+  final int visitorRef;
+  final int roleRef;
+  final int usersGroupRef;
+  final int listViewDetailId;
 
   const DetailesStarted({
     required this.productId,
+    required this.categoryId,
+    required this.modelId,
+    required this.userId,
     required this.sellsCenter,
+    required this.model,
+    required this.visitorRef,
+    required this.roleRef,
+    required this.usersGroupRef,
+    required this.listViewDetailId,
   });
 }
 
@@ -83,4 +99,10 @@ class DetailesAddToCartButtonClicked extends DetailesEvent {
     required this.lat,
     required this.long,
   });
+}
+
+class DetailAddToFavoriteButtonClicked extends DetailesEvent {
+  final int productId;
+
+  DetailAddToFavoriteButtonClicked(this.productId);
 }

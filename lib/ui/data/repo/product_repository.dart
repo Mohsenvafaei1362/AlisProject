@@ -9,6 +9,17 @@ final productRepository =
 abstract class IProductRepository {
   Future<List<ProductEntity>> filtter(String sort);
   Future<List<ProductEntity>> productDetaile(int productId);
+  Future<List<ProductEntity>> productCount({
+    required int poductId,
+    required int categoryId,
+    required int modelId,
+    required int userId,
+    required int sellCenter,
+    required String model,
+    required int visitorRef,
+    required int roleRef,
+    required int usersGroupRef,
+  });
   Future<void> increment({required int productId, required int count});
   Future<void> decrement({required int productId, required int count});
   Future<List<PropertyEntity>> property(int productId, int sellsCenterId);
@@ -183,4 +194,29 @@ class ProductRepository implements IProductRepository {
   @override
   Future<List<ProductEntity>> productDetaile(int productId) =>
       dataSource.productDetaile(productId);
+
+  @override
+  Future<List<ProductEntity>> productCount({
+    required int poductId,
+    required int categoryId,
+    required int modelId,
+    required int userId,
+    required int sellCenter,
+    required String model,
+    required int visitorRef,
+    required int roleRef,
+    required int usersGroupRef,
+  }) {
+    return dataSource.productCount(
+      categoryId: categoryId,
+      modelId: modelId,
+      userId: userId,
+      model: model,
+      poductId: poductId,
+      roleRef: roleRef,
+      sellCenter: sellCenter,
+      usersGroupRef: usersGroupRef,
+      visitorRef: visitorRef,
+    );
+  }
 }

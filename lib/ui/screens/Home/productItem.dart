@@ -193,19 +193,11 @@ class _ProductItemState extends State<ProductItem> {
                                 splashColor: Colors.white,
                                 highlightColor: Colors.white,
                                 onPressed: () {
-                                  // isFavorite = !isFavorite;
-                                  if (!favoritmanager
-                                      .isFavorite(widget.product)) {
-                                    favoritmanager.addFavorite(widget.product);
-                                  } else {
-                                    favoritmanager.delete(widget.product);
-                                  }
-                                  setState(() {});
-                                  // BlocProvider.of<ProductsBloc>(context).add(
-                                  //   ProductAddToFavoriteButtonClicked(
-                                  //     widget.product.id,
-                                  //   ),
-                                  // );
+                                  BlocProvider.of<ProductsBloc>(context).add(
+                                    ProductAddToFavoriteButtonClicked(
+                                      widget.product.productId,
+                                    ),
+                                  );
                                 },
                                 icon: Icon(
                                   favoritmanager.isFavorite(widget.product)
