@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:get/get.dart';
+import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/orderInfo.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/order_repository.dart';
 import 'package:local_notification_flutter_project/ui/screens/cart/price_info.dart';
@@ -8,6 +10,7 @@ import 'package:local_notification_flutter_project/ui/screens/shipping/bloc/ship
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 
 class ShippingScreen extends StatefulWidget {
   final num payablePrice;
@@ -37,6 +40,9 @@ class _ShippingScreenState extends State<ShippingScreen> {
   final TextEditingController addressController = TextEditingController();
 
   StreamSubscription? subscription;
+
+  final UiDl _dl = Get.put(UiDl());
+  final UserInfo _userinfo = Get.put(UserInfo());
 
   @override
   void dispose() {
@@ -90,8 +96,9 @@ class _ShippingScreenState extends State<ShippingScreen> {
             children: [
               TextField(
                 controller: firstNameController,
-                decoration: const InputDecoration(
-                  label: Text('نام'),
+                decoration: InputDecoration(
+                  hintText: _dl.FName.value,
+                  // label: Text(_dl.FName.value),
                 ),
               ),
               const SizedBox(
@@ -99,8 +106,9 @@ class _ShippingScreenState extends State<ShippingScreen> {
               ),
               TextField(
                 controller: lastNameController,
-                decoration: const InputDecoration(
-                  label: Text('نام خانوادگی'),
+                decoration: InputDecoration(
+                  // label: Text(_dl.LName.value),
+                  hintText: _dl.LName.value,
                 ),
               ),
               const SizedBox(
@@ -108,8 +116,9 @@ class _ShippingScreenState extends State<ShippingScreen> {
               ),
               TextField(
                 controller: phoneNumberController,
-                decoration: const InputDecoration(
-                  label: Text('شماره تماس'),
+                decoration: InputDecoration(
+                  // label: Text('شماره تماس'),
+                  hintText: _dl.PhoneNumber.value.toPersianDigit(),
                 ),
               ),
               const SizedBox(
@@ -117,9 +126,9 @@ class _ShippingScreenState extends State<ShippingScreen> {
               ),
               TextField(
                 controller: postalCodeController,
-                decoration: const InputDecoration(
-                  label: Text('کد پستی'),
-                ),
+                decoration: InputDecoration(
+                    // label: Text('کد پستی'),
+                    hintText: _dl.PostalCode.value.toString().toPersianDigit()),
               ),
               const SizedBox(
                 height: 12,

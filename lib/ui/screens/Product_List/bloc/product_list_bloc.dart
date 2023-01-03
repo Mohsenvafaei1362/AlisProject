@@ -22,7 +22,7 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
           final products = await productRepository.getAll(
             categoryId: event.categoryId,
             modelId: event.modelId,
-            model: event.modelName,
+            model: "",
             roleRef: event.roleRef,
             sellCenter: event.sellCenter,
             userId: event.userId,

@@ -74,6 +74,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    print(widget.categoryId);
+    print(widget.modelId);
+    print(widget.model);
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -84,9 +87,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
           create: (context) {
             final bloc = ProductListBloc(productRepository)
               ..add(ProductListStarted(
-                categoryId: 0,
-                modelId: 3,
-                modelName: 'HotList',
+                categoryId: widget.categoryId,
+                modelId: widget.modelId,
+                modelName: widget.model,
                 roleRef: _userinfo.RoleId.value,
                 sellCenter: _userinfo.sellsCenter.value,
                 userId: _userinfo.UserId.value,

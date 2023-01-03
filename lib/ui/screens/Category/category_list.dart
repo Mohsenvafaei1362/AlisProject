@@ -62,9 +62,9 @@ class _CategoryListState extends State<CategoryList> {
                               builder: (BuildContext context) => Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
-                                  categoryId: 3,
-                                  modelId: 1,
-                                  model: '',
+                                  categoryId: 0,
+                                  modelId: 3,
+                                  model: 'HotList',
                                 ),
                               ),
                             ),
@@ -77,9 +77,9 @@ class _CategoryListState extends State<CategoryList> {
                               builder: (BuildContext context) => Directionality(
                                 textDirection: TextDirection.rtl,
                                 child: ProductListScreen(
-                                  categoryId: 4,
-                                  modelId: 1,
-                                  model: '',
+                                  categoryId: 0,
+                                  modelId: 5,
+                                  model: 'BestSell',
                                 ),
                               ),
                             ),
