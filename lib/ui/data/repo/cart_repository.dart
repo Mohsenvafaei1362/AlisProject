@@ -15,12 +15,12 @@ class CartRepository implements ICartRepository {
 
   CartRepository(this.dataSource);
   @override
-  Future<AddToCartResponse> add(
+  Future<void> add(
     int productId,
     int count,
     double price,
-    int takhfif,
-    int etebar,
+    double takhfif,
+    double etebar,
     int emtiaz,
     int userId,
     int dlRef,

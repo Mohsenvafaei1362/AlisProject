@@ -173,12 +173,11 @@ class _ProductItemState extends State<ProductItem> {
                             // color: Colors.amber,
                             width: widget.itemWidth,
                             height: widget.itemHeight,
-                            child: Hero(
-                                transitionOnUserGestures: true,
-                                tag: 'image',
-                                child: Image.memory(base64.decode(
-                                  widget.product.imageUrl.toString(),
-                                ))),
+                            child: Image.memory(
+                              base64.decode(
+                                widget.product.imageUrl,
+                              ),
+                            ),
                           ),
                           Positioned(
                             top: 0,
@@ -282,7 +281,7 @@ class _ProductItemState extends State<ProductItem> {
                                   Row(
                                     children: [
                                       Text('قیمت : ${widget.product.price}'
-                                          .toPersianDigit())
+                                          .toPersianDigit()),
                                     ],
                                   ),
                                   Row(

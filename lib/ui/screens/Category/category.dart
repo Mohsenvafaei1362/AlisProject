@@ -133,9 +133,9 @@ class _CategoryState extends State<Category> {
                                                 Directionality(
                                               textDirection: TextDirection.rtl,
                                               child: ProductListScreen(
-                                                categoryId: 3,
-                                                modelId: 1,
-                                                model: '',
+                                                categoryId: 0,
+                                                modelId: 3,
+                                                model: 'HotList',
                                               ),
                                             ),
                                           ),

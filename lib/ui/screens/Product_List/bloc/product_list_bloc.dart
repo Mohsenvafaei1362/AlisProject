@@ -23,11 +23,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
             categoryId: event.categoryId,
             modelId: event.modelId,
             model: event.modelName,
-            roleRef: _userinfo.RoleId.value,
-            sellCenter: _userinfo.sellsCenter.value,
-            userId: _dl.UserId.value,
-            usersGroupRef: _userinfo.userGroups.value,
-            visitorRef: _userinfo.visitor.value,
+            roleRef: event.roleRef,
+            sellCenter: event.sellCenter,
+            userId: event.userId,
+            usersGroupRef: event.usersGroupRef,
+            visitorRef: event.visitorRef,
           );
           emit(ProductListSuccess(
             products,

@@ -103,8 +103,8 @@ class _DetailScreenState extends State<DetailScreen> {
     return WillPopScope(
       onWillPop: () async {
         print('object');
-        return _onWillPop();
-        // return Future.value(true);
+        // return _onWillPop();
+        return Future.value(true);
       },
       child: BlocProvider<DetailesBloc>(
         create: (context) {
@@ -156,11 +156,12 @@ class _DetailScreenState extends State<DetailScreen> {
                                         count: count,
                                         emtiaz: int.parse(
                                             state.productDetail.first.emtiaz),
-                                        etebar: int.parse(
+                                        etebar: double.parse(
                                             state.productDetail.first.etebar),
                                         price: state.productDetail.first.price,
-                                        productId: widget.listViewDetailId,
-                                        takhfif: int.parse(
+                                        productId:
+                                            state.productDetail.first.productId,
+                                        takhfif: double.parse(
                                             state.productDetail.first.takhfif),
                                         userId: _userInfo.UserId.value,
                                         categoriesId: state
@@ -911,17 +912,12 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                     .itemWidth,
                                                                 height: widget
                                                                     .itemHeight,
-                                                                child: Hero(
-                                                                    transitionOnUserGestures:
-                                                                        true,
-                                                                    tag:
-                                                                        'image',
-                                                                    child: Image
-                                                                        .memory(
-                                                                            base64.decode(
-                                                                      data.imageUrl
-                                                                          .toString(),
-                                                                    ))),
+                                                                child: Image
+                                                                    .memory(base64
+                                                                        .decode(
+                                                                  data.imageUrl
+                                                                      .toString(),
+                                                                )),
                                                               ),
                                                               Positioned(
                                                                 top: 0,

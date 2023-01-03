@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/add_to_cart_response.dart';
@@ -10,12 +11,12 @@ import 'package:local_notification_flutter_project/ui/screens/widgets/Validation
 final UiDl _dl = Get.put(UiDl());
 
 abstract class ICartDataSource {
-  Future<AddToCartResponse> add(
+  Future<void> add(
     int productId,
     int count,
     double price,
-    int takhfif,
-    int etebar,
+    double takhfif,
+    double etebar,
     int emtiaz,
     int userId,
     int dlRef,
@@ -39,12 +40,12 @@ class CartRemoteDataSource implements ICartDataSource {
   late final Dio httpClient;
   CartRemoteDataSource(this.httpClient);
   @override
-  Future<AddToCartResponse> add(
+  Future<void> add(
     int productId,
     int count,
     double price,
-    int takhfif,
-    int etebar,
+    double takhfif,
+    double etebar,
     int emtiaz,
     int userId,
     int dlRef,
@@ -57,9 +58,9 @@ class CartRemoteDataSource implements ICartDataSource {
     double lat,
     double long,
   ) async {
-    final response = await httpClient.post('path', data: {
-      "product_id": productId,
-      "Count": count,
+    final response = await httpClient.post('Cart', data: {
+      "productId": productId,
+      "count": count,
       "Price": price,
       "Takhfif": takhfif,
       "Etebar": etebar,
@@ -75,8 +76,8 @@ class CartRemoteDataSource implements ICartDataSource {
       "Lat": lat,
       "Long": long,
     });
-    validateResponse(response);
-    return AddToCartResponse.fromJson(response.data);
+    // validateResponse(response);
+    // return AddToCartResponse.fromJson(response.data);
   }
 
   @override

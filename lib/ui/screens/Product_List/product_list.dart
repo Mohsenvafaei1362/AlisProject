@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:get/get.dart';
+import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/product_repository.dart';
 import 'package:local_notification_flutter_project/ui/screens/Home/productItem.dart';
@@ -64,6 +68,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
     }
   }
 
+  final UiDl _dl = Get.put(UiDl());
+  final UserInfo _userinfo = Get.put(UserInfo());
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -77,9 +84,14 @@ class _ProductListScreenState extends State<ProductListScreen> {
           create: (context) {
             final bloc = ProductListBloc(productRepository)
               ..add(ProductListStarted(
-                categoryId: widget.categoryId,
-                modelId: widget.modelId,
-                modelName: widget.model,
+                categoryId: 0,
+                modelId: 3,
+                modelName: 'HotList',
+                roleRef: _userinfo.RoleId.value,
+                sellCenter: _userinfo.sellsCenter.value,
+                userId: _userinfo.UserId.value,
+                usersGroupRef: _userinfo.userGroups.value,
+                visitorRef: _userinfo.visitor.value,
               ));
             productListBloc = bloc;
             return bloc;
@@ -88,7 +100,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
             builder: (context, state) {
               if (state is ProductListSuccess) {
                 final products = state.products;
-
                 return Column(
                   children: [
                     Container(
@@ -155,14 +166,33 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                                 productListBloc!
                                                                     .add(
                                                                   ProductListStarted(
-                                                                      categoryId:
-                                                                          index,
-                                                                      modelId:
-                                                                          widget
-                                                                              .modelId,
-                                                                      modelName:
-                                                                          widget
-                                                                              .model),
+                                                                    categoryId:
+                                                                        widget
+                                                                            .categoryId,
+                                                                    modelId: widget
+                                                                        .modelId,
+                                                                    modelName:
+                                                                        widget
+                                                                            .model,
+                                                                    roleRef: _userinfo
+                                                                        .RoleId
+                                                                        .value,
+                                                                    sellCenter:
+                                                                        _userinfo
+                                                                            .sellsCenter
+                                                                            .value,
+                                                                    userId: _userinfo
+                                                                        .UserId
+                                                                        .value,
+                                                                    usersGroupRef:
+                                                                        _userinfo
+                                                                            .userGroups
+                                                                            .value,
+                                                                    visitorRef:
+                                                                        _userinfo
+                                                                            .visitor
+                                                                            .value,
+                                                                  ),
                                                                 );
                                                                 Navigator.pop(
                                                                     context);
@@ -262,53 +292,34 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                   /// width / height = 0.65
                                   childAspectRatio:
-                                      viewType == ViewType.grid ? 0.65 : 1.2,
+                                      viewType == ViewType.grid ? 0.5 : 1,
                                   // crossAxisCount: 4,
                                   crossAxisCount:
                                       viewType == ViewType.grid ? 2 : 1,
                                 ),
-                                itemCount: count,
-                                itemBuilder: (context, index) {
-                                  if (searchController.text.isEmpty) {
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((timeStamp) {
-                                      setState(() {
-                                        count = products.length;
-                                        sort(products);
-                                      });
-                                    });
-                                    final data = products[index];
-                                    return ProductItem(
-                                      product: data,
-                                      borderRadius: BorderRadius.circular(
-                                        12,
-                                      ),
-                                    );
-                                  } else {
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((timeStamp) {
-                                      setState(() {
-                                        count = products
-                                            .where((e) => e.title.contains(
-                                                searchController.text))
-                                            .length;
-                                        sort(products);
-                                      });
-                                    });
-                                    final d = products
+                                itemCount: searchController.text.isEmpty
+                                    ? products.length
+                                    : products
                                         .where((e) => e.title
                                             .contains(searchController.text))
-                                        .map((e) => e)
-                                        .toList();
-                                    final data = d[index];
+                                        .length,
+                                itemBuilder: (context, index) {
+                                  products.sort(
+                                      (a, b) => a.price.compareTo(b.price));
 
-                                    return ProductItem(
-                                      product: data,
-                                      borderRadius: BorderRadius.circular(
-                                        12,
-                                      ),
-                                    );
-                                  }
+                                  final data = searchController.text.isEmpty
+                                      ? products[index]
+                                      : products
+                                          .where((e) => e.title
+                                              .contains(searchController.text))
+                                          .map((e) => e)
+                                          .toList()[index];
+                                  return ProductItem(
+                                    product: data,
+                                    borderRadius: BorderRadius.circular(
+                                      12,
+                                    ),
+                                  );
                                 },
                               ),
                             ),

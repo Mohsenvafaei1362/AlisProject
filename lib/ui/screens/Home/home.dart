@@ -6,6 +6,7 @@ import 'package:local_notification_flutter_project/ui/data/repo/festival_Reposit
 import 'package:local_notification_flutter_project/ui/data/repo/race_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/survey_repository.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/topPepole_repository.dart';
+import 'package:local_notification_flutter_project/ui/screens/CommentSuggest/Comment.dart';
 import 'package:local_notification_flutter_project/ui/screens/Notification/services/notification_service.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/banner.dart';
@@ -120,9 +121,9 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
     Size size = MediaQuery.of(context).size;
     final PageController _controller = PageController();
     const rankPepole = Pepole.pepoles;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      controller.position.maxScrollExtent;
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   controller.position.maxScrollExtent;
+    // });
 
     return BlocProvider(
       create: (context) {
@@ -918,7 +919,17 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
             primary: Colors.white,
             onPrimary: Colors.red,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: CommentScreen(),
+                ),
+              ),
+            );
+          },
           child: const Text(
             'شرکت در نظر سنجی',
             style: TextStyle(
@@ -1101,6 +1112,15 @@ class _HomeScreen_UiState extends State<HomeScreen_Ui> {
                 onTap: () {
                   // Get.to(
                   //     CommentSuggest());
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: Festival(),
+                      ),
+                    ),
+                  );
                   Navigator.push(
                     context,
                     MaterialPageRoute(

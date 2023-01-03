@@ -198,10 +198,11 @@ class _CommentScreenState extends State<CommentScreen> {
     // );
     return Scaffold(
       body: SafeArea(
-          child: WebView(
-        initialUrl: 'https://www.google.com/',
-        // initialUrl: 'http://allix.ir/product/',
-      )),
+        child: WebView(
+          initialUrl: 'http://allix.ir/product',
+          // initialUrl: 'http://iranjib.ir/',
+        ),
+      ),
     );
   }
 }

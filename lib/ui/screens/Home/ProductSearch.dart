@@ -173,12 +173,8 @@ class _ProductSearchState extends State<ProductSearch> {
                               // color: Colors.amber,
                               width: widget.itemWidth,
                               height: widget.itemHeight,
-                              child: Hero(
-                                transitionOnUserGestures: true,
-                                tag: 'image',
-                                child: ImageLoadingService(
-                                  imageUrl: widget.product.imageUrl,
-                                ),
+                              child: ImageLoadingService(
+                                imageUrl: widget.product.imageUrl,
                               ),
                             ),
                             Positioned(

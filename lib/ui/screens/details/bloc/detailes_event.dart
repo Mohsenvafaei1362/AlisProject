@@ -51,8 +51,8 @@ class DetailesAddToCartButtonClicked extends DetailesEvent {
   final int productId;
   final int count;
   final double price;
-  final int takhfif;
-  final int etebar;
+  final double takhfif;
+  final double etebar;
   final int emtiaz;
   final int userId;
   final int dlRef;
