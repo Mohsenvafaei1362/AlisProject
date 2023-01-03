@@ -110,7 +110,7 @@ class CartRemoteDataSource implements ICartDataSource {
       "user_id": _dl.UserId.value,
     });
     final List<CartResponseFake> cart = [];
-    // validateResponse(response);
+    validateResponse(response);
     (response.data as List).forEach((element) {
       cart.add(CartResponseFake.fromJson(element));
     });
