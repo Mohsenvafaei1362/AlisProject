@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/product.dart';
@@ -221,7 +219,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                                             8,
                                                                       ),
                                                                       if (index ==
-                                                                          selecktedSortIndex)
+                                                                          indexsort)
                                                                         Icon(
                                                                           CupertinoIcons
                                                                               .check_mark_circled_solid,
@@ -250,11 +248,14 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Text('مرتب سازی'),
-                                      // Text(
-                                      //   UiProductSort.names[indexsort!],
-                                      //   style:
-                                      //       Theme.of(context).textTheme.caption,
-                                      // ),
+                                      indexsort == null
+                                          ? Text('')
+                                          : Text(
+                                              UiProductSort.names[indexsort!],
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .caption,
+                                            ),
                                     ],
                                   ),
                                 ],
@@ -307,8 +308,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                             .contains(searchController.text))
                                         .length,
                                 itemBuilder: (context, index) {
-                                  products.sort(
-                                      (a, b) => a.price.compareTo(b.price));
+                                  // print(_sort);
+                                  // products.sort(
+                                  //     (a, b) => a.price.compareTo(b.price));
+                                  sort(products);
 
                                   final data = searchController.text.isEmpty
                                       ? products[index]
