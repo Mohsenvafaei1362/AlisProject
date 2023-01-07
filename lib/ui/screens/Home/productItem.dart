@@ -246,7 +246,7 @@ class _ProductItemState extends State<ProductItem> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.product.title,
+                              widget.product.title.toPersianDigit(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),

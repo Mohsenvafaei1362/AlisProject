@@ -33,7 +33,12 @@ class AuthScreen extends StatefulWidget {
 final UiAddressIp getAddress2 = Get.put(UiAddressIp());
 
 class _AuthScreenState extends State<AuthScreen> {
+  ///save information about the current client
+  ///ذخیره اطلاعات در مورد مشتری فعلی
   final UiPhoneController phoneController = Get.put(UiPhoneController());
+
+  ///save location
+  ///ذخیره موقعیت جغرافیایی
   final UiGetLocation getLocation = Get.put(UiGetLocation());
   final UiTimerUser timerUser = Get.put(UiTimerUser());
 
@@ -41,6 +46,9 @@ class _AuthScreenState extends State<AuthScreen> {
   final UiShowInfo showInfo2 = Get.put(UiShowInfo());
   final UiLog log = Get.put(UiLog());
   final UiTimeStep timeStep = Get.put(UiTimeStep());
+
+  ///save information about the current client
+  ///ذخیره اطلاعات در مورد مشتری فعلی
   final UiDl _dl = Get.put(UiDl());
 
   final TextEditingController _controller = TextEditingController();
@@ -107,6 +115,8 @@ class _AuthScreenState extends State<AuthScreen> {
     }
   }
 
+  ///get location
+  ///گرفتن موقعیت جغرافیایی
   getLoc() async {
     var location = Location();
     return location.onLocationChanged.listen((currentLocation) {
@@ -118,9 +128,9 @@ class _AuthScreenState extends State<AuthScreen> {
   Map<String, dynamic>? _info;
   String? id, brand, model, fingerprint;
 
-  // This function is triggered when the floating button gets pressed
+  /// get information about the phone
+  ///دریافت اطلاعات در مورد گوشی
   _getInfo() async {
-    // Instantiating the plugin
     final deviceInfoPlugin = DeviceInfoPlugin();
 
     final result = await deviceInfoPlugin.deviceInfo;

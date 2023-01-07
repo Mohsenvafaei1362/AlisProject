@@ -1,6 +1,5 @@
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/ClassInfo/sliderInfo.dart';
-import 'package:local_notification_flutter_project/ui/data/common/exception.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:local_notification_flutter_project/ui/screens/widgets/ValidationResponse.dart';
@@ -8,7 +7,8 @@ import 'package:local_notification_flutter_project/ui/screens/widgets/Validation
 final UserInfo _userInfo = Get.put(UserInfo());
 
 abstract class ISliderDataSource {
-  Future<List<SliderInfo>> getImage(String sliderGroup);
+  ///get image slider:[link]
+  Future<List<SliderInfo>> getImage(String sliderGroup); //abstract method
 }
 
 class SliderRemoteDataSource implements ISliderDataSource {

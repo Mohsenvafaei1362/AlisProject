@@ -9,6 +9,8 @@ import 'package:persian_utils/persian_utils.dart';
 import 'package:http/http.dart' as http;
 // import '../models/products.dart';
 
+///save information about the current client
+///ذخیره اطلاعات در مورد مشتری فعلی
 class UiPhoneController extends GetxController {
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   late TextEditingController phoneController;
@@ -430,6 +432,8 @@ class UiInformationStore extends GetxController {
   }
 }
 
+///save information about the current client
+///ذخیره اطلاعات در مورد مشتری فعلی
 class UiDl extends GetxController {
   RxInt DlId = 0.obs;
   var Company = ''.obs;
@@ -510,6 +514,8 @@ class UiControlClickedSmsCode extends GetxController {
   RxInt controlSms = 0.obs;
 }
 
+///save the information client
+///ذخیره داده های userid , roleid,dlref,roletitle,roletitleen,username,visitor,sellscenter,usergroups
 class UserInfo extends GetxController {
   RxInt UserId = 0.obs;
   RxInt RoleId = 0.obs;

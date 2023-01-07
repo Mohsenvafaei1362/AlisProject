@@ -44,6 +44,8 @@ class _DocumentsState extends State<Documents> {
   File? _file3;
   File? _file4;
 
+  ///Select photo from gallery or camera and send to server
+  ///انتخاب عکس از  دوربین و ارسال به سرور
   Future getImage() async {
     final pickedFile = await picker1.getImage(source: ImageSource.camera);
     setState(() {
@@ -91,6 +93,8 @@ class _DocumentsState extends State<Documents> {
     });
   }
 
+  ///Select photo from gallery or camera and send to server
+  ///انتخاب عکس از گالری و ارسال به سرور
   Future getgallery() async {
     final pickedFile = await picker1.getImage(source: ImageSource.gallery);
     setState(() {
@@ -139,6 +143,8 @@ class _DocumentsState extends State<Documents> {
     });
   }
 
+  ///Select photo from gallery or camera and send to server
+  ///انتخاب عکس از دوربین و ارسال به سرور
   Future getImage2() async {
     final pickedFile2 = await picker2.getImage(source: ImageSource.camera);
     setState(() {
@@ -186,6 +192,8 @@ class _DocumentsState extends State<Documents> {
     });
   }
 
+  ///Select photo from gallery or camera and send to server
+  ///انتخاب عکس از گالری و ارسال به سرور
   Future getgallery2() async {
     final pickedFile2 = await picker1.getImage(source: ImageSource.gallery);
     setState(() {
@@ -233,6 +241,8 @@ class _DocumentsState extends State<Documents> {
     });
   }
 
+  ///Select photo from gallery or camera and send to server
+  ///انتخاب عکس از دوربین و ارسال به سرور
   Future getImage3() async {
     final pickedFile3 = await picker3.getImage(source: ImageSource.camera);
     setState(() {
@@ -280,6 +290,8 @@ class _DocumentsState extends State<Documents> {
     });
   }
 
+  ///Select photo from gallery or camera and send to server
+  ///انتخاب عکس از گالری و ارسال به سرور
   Future getgallery3() async {
     final pickedFile3 = await picker1.getImage(source: ImageSource.gallery);
     setState(() {
@@ -327,6 +339,8 @@ class _DocumentsState extends State<Documents> {
     });
   }
 
+  ///Select photo from gallery or camera and send to server
+  ///انتخاب عکس از دوربین و ارسال به سرور
   Future getImage4() async {
     final pickedFile4 = await picker4.getImage(source: ImageSource.camera);
     setState(() {
@@ -374,6 +388,8 @@ class _DocumentsState extends State<Documents> {
     });
   }
 
+  ///Select photo from gallery or camera and send to server
+  ///انتخاب عکس از گالری و ارسال به سرور
   Future getgallery4() async {
     final pickedFile4 = await picker1.getImage(source: ImageSource.gallery);
     setState(() {

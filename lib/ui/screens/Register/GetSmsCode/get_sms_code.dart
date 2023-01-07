@@ -84,45 +84,48 @@ class _GetSmsCodeState extends State<GetSmsCode> {
     );
   }
 
-  void test() {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text(
-          "!!! توجه",
-          style: TextStyle(
-            color: Colors.amber,
-          ),
-        ),
-        content: const Text("کد وارد شده صحیح نمی باشد"),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-            child: Container(
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: Colors.lightBlue,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Text(
-                "متوجه شدم",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // void test() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (ctx) => AlertDialog(
+  //       title: const Text(
+  //         "!!! توجه",
+  //         style: TextStyle(
+  //           color: Colors.amber,
+  //         ),
+  //       ),
+  //       content: const Text("کد وارد شده صحیح نمی باشد"),
+  //       actions: <Widget>[
+  //         TextButton(
+  //           onPressed: () {
+  //             Navigator.of(ctx).pop();
+  //           },
+  //           child: Container(
+  //             padding: const EdgeInsets.all(14),
+  //             decoration: BoxDecoration(
+  //               color: Colors.lightBlue,
+  //               borderRadius: BorderRadius.circular(10),
+  //             ),
+  //             child: const Text(
+  //               "متوجه شدم",
+  //               style: TextStyle(
+  //                 color: Colors.white,
+  //                 fontWeight: FontWeight.bold,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   bool show = false;
   bool code = false;
   String getCode = '';
+
+  ///show dialog when code is invalid
+  ///زمانی که کد نامعتبر است، گفتگو را نشان دهید
   checkCode() {
     showDialog(
       context: context,

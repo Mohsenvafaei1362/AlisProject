@@ -26,6 +26,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 final UiTimeStep timeStep = Get.put(UiTimeStep());
+///save information about the current client
+  ///ذخیره اطلاعات در مورد مشتری فعلی
 final UiPhoneController phoneController = Get.put(UiPhoneController());
 final UiLog phoneId = Get.put(UiLog());
 

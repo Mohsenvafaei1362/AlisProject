@@ -75,7 +75,9 @@ class _RoleState extends State<Role> {
     );
   }
 
-  test() {
+  ///Check if it is not empty
+  ///چک کردن خالی نبودن مقادیر
+  checkIsNotEmpty() {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -171,7 +173,7 @@ class _RoleState extends State<Role> {
                   },
                 );
               } else {
-                test();
+                checkIsNotEmpty();
               }
             },
 

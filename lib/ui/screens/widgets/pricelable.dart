@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 extension PriceLable on int {
-  String get withPriceLable => '$separateByComma  تومان';
+  String get withPriceLable => '$separateByComma  ریال';
 
   String get separateByComma {
     final numberFormat = NumberFormat.decimalPattern();
@@ -11,7 +11,7 @@ extension PriceLable on int {
 }
 
 extension PriceLabledouble on double {
-  String get withPriceLableDouble => '$separateByComma  تومان';
+  String get withPriceLableDouble => '$separateByComma  ریال';
 
   String get separateByComma {
     final numberFormat = NumberFormat.decimalPattern();
@@ -20,7 +20,7 @@ extension PriceLabledouble on double {
 }
 
 extension PriceLableString on String {
-  String get withPriceLableString => '$separateByComma  تومان';
+  String get withPriceLableString => '$separateByComma  ریال';
 
   String get separateByComma {
     final numberFormat = NumberFormat.decimalPattern();
@@ -29,7 +29,7 @@ extension PriceLableString on String {
 }
 
 extension PriceLableNum on num {
-  String get withPriceLableNum => '$separateByComma  تومان';
+  String get withPriceLableNum => '$separateByComma  ریال';
 
   String get separateByComma {
     final numberFormat = NumberFormat.decimalPattern();
@@ -39,7 +39,7 @@ extension PriceLableNum on num {
 
 extension PriceLableNumShippingCost on num {
   String get withPriceLableNumShippingCost =>
-      this > 0 ? '$separateByComma  تومان' : 'رایگان';
+      this > 0 ? '$separateByComma  ریال' : 'رایگان';
 
   String get separateByComma {
     final numberFormat = NumberFormat.decimalPattern();

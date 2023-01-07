@@ -948,7 +948,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                     children: [
                                                                       Row(
                                                                         children: [
-                                                                          Text('قیمت : ${state.productDetail.first.price}'
+                                                                          Text('قیمت : ${state.productDetail.first.price.withPriceLableDouble}'
                                                                               .toPersianDigit())
                                                                         ],
                                                                       ),
@@ -973,10 +973,12 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                           .spaceBetween,
                                                                   children: [
                                                                     Text(
-                                                                      state.productDetail.first
-                                                                              .finalprice
-                                                                              .toPersianDigit() +
-                                                                          ' تومان ',
+                                                                      state
+                                                                          .productDetail
+                                                                          .first
+                                                                          .finalprice
+                                                                          .withPriceLableString
+                                                                          .toPersianDigit(),
                                                                     ),
                                                                     // widget.product.discount != 0
                                                                     //     ? Text(
@@ -1523,7 +1525,7 @@ class PropertyProduct extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(data.newTitle),
+                      Text(data.newTitle.toPersianDigit()),
                       // Text('titr2'),
                     ],
                   ),

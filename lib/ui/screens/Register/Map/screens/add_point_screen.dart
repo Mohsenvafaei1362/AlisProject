@@ -58,6 +58,8 @@ class _Ui_AddPointScreenState extends State<Ui_AddPointScreen> {
     _selectedLocation = _location;
   }
 
+  ///Check if it is not empty
+  ///چک کردن خالی نبودن مقادیر
   void _save() async {
     if (_titleController.text.isEmpty ||
         _image == null ||

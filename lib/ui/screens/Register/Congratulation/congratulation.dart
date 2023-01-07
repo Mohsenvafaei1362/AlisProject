@@ -3,9 +3,6 @@ import 'dart:io';
 
 import 'package:local_notification_flutter_project/ui/controller/controller.dart';
 import 'package:local_notification_flutter_project/ui/data/repo/Congratulation_repository.dart';
-import 'package:local_notification_flutter_project/ui/root.dart';
-import 'package:local_notification_flutter_project/ui/screens/Home/home.dart';
-import 'package:local_notification_flutter_project/ui/screens/Register/Confirmation/confirmation.dart';
 import 'package:local_notification_flutter_project/ui/screens/Register/Congratulation/bloc/congratulation_bloc.dart';
 import 'package:local_notification_flutter_project/ui/screens/Setting/About/About.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +69,7 @@ class _CongratulationState extends State<Congratulation> {
                   child: WillPopScope(
                     onWillPop: () {
                       exit(0);
-                      return Future.value(false);
+                      // return Future.value(false);
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
