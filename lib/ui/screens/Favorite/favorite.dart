@@ -89,7 +89,7 @@ class _FavoriteListState extends State<FavoriteList> {
                                     height: 10,
                                   ),
                                   Text(
-                                    data.price.withPriceLable
+                                    data.price.withPriceLableDouble
                                         .toString()
                                         .toPersianDigit(),
                                   ),

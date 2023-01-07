@@ -153,9 +153,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                               .sortNames.length,
                                                           itemBuilder:
                                                               (context, index) {
-                                                            final selecktedSortIndex =
-                                                                state
-                                                                    .categoryId;
+                                                            // final selecktedSortIndex =
+                                                            //     state
+                                                            //         .categoryId;
 
                                                             return InkWell(
                                                               onTap: () {
@@ -308,9 +308,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                             .contains(searchController.text))
                                         .length,
                                 itemBuilder: (context, index) {
-                                  // print(_sort);
-                                  // products.sort(
-                                  //     (a, b) => a.price.compareTo(b.price));
                                   sort(products);
 
                                   final data = searchController.text.isEmpty

@@ -137,7 +137,7 @@ class _ProductSearchState extends State<ProductSearch> {
                             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                widget.product.price.withPriceLable
+                                widget.product.price.withPriceLableDouble
                                     .toPersianDigit(),
                               ),
                               IconButton(

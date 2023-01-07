@@ -278,7 +278,7 @@ class _CartScreenState extends State<CartScreen> {
       _totalPrice += cartItem.product_price * cartItem.product_code;
       _payablePrice += cartItem.product_price * cartItem.product_code;
     });
-    _shippingCost = _payablePrice >= 3000000 ? 0 : 300000;
+    _shippingCost = _payablePrice >= 2000000 ? 0 : 30000;
     return (cartResponse);
   }
 }

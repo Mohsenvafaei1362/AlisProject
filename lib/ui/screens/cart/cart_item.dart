@@ -88,7 +88,7 @@ class CartItem extends StatelessWidget {
                           height: 5,
                         ),
                   Text(
-                      '${(data.product_price - (data.product_price * (data.product_discount / 100))).withPriceLable}'
+                      '${(data.product_price - (data.product_price * (data.product_discount / 100))).withPriceLableDouble}'
                           .toPersianDigit()),
                   SizedBox(
                     height: 5,

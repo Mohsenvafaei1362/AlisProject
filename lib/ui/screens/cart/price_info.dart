@@ -44,8 +44,9 @@ class PriceInfo extends StatelessWidget {
                     const Text('مبلغ کل خرید'),
                     RichText(
                       text: TextSpan(
-                          text: totalPrice.separateByComma
-                              .beToman()
+                          text: totalPrice
+                              .toString()
+                              // .beToman()
                               .seRagham()
                               .toPersianDigit(),
                           style: const TextStyle(
@@ -76,12 +77,21 @@ class PriceInfo extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('هزینه ارسال'),
+                    // Text(
+                    //   shippingCost.withPriceLableNumShippingCost
+                    //       .toPersianDigit(),
+                    //   style: const TextStyle(
+                    //     fontWeight: FontWeight.bold,
+                    //     fontSize: 14,
+                    //     color: Colors.black54,
+                    //   ),
+                    // ),
                     if (shippingCost != 0)
                       RichText(
                         text: TextSpan(
-                          text: shippingCost.separateByComma
+                          text: shippingCost
                               .toString()
-                              .beToman()
+                              // .beToman()
                               .seRagham()
                               .toPersianDigit(),
                           style: const TextStyle(
@@ -107,7 +117,7 @@ class PriceInfo extends StatelessWidget {
                           color: Colors.black45,
                           fontWeight: FontWeight.bold,
                         ),
-                      )
+                      ),
                   ],
                 ),
               ),
@@ -122,8 +132,9 @@ class PriceInfo extends StatelessWidget {
                     const Text('مبلغ قابل پرداخت'),
                     RichText(
                       text: TextSpan(
-                          text: payablePrice.separateByComma
-                              .beToman()
+                          text: payablePrice
+                              .toString()
+                              // .beToman()
                               .seRagham()
                               .toPersianDigit(),
                           style: const TextStyle(

@@ -318,8 +318,11 @@ class _DetailScreenState extends State<DetailScreen> {
                                                       .takhfif !=
                                                   '0')
                                                 Text(
-                                                  state.productDetail.first
-                                                      .price.withPriceLable
+                                                  state
+                                                      .productDetail
+                                                      .first
+                                                      .price
+                                                      .withPriceLableDouble
                                                       .toPersianDigit(),
                                                   style: const TextStyle(
                                                     color: Color(0xff3C4048),

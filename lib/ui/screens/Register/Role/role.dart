@@ -120,68 +120,73 @@ class _RoleState extends State<Role> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    bool showFab = MediaQuery.of(context).viewInsets.bottom != 0;
     print('_dl.UserId.value : ${_dl.UserId.value}');
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SizedBox(
-        width: size.width * 0.9,
-        height: size.height * 0.065,
-        child: FloatingActionButton(
-          onPressed: () {
-            if (isClickedButton == true) {
-              print('غیر مجاز');
-            } else if (roleBloc?.state is RoleScreenLoading) {
-              return;
-            } else if (gender!.isNotEmpty &&
-                controlfname.text.isNotEmpty &&
-                controllname.text.isNotEmpty &&
-                controlcode.text.isNotEmpty &&
-                controlemail.text.isNotEmpty &&
-                getinfo.ostan.value.isNotEmpty &&
-                getinfo.city.value.isNotEmpty &&
-                controlcodeposti.text.isNotEmpty) {
-              setState(
-                () {
-                  roleBloc?.add(
-                    RoleScreenClickButton(
-                      Ui_UserUpdateDto(
-                        ui_gender.toString(),
-                        '',
-                        '',
-                        '',
-                        0,
-                        0,
-                        0,
-                        0,
-                        '',
-                        '',
+      floatingActionButton: Visibility(
+        visible: !showFab,
+        child: SizedBox(
+          width: size.width * 0.9,
+          height: size.height * 0.065,
+          child: FloatingActionButton(
+            onPressed: () {
+              if (isClickedButton == true) {
+                print('غیر مجاز');
+              } else if (roleBloc?.state is RoleScreenLoading) {
+                return;
+              } else if (gender!.isNotEmpty &&
+                  controlfname.text.isNotEmpty &&
+                  controllname.text.isNotEmpty &&
+                  controlcode.text.isNotEmpty &&
+                  controlemail.text.isNotEmpty &&
+                  getinfo.ostan.value.isNotEmpty &&
+                  getinfo.city.value.isNotEmpty &&
+                  controlcodeposti.text.isNotEmpty) {
+                setState(
+                  () {
+                    roleBloc?.add(
+                      RoleScreenClickButton(
+                        Ui_UserUpdateDto(
+                          ui_gender.toString(),
+                          '',
+                          '',
+                          '',
+                          0,
+                          0,
+                          0,
+                          0,
+                          '',
+                          '',
+                        ),
                       ),
-                    ),
-                  );
-                  isClickedButton = true;
-                  _dl.FName.value = controlfname.text;
-                  _dl.LName.value = controllname.text;
-                  _dl.NastinalCode.value = controlcode.text;
-                  _dl.Email.value = controlemail.text;
-                  _dl.PostalCode.value = int.parse(controlcodeposti.text);
-                  _dl.Role.value = gender!;
-                },
-              );
-            } else {
-              test();
-            }
-          },
+                    );
+                    isClickedButton = true;
+                    _dl.FName.value = controlfname.text;
+                    _dl.LName.value = controllname.text;
+                    _dl.NastinalCode.value = controlcode.text;
+                    _dl.Email.value = controlemail.text;
+                    _dl.PostalCode.value = int.parse(controlcodeposti.text);
+                    _dl.Role.value = gender!;
+                  },
+                );
+              } else {
+                test();
+              }
+            },
 
-          // onPressed: () {
-          //   roleBloc?.add(RoleScreenClickButton(Ui_UserUpdateDto(
-          //       ui_gender.toString(), '', '', '', 0, 0, 0, 0, '', '')));
-          // },
-          child: roleBloc?.state is RoleScreenLoading
-              ? CircularProgressIndicator(
-                  color: Colors.white,
-                )
-              : Text('ادامه'),
-          shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(5)),
+            // onPressed: () {
+            //   roleBloc?.add(RoleScreenClickButton(Ui_UserUpdateDto(
+            //       ui_gender.toString(), '', '', '', 0, 0, 0, 0, '', '')));
+            // },
+            child: roleBloc?.state is RoleScreenLoading
+                ? CircularProgressIndicator(
+                    color: Colors.white,
+                  )
+                : Text('ادامه'),
+            shape:
+                BeveledRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          ),
         ),
       ),
       body: BlocProvider<RoleScreenBloc>(
@@ -216,6 +221,7 @@ class _RoleState extends State<Role> {
         },
         child: SafeArea(
           child: SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             physics: const AlwaysScrollableScrollPhysics(),
             child: BlocBuilder<RoleScreenBloc, RoleScreenState>(
                 buildWhen: (previous, current) {

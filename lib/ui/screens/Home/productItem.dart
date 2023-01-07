@@ -12,6 +12,7 @@ import 'package:local_notification_flutter_project/ui/screens/details/details.da
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_notification_flutter_project/ui/screens/widgets/pricelable.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
 class ProductItem extends StatefulWidget {
@@ -272,8 +273,9 @@ class _ProductItemState extends State<ProductItem> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text('قیمت : ${widget.product.price}'
-                                          .toPersianDigit()),
+                                      Text(
+                                          'قیمت : ${widget.product.price.withPriceLableDouble}'
+                                              .toPersianDigit()),
                                     ],
                                   ),
                                   Row(
@@ -297,8 +299,8 @@ class _ProductItemState extends State<ProductItem> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  widget.product.finalprice.toPersianDigit() +
-                                      ' تومان ',
+                                  widget.product.finalprice.withPriceLableString
+                                      .toPersianDigit(),
                                 ),
                                 // widget.product.discount != 0
                                 //     ? Text(

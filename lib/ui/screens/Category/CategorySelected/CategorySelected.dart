@@ -244,7 +244,8 @@ class _CategorySelectedState extends State<CategorySelected> {
                                                     MainAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    data.price.withPriceLable
+                                                    data.price
+                                                        .withPriceLableDouble
                                                         .toPersianDigit(),
                                                     style: const TextStyle(
                                                       fontSize: 15,
