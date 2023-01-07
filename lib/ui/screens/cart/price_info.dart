@@ -56,7 +56,7 @@ class PriceInfo extends StatelessWidget {
                           ),
                           children: const [
                             TextSpan(
-                              text: ' تومان',
+                              text: ' ریال',
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 10,
@@ -101,7 +101,7 @@ class PriceInfo extends StatelessWidget {
                           ),
                           children: const [
                             TextSpan(
-                              text: ' تومان',
+                              text: ' ریال',
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 10,
@@ -144,7 +144,7 @@ class PriceInfo extends StatelessWidget {
                           ),
                           children: const [
                             TextSpan(
-                                text: ' تومان',
+                                text: ' ریال',
                                 style: TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 10,
